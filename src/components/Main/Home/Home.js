@@ -1,12 +1,28 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { Text, TextInput, View, Image } from 'react-native'
 import React from 'react'
+
+import CardAndChat from "../CartAndChat/CartAndChat.js"
+import styles from './Style.js'
 
 export default function Home() {
   return (
-    <View>
-      <Text>Home vao day</Text>
+    <View style={styles.container}>
+      <View style={styles.contain}>
+        <View style={styles.SectionStyle}>
+        <Image source={require('../../../../image/search.png')} style={styles.ImageStyle} />
+          <TextInput
+            style={styles.input}
+            placeholder="Search"
+            underlineColorAndroid="transparent"
+          />
+        </View>
+        <View>
+          <CardAndChat />
+        </View>
+      </View>
+      <View style={styles.contain2}>
+        <Text>kokkkokoko</Text>
+      </View>
     </View>
   )
 }
-
-const styles = StyleSheet.create({})
