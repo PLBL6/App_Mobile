@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
         height: 700
     },
     contain: {
-        marginTop: 20,
+        paddingTop: 20,
         flexDirection: 'row',
         flex: 1,
         backgroundColor: colors.yellowLight
