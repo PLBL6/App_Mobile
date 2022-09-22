@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-import colors from './colors/colors';
+import colors from "../../../colors/colors";
 
 const styles = (focused) => StyleSheet.create({
     tabBarIcon: {
