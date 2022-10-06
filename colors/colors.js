@@ -5,5 +5,7 @@ export default {
     white: '#FFF',
     yellowLight: '#F3B63F',
     whiteDark: '#686868',
-    green: '#8DC48B'
+    green: '#8DC48B',
+    greenv2: '#21BA9C',
+    productBackgrond: '#D8D8D8'
 }

@@ -5,6 +5,8 @@ import styles from './Style'
 
 export default class SignIn extends Component {
     render() {
+        const navigation = this.props.navigation
+
         return (
             <ImageBackground
                 source={require('../../../../../image/loginBackground.jpg')}
@@ -31,7 +33,7 @@ export default class SignIn extends Component {
                         <Text style={styles.content2}>Sign into your Account</Text>
                     </View>
                     <View style={styles.Item2}>
-                        <Text style={styles.textAll}>Email ID*</Text>
+                        <Text style={styles.textAll}>User Name*</Text>
                         <View style={styles.infoLogin}>
                             <TextInput style={styles.textInput} />
                             <Image
@@ -42,7 +44,7 @@ export default class SignIn extends Component {
                     <View style={styles.Item3}>
                         <Text style={styles.textAll}>Password*</Text>
                         <View style={styles.infoLogin}>
-                            <TextInput style={styles.textInput} />
+                            <TextInput secureTextEntry={true} style={styles.textInput} />
                             <Image
                                 source={require('../../../../../image/hide.png')}
                             />
@@ -61,7 +63,7 @@ export default class SignIn extends Component {
                 </View>
                 <View style={styles.view4}>
                     <Text>Don't have an account? </Text>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
                         <Text style={styles.textSignUp}>Register Now</Text>
                     </TouchableOpacity>
                 </View>

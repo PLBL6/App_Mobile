@@ -13,9 +13,6 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: colors.yellowLight
     },
-    contain2: {
-        flex: 7
-    },
     SectionStyle: {
         flexDirection: 'row',
         width: 300,
@@ -40,6 +37,62 @@ const styles = StyleSheet.create({
         width: 25,
         resizeMode : 'stretch',
         alignItems: 'center'
+    },
+    containerv1: {
+        flex: 0.4, 
+        backgroundColor: colors.yellowLight,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    categori: {
+        marginHorizontal: 10
+    },
+    textCategory: {
+        fontSize: 15
+    },
+    containerv2: {
+        flex: 7, 
+        margin: 5,
+        backgroundColor: colors.productBackgrond
+    },
+    item: {
+        borderRadius: 5,
+        width: '49%',
+        height: 233,
+        marginHorizontal: 2,
+        marginVertical: 2,
+        backgroundColor: colors.white
+    },
+    Image: {
+        height: '78%',
+        width: '100%',
+        borderTopLeftRadius: 5,
+        borderTopRightRadius: 5,
+    },
+    info: {
+        marginHorizontal: 10
+    },
+    info1: {
+        flexDirection: 'row',
+        marginTop: 5,
+        justifyContent: 'space-between'
+    },
+    info2: {
+        flexDirection: 'row',
+    },
+    textName: {
+        fontSize: 17
+    },
+    textRating: {
+        marginLeft: 5,
+        color: colors.dark,
+        fontWeight: 'bold'
+    },
+    textAvailable: {
+        color: colors.whiteDark
+    },
+    textPrice: {
+        color: colors.greenv2
     },
 })
 

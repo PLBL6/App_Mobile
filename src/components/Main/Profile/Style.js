@@ -60,6 +60,43 @@ const styles = StyleSheet.create({
     cover: {
         height: 200,
         width: '100%'
+    },
+    notLogin: {
+        flexDirection: 'row',
+        marginTop: 60
+    },
+    btn: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginLeft: 37
+    },
+    btnSignIn: {
+        backgroundColor: colors.white,
+        height: 40,
+        width: 120,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderColor: colors.main,
+        borderWidth: 1
+    },
+    btnSignUn: {
+        backgroundColor: colors.orange,
+        marginHorizontal: 10,
+        height: 40,
+        width: 120,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderColor: colors.white,
+        borderWidth: 1
+    },
+    textBtn1: {
+        fontSize: 15,
+        color: colors.orange
+    },
+    textBtn2: {
+        fontSize: 15,
+        color: colors.white
     }
 })
 
