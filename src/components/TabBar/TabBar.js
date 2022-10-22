@@ -6,10 +6,10 @@ import styles from './Style';
 import Home from '../Main/Home/Home';
 import Profile from '../Main/Profile/Profile';
 
-function HomeScreen() {
+function HomeScreen({navigation}) {
   return (
     <View>
-      <Home />
+      <Home navigation = {navigation}/>
     </View>
   );
 }

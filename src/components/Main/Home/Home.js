@@ -59,7 +59,6 @@ export default class Home extends Component {
   filterCategory(text) {
     const newData = this.arrayholder.filter(item => {
       const itemData = `${item.category.toUpperCase()}`;
-
       const textData = text.toUpperCase();
 
       return itemData.indexOf(textData) > -1;
@@ -70,6 +69,7 @@ export default class Home extends Component {
 
   render() {
     const { data, isLoading, dataTemp} = this.state;
+    const navigation = this.props.navigation
 
     return (
       <View style={styles.container}>
@@ -110,7 +110,10 @@ export default class Home extends Component {
                 keyExtractor={({ id }, index) => id}
                 numColumns={2}
                 renderItem={({ item }) => (
-                  <TouchableOpacity style={styles.item}>
+                  <TouchableOpacity 
+                    style={styles.item}
+                    onPress={() => navigation.navigate('InfoProduct', {id: item.id})}
+                  >
                     <Image source={{ uri: item.thumbnail }} style={styles.Image} />
                     <View style={styles.info}>
                       <Text numberOfLines={1} style={styles.textName}>{item.title}</Text>

@@ -14,13 +14,13 @@ export default class SignUp extends Component {
                 style={styles.background}
             >
                 <View style={styles.view1}>
-                    <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
+                    <TouchableOpacity style={styles.btnBack} onPress={() => this.props.navigation.goBack()}>
                         <Image
                             source={require('../../../../../image/arrowLeft.png')}
                             style={styles.iconArrow}
                         />
+                        <Text style={styles.textBack}>Back</Text>
                     </TouchableOpacity>
-                    <Text style={styles.textBack}>Back</Text>
                 </View>
                 <View style={styles.view2}>
                    <SetAvatar />

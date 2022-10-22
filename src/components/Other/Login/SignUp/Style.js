@@ -6,10 +6,15 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingTop: 20
     },
+    btnBack: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: 20,
+        marginLeft: 5
+    },
     view1: {
         flex: 1,
-        flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'flex-start'
     },
     view2: {
         flex: 2,

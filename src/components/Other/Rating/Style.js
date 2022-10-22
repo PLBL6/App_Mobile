@@ -13,8 +13,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row'
       },
       imageStyle: {
-        width: 10,
-        height: 10,
+        width: 13,
+        height: 13,
         resizeMode: 'cover',
       },
 })

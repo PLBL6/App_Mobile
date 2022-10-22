@@ -86,7 +86,9 @@ const styles = StyleSheet.create({
     textRating: {
         marginLeft: 5,
         color: colors.dark,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        fontSize: 15,
+        marginRight: 2
     },
     textAvailable: {
         color: colors.whiteDark

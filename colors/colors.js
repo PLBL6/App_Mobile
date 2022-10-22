@@ -7,5 +7,7 @@ export default {
     whiteDark: '#686868',
     green: '#8DC48B',
     greenv2: '#21BA9C',
-    productBackgrond: '#D8D8D8'
+    productBackgrond: '#D8D8D8',
+    dotNotActive: '#888',
+    pink: '#FA3C65'
 }
