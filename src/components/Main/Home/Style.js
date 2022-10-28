@@ -5,30 +5,32 @@ import colors from '../../../../colors/colors'
 const styles = StyleSheet.create({
     container: {
         display: "flex",
-        height: 700
+        height: 800
     },
     contain: {
         paddingTop: 20,
         flexDirection: 'row',
         flex: 1,
-        backgroundColor: colors.yellowLight
+        backgroundColor: colors.orangeLigth
     },
     SectionStyle: {
         flexDirection: 'row',
         width: 300,
         marginTop: 25,
-        backgroundColor: '#fff',
-        borderWidth: .5,
-        borderColor: '#000',
+        borderWidth: 1,
+        borderColor: colors.main,
+        backgroundColor: colors.white,
         height: 40,
-        borderRadius: 5 ,
-        margin: 10
+        borderRadius: 30 ,
+        margin: 10,
+        alignItems: 'center',
+        paddingLeft: 5
     },
     input: {
         width: 290,
         height: 40,
-        paddingHorizontal: 7,
-        fontSize: 20
+        paddingHorizontal: 10,
+        fontSize: 17
     },
     ImageStyle: {
         padding: 10,
@@ -40,7 +42,7 @@ const styles = StyleSheet.create({
     },
     containerv1: {
         flex: 0.4, 
-        backgroundColor: colors.yellowLight,
+        backgroundColor: colors.orangeLigth,
         justifyContent: 'center',
         alignItems: 'center'
     },
@@ -48,54 +50,65 @@ const styles = StyleSheet.create({
         marginHorizontal: 10
     },
     textCategory: {
-        fontSize: 15
+        fontSize: 15,
+        color: colors.white
     },
     containerv2: {
         flex: 7, 
-        margin: 5,
+        padding: 3,
         backgroundColor: colors.productBackgrond
     },
     item: {
         borderRadius: 5,
-        width: '49%',
-        height: 233,
-        marginHorizontal: 2,
-        marginVertical: 2,
+        width: '48%',
+        height: 280,
+        margin: 4,
         backgroundColor: colors.white
     },
     Image: {
-        height: '78%',
+        height: '75%',
         width: '100%',
         borderTopLeftRadius: 5,
-        borderTopRightRadius: 5,
+        borderTopRightRadius: 5
+    },
+    discout: {
+        height: 50,
+        width: 50,
+        position: 'absolute',
+        alignSelf: 'flex-end',
+        backgroundColor: colors.yellowLight,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderBottomStartRadius: 15
     },
     info: {
-        marginHorizontal: 10
+        marginHorizontal: 10,
+        paddingTop: 10
     },
     info1: {
         flexDirection: 'row',
         marginTop: 5,
-        justifyContent: 'space-between'
-    },
-    info2: {
-        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center'
     },
     textName: {
         fontSize: 17
     },
-    textRating: {
-        marginLeft: 5,
-        color: colors.dark,
-        fontWeight: 'bold',
-        fontSize: 15,
-        marginRight: 2
-    },
     textAvailable: {
-        color: colors.whiteDark
+        fontSize: 15
     },
     textPrice: {
-        color: colors.greenv2
+        fontSize: 20,
+        color: colors.orange
     },
+    textDiscount: {
+        fontSize: 15,
+        color: colors.orange
+    },
+    textGIAM: {
+        fontSize: 15,
+        color: colors.white
+    }
 })
 
 export default styles

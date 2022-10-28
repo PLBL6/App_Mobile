@@ -12,9 +12,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         flexDirection: 'row'
       },
-      imageStyle: {
-        width: 13,
-        height: 13,
+      imageStyle: { 
+        width: 25,
+        height: 25,
         resizeMode: 'cover',
       },
 })

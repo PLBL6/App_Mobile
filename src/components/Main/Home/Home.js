@@ -3,7 +3,6 @@ import React, { Component } from 'react'
 
 import CardAndChat from "../CartAndChat/CartAndChat.js"
 import styles from './Style.js'
-import Rating from '../../Other/Rating/Rating'
 
 export default class Home extends Component {
   constructor(props) {
@@ -22,7 +21,7 @@ export default class Home extends Component {
     try {
       const response = await fetch('https://dummyjson.com/products');
       const json = await response.json();
-      this.setState({ data: json.products});
+      this.setState({ data: json.products });
       this.arrayholder = json.products;
     } catch (error) {
       console.log(error);
@@ -33,11 +32,11 @@ export default class Home extends Component {
     const newArrayList = [];
     this.arrayholder?.forEach(obj => {
       if (!newArrayList.some(o => o.category === obj.category)) {
-        newArrayList.push({...obj});
+        newArrayList.push({ ...obj });
       }
     });
 
-    this.setState({ dataTemp: newArrayList})
+    this.setState({ dataTemp: newArrayList })
   }
 
 
@@ -68,7 +67,7 @@ export default class Home extends Component {
   }
 
   render() {
-    const { data, isLoading, dataTemp} = this.state;
+    const { data, isLoading, dataTemp } = this.state;
     const navigation = this.props.navigation
 
     return (
@@ -78,7 +77,7 @@ export default class Home extends Component {
             <Image source={require('../../../../image/search.png')} style={styles.ImageStyle} />
             <TextInput
               style={styles.input}
-              placeholder="Search"
+              placeholder="Tìm kiếm sản phẩm"
               underlineColorAndroid="transparent"
               onChangeText={text => this.onChangeText(text)}
             />
@@ -96,42 +95,42 @@ export default class Home extends Component {
                 horizontal={true}
                 renderItem={({ item }) => (
                   <TouchableOpacity style={styles.categori} onPress={() => this.filterCategory(item.category)}>
-                        <Text style={styles.textCategory}>{item.category}</Text>
+                    <Text style={styles.textCategory}>{item.category}</Text>
                   </TouchableOpacity>
                 )}
               />
             )}
           </View>
         </View>
-          <View style={styles.containerv2}>
-            {isLoading ? <ActivityIndicator /> : (
-              <FlatList
-                data={data}
-                keyExtractor={({ id }, index) => id}
-                numColumns={2}
-                renderItem={({ item }) => (
-                  <TouchableOpacity 
-                    style={styles.item}
-                    onPress={() => navigation.navigate('InfoProduct', {id: item.id})}
-                  >
-                    <Image source={{ uri: item.thumbnail }} style={styles.Image} />
-                    <View style={styles.info}>
-                      <Text numberOfLines={1} style={styles.textName}>{item.title}</Text>
-                      <View style={styles.info1}>
-                        <View style={styles.info2}>
-                          <Rating rating={item.rating} />
-                          <Text style={styles.textRating}>{item.rating}</Text>
-                          <Text style={styles.textAvailable}>({item.stock})</Text>
-                        </View>
-                        <Text style={styles.textPrice}>${item.price}</Text>
-                      </View>
+        <View style={styles.containerv2}>
+          {isLoading ? <ActivityIndicator /> : (
+            <FlatList
+              data={data}
+              keyExtractor={({ id }, index) => id}
+              numColumns={2}
+              renderItem={({ item }) => (
+                <TouchableOpacity
+                  style={styles.item}
+                  onPress={() => navigation.navigate('InfoProduct', { data: data, id: item.id })}
+                >
+                  <Image source={{ uri: item.thumbnail }} style={styles.Image} />
+                  <View style={styles.discout}>
+                    <Text style={styles.textDiscount}>41%</Text>
+                    <Text style={styles.textGIAM}>GIẢM</Text>
+                  </View>
+                  <View style={styles.info}>
+                    <Text numberOfLines={1} style={styles.textName}>{item.title}</Text>
+                    <View style={styles.info1}>
+                      <Text style={styles.textPrice}>${item.price}</Text>
+                      <Text style={styles.textAvailable}>Đã bán {item.stock}</Text>
                     </View>
-                  </TouchableOpacity>
-                )}
-              />
-            )}
-          </View>
+                  </View>
+                </TouchableOpacity>
+              )}
+            />
+          )}
         </View>
+      </View>
     )
   }
 }

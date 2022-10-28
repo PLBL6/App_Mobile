@@ -1,12 +1,14 @@
 import { Text, View } from 'react-native'
-import React from 'react'
+import React, { Component } from 'react'
 
-import styles from './Style'
+import styles from './Style.js'
 
-export default function Cart() {
-  return (
-    <View>
-      <Text>Cart</Text>
-    </View>
-  )
+export default class Cart extends Component {
+  render() {
+    return (
+      <View>
+        <Text>Cart</Text>
+      </View>
+    )
+  }
 }
