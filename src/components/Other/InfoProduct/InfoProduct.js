@@ -1,4 +1,4 @@
-import { Text, TouchableOpacity, View, Image, ScrollView, Button } from 'react-native'
+import { Text, TouchableOpacity, View, Image, ScrollView, ToastAndroid } from 'react-native'
 import React, { Component } from 'react'
 
 import styles from './Style'
@@ -14,6 +14,13 @@ export default class InfoProduct extends Component {
     if (slide !== this.state.active) {
       this.setState({ active: slide });
     }
+  }
+
+  Messge() {
+    ToastAndroid.show(
+      'Đã thêm vào giỏ',
+      ToastAndroid.SHORT
+    )
   }
 
   render() {
@@ -123,7 +130,7 @@ export default class InfoProduct extends Component {
           </ScrollView>
         </View>
         <View style={styles.container2}>
-          <TouchableOpacity style={styles.btnSubmit} >
+          <TouchableOpacity style={styles.btnSubmit} onPress={this.Messge}>
             <Text style={styles.textBtn}>ADD TO BAG</Text>
           </TouchableOpacity>
         </View>

@@ -83,7 +83,7 @@ export default class Home extends Component {
             />
           </View>
           <View>
-            <CardAndChat />
+            <CardAndChat navigation = {navigation}/>
           </View>
         </View>
         <View style={styles.containerv1}>

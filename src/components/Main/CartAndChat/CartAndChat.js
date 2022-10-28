@@ -5,9 +5,11 @@ import styles from './Style'
 
 export default class CartAndChat extends Component {
     render() {
+        const navigation = this.props.navigation
+
         return (
             <View style={styles.container}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate('Cart')}>
                     <Image
                         style={styles.icon}
                         source={require('../../../../image/cart.png')}

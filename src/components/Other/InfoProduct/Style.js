@@ -112,7 +112,8 @@ const styles = StyleSheet.create({
         flex: 9
     },
     container2: {
-        flex: 0.8
+        flex: 0.8,
+        justifyContent: 'center'
     },
     viewInfo1: {
         flex: 1,

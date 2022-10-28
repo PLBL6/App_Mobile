@@ -5,9 +5,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   icon: {
-    height: 25,
-    width: 25,
-    marginHorizontal: 10,
+    height: 27,
+    width: 27,
+    marginRight: 13,
     marginVertical: 30
   }
 })

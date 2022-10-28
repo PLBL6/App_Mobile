@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     },
     SectionStyle: {
         flexDirection: 'row',
-        width: 300,
+        width: '75%',
         marginTop: 25,
         borderWidth: 1,
         borderColor: colors.main,
