@@ -64,8 +64,8 @@ const styles = StyleSheet.create({
     textRating: {
         fontSize: 20,
         fontWeight: 'bold',
-        marginRight: 5,
-        color: colors.dark
+        color: colors.dark,
+        marginRight: 2
     },
     info: {
         marginTop: 13
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        marginLeft: 10,
+        marginLeft: 8,
         marginBottom: 3
     },
     textDecription: {
@@ -138,48 +138,42 @@ const styles = StyleSheet.create({
     viewOption: {
         marginVertical: 10,
         paddingVertical: 10,
-        borderWidth: 2,
-        borderTopColor: colors.whiteDark,
-        borderBottomColor: colors.white,
-        borderRightColor: colors.white,
-        borderLeftColor: colors.white
+        borderTopWidth: 2,
+        borderColor: colors.whiteDark
     },
     viewShop: {
         flexDirection: 'row',
-        alignItems: 'center',
-        marginVertical: 10,
         paddingVertical: 10,
-        borderWidth: 2,
-        borderTopColor: colors.whiteDark,
-        borderBottomColor: colors.white,
-        borderRightColor: colors.white,
-        borderLeftColor: colors.white,
+        borderTopWidth: 2,
+        borderColor: colors.whiteDark,
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     textMota: {
         fontSize: 17,
         fontWeight: 'bold'
     },
     avatar: {
-        height: 100,
-        width: 100,
+        height: 80,
+        width: 80,
         borderRadius: 100
     },
     iconMap: {
-        height: 20,
-        width: 20,
+        height: 25,
+        width: 25,
         marginLeft: 20,
-        marginRight: 7
+        marginRight: 3
     },
     name: {
-        marginLeft: 20,
-        fontSize: 25,
+        marginLeft: 25,
+        fontSize: 20,
         fontWeight: "bold"
     },
     viewRow: {
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'center',
-        marginTop: 15
+        marginTop: 10
     },
     textMap: {
         fontSize: 20
@@ -191,17 +185,15 @@ const styles = StyleSheet.create({
     btnViewShop: {
         height: 40,
         width: 120,
-        marginLeft: 20,
+        marginLeft: '10%',
         justifyContent: 'center',
         alignItems: 'center',
         borderWidth: 2,
         borderColor: colors.orange
-
     },
     iconArrowRating: {
         height: 18,
         width: 18,
-        marginLeft: 5,
         color: colors.green
     }
 })

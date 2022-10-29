@@ -9,6 +9,7 @@ import Profile from './src/components/Main/Profile/Profile';
 import InfoProduct from './src/components/Other/InfoProduct/InfoProduct';
 import Comment from './src/components/Other/Comment/Comment'
 import Cart from './src/components/Other/Cart/Cart';
+import Shop from './src/components/Other/Shop/Shop';
 
 
 const stack = createNativeStackNavigator();
@@ -24,6 +25,7 @@ export default function App() {
           <stack.Screen name='InfoProduct' component={InfoProduct}/>
           <stack.Screen name='Comment' component={Comment}/>
           <stack.Screen name='Cart' component={Cart}/>
+          <stack.Screen name='Shop' component={Shop}/>
         </stack.Navigator>
       </NavigationContainer>
 

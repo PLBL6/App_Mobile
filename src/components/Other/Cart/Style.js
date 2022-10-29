@@ -111,6 +111,13 @@ const styles = StyleSheet.create({
         color: colors.white,
         fontWeight: 'bold'
     },
+    deleteBox: {
+        backgroundColor: 'red',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: 100,
+        height: 80,
+      },
 })
 
 export default styles

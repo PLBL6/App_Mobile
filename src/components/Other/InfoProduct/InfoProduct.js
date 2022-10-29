@@ -111,7 +111,7 @@ export default class InfoProduct extends Component {
                           <Text style={styles.textMap}>Đà Nẵng</Text>
                         </View>
                       </View>
-                      <TouchableOpacity style={styles.btnViewShop}>
+                      <TouchableOpacity style={styles.btnViewShop} onPress={() => this.props.navigation.navigate('Shop')}>
                         <Text style={styles.textBtnViewShop}>Xem Shop</Text>
                       </TouchableOpacity>
                     </View>
