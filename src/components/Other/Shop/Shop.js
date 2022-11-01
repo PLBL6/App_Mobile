@@ -16,7 +16,7 @@ export default class Shop extends Component {
       <View style={styles.container}>
         <ImageBackground source={{ uri: 'https://genk.mediacdn.vn/k:thumb_w/640/2016/21-20160516-img-6625-1463647934941-1463981877095/bo-anh-nha-sach-tuyet-dep-cho-ban-nam-dai-doc-truyen-tranh-thoai-mai-tai-viet-nam.jpg' }} style={styles.header}>
           <View style={styles.view1}>
-            <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('Home')}>
               <Image
                 style={styles.iconArrow}
                 source={require('../../../../image/arrowLeftWhite.png')}
@@ -46,8 +46,9 @@ export default class Shop extends Component {
                 <Text style={styles.textMap}>Đà Nẵng</Text>
               </View>
               <View style={styles.viewRow}>
+                <Image source={require('../../../../image/ic_star_fill.png')} style={styles.iconStar}/>
                 <Text style={styles.textMap}>5.0/5.0 </Text>
-                <Text numberOfLines={1} style={styles.textMap}>17,9k Người theo dõi </Text>
+                <Text numberOfLines={1} style={styles.textAll}>17,9k Người theo dõi </Text>
               </View>
             </View>
             <View style={styles.view2}>

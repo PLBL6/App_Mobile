@@ -5,11 +5,20 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import styles from './Style';
 import Home from '../Main/Home/Home';
 import Profile from '../Main/Profile/Profile';
+import Sale from '../Main/Sale/Sale';
 
 function HomeScreen({navigation}) {
   return (
     <View>
       <Home navigation = {navigation}/>
+    </View>
+  );
+}
+
+function SalesScreen({navigation}) {
+  return (
+    <View>
+      <Sale navigation = {navigation}/>
     </View>
   );
 }
@@ -86,7 +95,7 @@ export default class TabBar extends Component {
               ),
               headerShown: false
             }}
-            component={HomeScreen} />
+            component={SalesScreen} />
           <Tab.Screen
             name="Notify"
             options={{

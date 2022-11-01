@@ -1,8 +1,7 @@
-import { Text, View, Image, TouchableOpacity } from 'react-native'
+import { Text, View, Image, TouchableOpacity, ScrollView } from 'react-native'
 import React, { Component } from 'react'
 
 import styles from './Style'
-import { ScrollView } from 'react-native-gesture-handler'
 
 export default class Category extends Component {
   category = [
@@ -18,14 +17,24 @@ export default class Category extends Component {
           {
             this.category.map((item, index) => (
               <TouchableOpacity key={index} style={styles.item}>
-                <Image source={{uri: item.image}} style={styles.image}/>
-                <View style={styles.info}>
-                  <Text style={styles.textName}>{item.title}</Text>
-                  <Text style={styles.textNumber}>{item.number} sản phẩm</Text>
+                <View style={styles.item1}>
+                  <Image source={{ uri: item.image }} style={styles.image} />
+                  <View style={styles.info}>
+                    <Text style={styles.textName}>{item.title}</Text>
+                    <Text style={styles.textNumber}>{item.number} sản phẩm</Text>
+                  </View>
                 </View>
+                <Image source={require('../../../../../image/arrowRightBlack.png')} style={styles.iconArrow} />
               </TouchableOpacity>
             ))
           }
+          <TouchableOpacity style={styles.item}>
+            <View style={styles.infoTotal}>
+              <Text style={styles.textName}>Sản phẩm</Text>
+              <Text style={styles.textNumber}>1103 sản phẩm</Text>
+            </View>
+            <Image source={require('../../../../../image/arrowRightBlack.png')} style={styles.iconArrow} />
+          </TouchableOpacity>
         </ScrollView>
       </View>
     )

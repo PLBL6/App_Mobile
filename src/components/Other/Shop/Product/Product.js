@@ -47,7 +47,7 @@ export default class Product extends Component {
                             renderItem={({ item }) => (
                                 <TouchableOpacity
                                     style={styles.item}
-                                    onPress={() => navigation.navigate('InfoProduct', { data: data, id: item.id })}
+                                    onPress={() => navigation.navigate('InfoProduct', { data: data, id: item.id, isBackProduct: true })}
                                 >
                                     <Image source={{ uri: item.thumbnail }} style={styles.Image} />
                                     <View style={styles.discout}>

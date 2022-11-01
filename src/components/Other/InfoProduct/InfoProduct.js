@@ -25,6 +25,7 @@ export default class InfoProduct extends Component {
 
   render() {
     const data = this.props.route.params.data.filter(data => data.id == this.props.route.params.id)
+    const isBackProduct = this.props.route.params.isBackProduct
 
     return (
       <View style={styles.container}>
@@ -51,9 +52,16 @@ export default class InfoProduct extends Component {
                     }
                   </ScrollView>
 
-                  <TouchableOpacity style={styles.btnBack} onPress={() => this.props.navigation.goBack()}>
+                  <TouchableOpacity style={styles.btnBack} onPress={() => isBackProduct ? this.props.navigation.navigate('Shop') : this.props.navigation.goBack()}>
                     <Image
                       source={require('../../../../image/arrowLeftv2.png')}
+                      style={styles.iconArrow}
+                    />
+                  </TouchableOpacity>
+
+                  <TouchableOpacity style={styles.btnCart} onPress={() => this.props.navigation.navigate('Cart')}>
+                    <Image
+                      source={require('../../../../image/cartv2.png')}
                       style={styles.iconArrow}
                     />
                   </TouchableOpacity>

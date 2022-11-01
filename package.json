@@ -22,7 +22,6 @@
     "react": "18.0.0",
     "react-dom": "18.0.0",
     "react-native": "0.69.6",
-    "react-native-gesture-handler": "~2.5.0",
     "react-native-image-crop-picker": "^0.38.0",
     "react-native-image-picker": "^4.10.0",
     "react-native-navigation-bar": "^0.2.1",

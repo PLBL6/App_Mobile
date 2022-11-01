@@ -13,6 +13,15 @@ const styles = StyleSheet.create({
         borderBottomColor: colors.whiteDarkLight,
         borderBottomWidth: 5,
         flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between'
+    },
+    item1: {
+        height: 100,
+        backgroundColor: colors.white,
+        borderBottomColor: colors.whiteDarkLight,
+        borderBottomWidth: 5,
+        flexDirection: 'row',
         alignItems: 'center'
     },
     image: {
@@ -23,6 +32,10 @@ const styles = StyleSheet.create({
     info: {
         justifyContent: 'center'
     },  
+    infoTotal: {
+        justifyContent: 'center',
+        marginLeft: 20
+    },
     textName: {
         fontSize: 20,
         marginBottom: 10
@@ -30,6 +43,11 @@ const styles = StyleSheet.create({
     textNumber: {
         fontSize: 17,
         color: colors.whiteDark
+    },
+    iconArrow: {
+        height: 30,
+        width: 30,
+        marginRight: 7
     }
 })
 

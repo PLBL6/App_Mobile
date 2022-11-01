@@ -80,14 +80,22 @@ const styles = StyleSheet.create({
   textMap: {
     fontSize: 15,
     color: colors.white,
+    fontWeight: "bold"
+  },
+  textAll: {
+    fontSize: 15,
+    color: colors.white,
     fontWeight: "bold",
+    borderLeftWidth: 2,
+    paddingLeft: 5,
+    borderLeftColor: colors.white
   },
   iconMap: {
     height: 15,
     width: 15,
     marginRight: 7
   },
-  btnFollowShop: { 
+  btnFollowShop: {
     height: '35%',
     width: '100%',
     justifyContent: 'center',
@@ -109,9 +117,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   text: {
-    color: colors.main, 
+    color: colors.main,
     fontSize: 12
-}
+  },
+  iconStar: {
+    height: 15,
+    width: 15,
+    marginRight: 2
+  }
 })
 
 export default styles

@@ -18,6 +18,12 @@ const styles = StyleSheet.create({
         marginTop: 40,
         marginLeft: 10
     },
+    btnCart: {
+        position: 'absolute', 
+        alignSelf: 'flex-end',
+        marginTop: 45,
+        right: 10
+    },
     iconArrow: {
         height: 40,
         width: 40

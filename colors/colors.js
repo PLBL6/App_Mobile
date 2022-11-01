@@ -8,7 +8,7 @@ export default {
     whiteDark: '#686868',
     whiteDarkLight: '#EFEFEF',
     whiteDarkv2: '#515151',
-    whiteDarkv3: '#424142',
+    whiteDarkv3: '#D8D8D8',
     green: '#8DC48B',
     greenv2: '#21BA9C',
     productBackgrond: '#D8D8D8',
