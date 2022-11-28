@@ -8,9 +8,9 @@ const styles = StyleSheet.create({
         height: 800
     },
     contain: {
-        paddingTop: 20,
+        paddingTop: '3%',
         flexDirection: 'row',
-        flex: 1,
+        flex: 0.7,
         backgroundColor: colors.orangeLigth
     },
     SectionStyle: {
@@ -41,13 +41,12 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     containerv1: {
-        flex: 0.4, 
-        backgroundColor: colors.orangeLigth,
-        justifyContent: 'center',
-        alignItems: 'center'
+        flex: 0.4,
+        backgroundColor: colors.orangeLigth
     },
     categori: {
-        marginHorizontal: 10
+        marginHorizontal: 10,
+        justifyContent: "center"
     },
     textCategory: {
         fontSize: 15,

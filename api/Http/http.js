@@ -1,0 +1,1 @@
+export const https = 'https://backend-api-server-endcode.herokuapp.com/api/'

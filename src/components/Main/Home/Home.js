@@ -3,6 +3,8 @@ import React, { Component } from 'react'
 
 import CardAndChat from "../CartAndChat/CartAndChat.js"
 import styles from './Style.js'
+import { getMathang, getMathang_Danhmuc, getMathang_Tenmathang } from '../../../../api/mathangs.js'
+import { getDanhmuc } from '../../../../api/danhmucs.js'
 
 export default class Home extends Component {
   constructor(props) {
@@ -19,24 +21,14 @@ export default class Home extends Component {
 
   async getProducts() {
     try {
-      const response = await fetch('https://dummyjson.com/products');
-      const json = await response.json();
-      this.setState({ data: json.products });
-      this.arrayholder = json.products;
+      this.setState({ data: await getMathang() });
+      this.arrayholder = await getMathang()
+      this.setState({ dataTemp: await getDanhmuc()});
     } catch (error) {
       console.log(error);
     } finally {
       this.setState({ isLoading: false });
     }
-
-    const newArrayList = [];
-    this.arrayholder?.forEach(obj => {
-      if (!newArrayList.some(o => o.category === obj.category)) {
-        newArrayList.push({ ...obj });
-      }
-    });
-
-    this.setState({ dataTemp: newArrayList })
   }
 
 
@@ -44,26 +36,20 @@ export default class Home extends Component {
     this.getProducts();
   }
 
-  onChangeText(text) {
-    const newData = this.arrayholder.filter(item => {
-      const itemData = `${item.title.toUpperCase()}`;
-      const textData = text.toUpperCase();
-
-      return itemData.indexOf(textData) > -1;
-    });
-
-    this.setState({ data: newData });
+  async onChangeText(name) {
+    try {
+      this.setState({ data: await getMathang_Tenmathang(name) });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  filterCategory(text) {
-    const newData = this.arrayholder.filter(item => {
-      const itemData = `${item.category.toUpperCase()}`;
-      const textData = text.toUpperCase();
-
-      return itemData.indexOf(textData) > -1;
-    });
-
-    this.setState({ data: newData });
+  async filterCategory(idDanhMuc) {
+    try {
+      this.setState({ data: await getMathang_Danhmuc(idDanhMuc) });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   render() {
@@ -79,28 +65,26 @@ export default class Home extends Component {
               style={styles.input}
               placeholder="Tìm kiếm sản phẩm"
               underlineColorAndroid="transparent"
-              onChangeText={text => this.onChangeText(text)}
+              onChangeText={name => this.onChangeText(name)}
             />
           </View>
           <View>
-            <CardAndChat navigation = {navigation}/>
+            <CardAndChat navigation={navigation} />
           </View>
         </View>
         <View style={styles.containerv1}>
-          <View>
-            {isLoading ? <ActivityIndicator /> : (
-              <FlatList
-                data={dataTemp}
-                keyExtractor={({ id }, index) => id}
-                horizontal={true}
-                renderItem={({ item }) => (
-                  <TouchableOpacity style={styles.categori} onPress={() => this.filterCategory(item.category)}>
-                    <Text style={styles.textCategory}>{item.category}</Text>
-                  </TouchableOpacity>
-                )}
-              />
-            )}
-          </View>
+          {isLoading ? <ActivityIndicator /> : (
+            <FlatList
+              data={dataTemp}
+              keyExtractor={({ id }, index) => id}
+              horizontal={true}
+              renderItem={({ item }) => (
+                <TouchableOpacity style={styles.categori} onPress={() => this.filterCategory(item.id)}>
+                  <Text style={styles.textCategory}>{item.tenDanhMuc}</Text>
+                </TouchableOpacity>
+              )}
+            />
+          )}
         </View>
         <View style={styles.containerv2}>
           {isLoading ? <ActivityIndicator /> : (
@@ -111,18 +95,18 @@ export default class Home extends Component {
               renderItem={({ item }) => (
                 <TouchableOpacity
                   style={styles.item}
-                  onPress={() => navigation.navigate('InfoProduct', { data: data, id: item.id, isBackProduct: false })}
+                  onPress={() => navigation.navigate('InfoProduct', { id: item.id, isBackProduct: false })}
                 >
-                  <Image source={{ uri: item.thumbnail }} style={styles.Image} />
+                  <Image source={{ uri: item.hinhAnh }} style={styles.Image} />
                   <View style={styles.discout}>
-                    <Text style={styles.textDiscount}>41%</Text>
+                    <Text style={styles.textDiscount}>{item.khuyenMai}%</Text>
                     <Text style={styles.textGIAM}>GIẢM</Text>
                   </View>
                   <View style={styles.info}>
-                    <Text numberOfLines={1} style={styles.textName}>{item.title}</Text>
+                    <Text numberOfLines={1} style={styles.textName}>{item.tenMatHang}</Text>
                     <View style={styles.info1}>
-                      <Text style={styles.textPrice}>${item.price}</Text>
-                      <Text style={styles.textAvailable}>Đã bán {item.stock}</Text>
+                      <Text style={styles.textPrice}>đ{item.gia}</Text>
+                      <Text style={styles.textAvailable}>Đã bán 0</Text>
                     </View>
                   </View>
                 </TouchableOpacity>
