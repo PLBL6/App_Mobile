@@ -3,18 +3,42 @@ import React, { Component } from 'react'
 
 import styles from '../Comment/Style'
 import Rating from '../Rating/Rating';
+import { getDanhgia } from '../../../../api/danhgias';
 
 export default class Comment extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      danhgia: [],
+      isLoading: true,
+    };
+  }
+
+  async getComment() {
+    try {
+      const id = this.props.route.params.idMathang
+      this.setState({ danhgia: await getDanhgia(id) });
+    } catch (error) {
+      console.log(error);
+    } finally {
+      this.setState({ isLoading: false });
+    }
+  }
+
+
+  componentDidMount() {
+    this.getComment();
+  }
+
+
   render() {
     const thumbnail = this.props.route.params.thumbnail
+    const { danhgia, isLoading } = this.state;
 
     const Images = [
       "https://www.chupsanpham.net/wp-content/uploads/2017/07/bat-mi-cach-chup-anh-quan-ao-thoi-trang-dep-khi-ban-hang-online-02.jpg",
-      "https://artia.vn/wp-content/uploads/2020/12/Baby-Solid-Knitted-Style-Long-sleeve-Romper-800x800.jpg",
-      "http://lavenderstudio.com.vn/wp-content/uploads/2019/09/chup-hinh-quang-cao-quan-ao.jpg",
-      "https://nhatminhdecor.com/wp-content/uploads/2019/01/chup-anh-voi-mau-that-800x800.jpg",
-      "https://upload.wikimedia.org/wikipedia/commons/b/b7/Big_smile.png",
-      "https://kenh14cdn.com/2018/10/19/photo-1-1539960492660791551744.png"
+      "https://artia.vn/wp-content/uploads/2020/12/Baby-Solid-Knitted-Style-Long-sleeve-Romper-800x800.jpg"
     ]
 
     return (
@@ -49,54 +73,36 @@ export default class Comment extends Component {
             </View>
           </View>
           <ScrollView>
-            <View style={styles.view2}>
-              <Image
-                style={styles.avatar}
-                source={require('../../../../image/catAvatar.jpg')}
-              />
-              <View>
-                <Text style={styles.textAll}>Đỗ Phú Vũ </Text>
-                <Rating rating={5} />
-                <Text style={styles.textAll}>Phân loại: Áo sơ mi xanh size XL </Text>
-                <Text style={styles.textCommen}>Sài tốt nên mua khá bền có điều khác màu với mô tả </Text>
-                <View style={{flexDirection: 'row', flexWrap: 'wrap', width: '80%'}}>
-                  {
-                    Images.map((item, index) => (
-                      <Image key={index} source={{ uri: item }} style={styles.ImageComen} />
-                    ))
-                  }
-                </View>
-                <Text style={styles.textAll}>01-10-2022 05:31</Text>
-                <View style={styles.viewFeedback}>
+            {
+              danhgia.map((item, index) => (
+                <View key={index} style={styles.view2}>
+                  <Image
+                    style={styles.avatar}
+                    source={require('../../../../image/catAvatar.jpg')}
+                  />
+                  <View>
+                    <Text style={styles.textAll}>Đỗ Phú Vũ </Text>
+                    <View style={styles.rating}>
+                      <Rating rating={item.xepHang} />
+                    </View>
+                    {/* <Text style={styles.textAll}>Phân loại: Áo sơ mi xanh size XL </Text> */}
+                    <Text style={styles.textCommen}>{item.noiDung}</Text>
+                    <View style={{ flexDirection: 'row', flexWrap: 'wrap', width: '80%' }}>
+                      {
+                        Images.map((item, index) => (
+                          <Image key={index} source={{ uri: item }} style={styles.ImageComen} />
+                        ))
+                      }
+                    </View>
+                    <Text style={styles.textAll}>{item.createdAt}</Text>
+                    {/* <View style={styles.viewFeedback}>
                   <Text style={styles.textSaleChat}>Phản hồi của người bán:</Text>
                   <Text style={styles.textSaleChatComen}>Thank you for your purchase and taking the time to write a product review. Customer reviews is important to us and we value your response. If you have any questions, please contact our customer service.All responses will be used to further improve the quality of our service and products.Sorry for the inconvenience and thank you for giving us the opportunity to rectify the matter.😔😔</Text>
+                </View> */}
+                  </View>
                 </View>
-              </View>
-            </View>
-            <View style={styles.view2}>
-              <Image
-                style={styles.avatar}
-                source={require('../../../../image/catAvatar.jpg')}
-              />
-              <View>
-                <Text style={styles.textAll}>Đỗ Phú Vũ </Text>
-                <Rating rating={5} />
-                <Text style={styles.textAll}>Phân loại: Áo sơ mi xanh size XL </Text>
-                <Text style={styles.textCommen}>Sài tốt nên mua khá bền có điều khác màu với mô tả </Text>
-                <View style={{flexDirection: 'row', flexWrap: 'wrap', width: '80%'}}>
-                  {
-                    Images.map((item, index) => (
-                      <Image key={index} source={{ uri: item }} style={styles.ImageComen} />
-                    ))
-                  }
-                </View>
-                <Text style={styles.textAll}>01-10-2022 05:31</Text>
-                <View style={styles.viewFeedback}>
-                  <Text style={styles.textSaleChat}>Phản hồi của người bán:</Text>
-                  <Text style={styles.textSaleChatComen}>Thank you for your purchase and taking the time to write a product review. Customer reviews is important to us and we value your response. If you have any questions, please contact our customer service.All responses will be used to further improve the quality of our service and products.Sorry for the inconvenience and thank you for giving us the opportunity to rectify the matter.😔😔</Text>
-                </View>
-              </View>
-            </View>
+              ))
+            }
           </ScrollView>
         </View>
       </View>

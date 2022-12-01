@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     textPrice: {
         fontSize: 25,
         fontWeight: 'bold',
-        color: colors.whiteDarkv3
+        color: colors.whiteDark
     },
     textSale: {
         fontSize: 15,
@@ -167,11 +167,12 @@ const styles = StyleSheet.create({
     iconMap: {
         height: 25,
         width: 25,
-        marginLeft: 20,
         marginRight: 3
     },
+    shopinfo: {
+        paddingHorizontal: 20
+    },
     name: {
-        marginLeft: 25,
         fontSize: 20,
         fontWeight: "bold"
     },
@@ -191,7 +192,6 @@ const styles = StyleSheet.create({
     btnViewShop: {
         height: 40,
         width: 120,
-        marginLeft: '10%',
         justifyContent: 'center',
         alignItems: 'center',
         borderWidth: 2,
@@ -201,6 +201,20 @@ const styles = StyleSheet.create({
         height: 18,
         width: 18,
         color: colors.green
+    },
+    viewPhanloai: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginTop: 10
+    },
+    phanloai: {
+        padding: 5,
+        margin: 5,
+        borderWidth: 1
+    },
+    phanloai1: {
+        padding: 5,
+        margin: 6
     }
 })
 

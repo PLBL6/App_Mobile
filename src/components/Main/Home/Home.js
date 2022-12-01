@@ -80,6 +80,7 @@ export default class Home extends Component {
               horizontal={true}
               renderItem={({ item }) => (
                 <TouchableOpacity style={styles.categori} onPress={() => this.filterCategory(item.id)}>
+                  <Image source={require('../../../../image/search.png')} style={styles.ImageCategory}/>
                   <Text style={styles.textCategory}>{item.tenDanhMuc}</Text>
                 </TouchableOpacity>
               )}

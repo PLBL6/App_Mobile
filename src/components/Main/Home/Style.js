@@ -11,7 +11,8 @@ const styles = StyleSheet.create({
         paddingTop: '3%',
         flexDirection: 'row',
         flex: 0.7,
-        backgroundColor: colors.orangeLigth
+        backgroundColor: colors.orangeLigth,
+        paddingBottom: 10
     },
     SectionStyle: {
         flexDirection: 'row',
@@ -41,12 +42,21 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     containerv1: {
-        flex: 0.4,
-        backgroundColor: colors.orangeLigth
+        flex: 1.15,
+        backgroundColor: colors.productBackgrond
     },
     categori: {
-        marginHorizontal: 10,
-        justifyContent: "center"
+        backgroundColor: colors.orangeLigth,
+        width: 100,
+        height: 100,
+        justifyContent: "center",
+        alignItems: 'center'
+    },
+    ImageCategory: {
+        height: 60,
+        width: 60,
+        marginBottom: 5,
+        borderRadius: 10
     },
     textCategory: {
         fontSize: 15,
@@ -54,14 +64,14 @@ const styles = StyleSheet.create({
     },
     containerv2: {
         flex: 7, 
-        padding: 3,
+        paddingRight: 2,
         backgroundColor: colors.productBackgrond
     },
     item: {
         borderRadius: 5,
-        width: '48%',
+        width: '50%',
         height: 280,
-        margin: 4,
+        margin: 2,
         backgroundColor: colors.white
     },
     Image: {

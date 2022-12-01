@@ -1,5 +1,5 @@
-import { get } from "./Method/methods";
+import { getAll } from "./Method/methods";
 
 export const getDanhmuc = async () => {
-    return await get('get-danhmucs', '','danhmucs')
+    return await getAll('get-danhmucs','danhmucs')
 }

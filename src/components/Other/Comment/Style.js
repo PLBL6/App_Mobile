@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 10
     },
     textAll: {
-        fontSize: 17,
+        fontSize: 19,
         color: colors.whiteDark,
         marginBottom: 15
     },
@@ -78,9 +78,9 @@ const styles = StyleSheet.create({
         color: colors.orangeLigth,
         marginBottom: 10
     },
-    textSaleChatComen: {
-        fontSize: 17
-    },
+    // textSaleChatComen: {
+    //     fontSize: 17
+    // },
     textCommen: {
         fontSize: 20,
         marginBottom: 5,
@@ -91,10 +91,14 @@ const styles = StyleSheet.create({
         width: 102,
         margin: 3
     },
-    viewFeedback: {
-        backgroundColor: colors.whiteDarkLight,
-        width: '72%',
-        padding: 15
+    // viewFeedback: {
+    //     backgroundColor: colors.whiteDarkLight,
+    //     width: '72%',
+    //     padding: 15
+    // },
+    rating: {
+        alignItems: "flex-start",
+        marginVertical: 5
     }
 })
 

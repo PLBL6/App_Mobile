@@ -3,6 +3,9 @@ import React, { Component } from 'react'
 
 import styles from './Style'
 import Rating from '../Rating/Rating';
+import { getKichcovMausac_IDmathang, getRatingMathang_IDmathang, getAnhMathang_IDmathang, getMathang_IDmathang } from '../../../../api/mathangs.js'
+import { getSoluongDanhgia } from '../../../../api/danhgias';
+import { getNhacungcap_IDmathang } from '../../../../api/nhacungcap';
 
 export default class InfoProduct extends Component {
   constructor(props) {
@@ -11,8 +14,10 @@ export default class InfoProduct extends Component {
     this.state = {
       data: [],
       imageData: [],
-      mausacData: [],
+      chitietData: [],
       ratingTBData: [],
+      numberRating: [],
+      nhaCungcap: [],
       active: 0,
       arrayholder: []
     };
@@ -34,21 +39,13 @@ export default class InfoProduct extends Component {
 
   async getProducts() {
     try {
-      const mathangID = await fetch('https://backend-api-server-endcode.herokuapp.com/api/get-mathangs?idMatHang=' + this.props.route.params.id);
-      const mathangIDJson = await mathangID.json();
-      this.setState({ data: mathangIDJson.mathangs });
-
-      const listanhID = await fetch('https://backend-api-server-endcode.herokuapp.com/api/get-all-hinh-anh-mathangs-by-id-mathang?matHangID=' + this.props.route.params.id);
-      const listanhIDJson = await listanhID.json();
-      this.setState({ imageData: listanhIDJson.hinhanhs });
-
-      const mausacID = await fetch('https://backend-api-server-endcode.herokuapp.com/api/get-all-hinh-anh-mathangs-by-id-mathang?matHangID=' + this.props.route.params.id);
-      const mausacIDJson = await mausacID.json();
-      this.setState({ mausacData: mausacIDJson.mausac });
-
-      const ratingTBID = await fetch('https://backend-api-server-endcode.herokuapp.com/api/get-avg-rating-by-id-mathang?idMatHang=' + this.props.route.params.id);
-      const ratingTBIDJson = await ratingTBID.json();
-      this.setState({ ratingTBData: ratingTBIDJson });
+      const id = this.props.route.params.id
+      this.setState({ data: await getMathang_IDmathang(id) });
+      this.setState({ imageData: await getAnhMathang_IDmathang(id) });
+      this.setState({ ratingTBData: await getRatingMathang_IDmathang(id) });
+      this.setState({ numberRating: await getSoluongDanhgia(id) });
+      this.setState({ chitietData: await getKichcovMausac_IDmathang(id) });
+      this.setState({ nhaCungcap: await getNhacungcap_IDmathang(id) });
     } catch (error) {
       console.log(error);
     } finally {
@@ -61,7 +58,7 @@ export default class InfoProduct extends Component {
   }
 
   render() {
-    const { data, imageData, mausacData, ratingTBData, isLoading } = this.state;
+    const { data, imageData, chitietData, ratingTBData, numberRating, nhaCungcap, isLoading } = this.state;
     const isBackProduct = this.props.route.params.isBackProduct
 
     var image = []
@@ -69,11 +66,23 @@ export default class InfoProduct extends Component {
       image.push(item.anh)
     ))
 
+    for (let i = image.length - 1; i >= 0; i--) {
+      if (image[i] == "")
+        image[i] = 'https://png.pngtree.com/png-clipart/20190924/original/pngtree-empty-box-icon-for-your-project-png-image_4820798.jpg'
+    }
+
     var ratingTB
-    if( ratingTBData["avgrating"] == null)
+    if (ratingTBData == null)
       ratingTB = 0
     else
-      ratingTB = Math.round(ratingTBData["avgrating"] * 10) / 10
+      ratingTB = Math.round(ratingTBData * 10) / 10
+
+    var loaiHang = []
+    var soLuong = []
+    for (var i = 0; i < chitietData.length; i = i + 3) {
+      loaiHang.push("Màu: " + chitietData[i] + " - Size: " + chitietData[i + 1])
+      soLuong.push(chitietData[i + 2])
+    }
 
     return (
       <View style={styles.container}>
@@ -130,7 +139,7 @@ export default class InfoProduct extends Component {
                     <Text style={styles.textPrice}>{data["gia"]} vnđ</Text>
                     <Text style={styles.textSale}>Đã bán: 0 | {data["khuyenMai"]}% GIẢM</Text>
                   </View>
-                  <TouchableOpacity onPress={() => this.props.navigation.navigate('Comment', { thumbnail: data["hinhAnh"] })} style={styles.viewInfo2}>
+                  <TouchableOpacity onPress={() => this.props.navigation.navigate('Comment', { thumbnail: data["hinhAnh"], idMathang: data["id"] })} style={styles.viewInfo2}>
                     <View style={styles.info3}>
                       <Text style={styles.textRating}>{ratingTB}</Text>
                       <Rating rating={ratingTB} />
@@ -139,27 +148,46 @@ export default class InfoProduct extends Component {
                         source={require('../../../../image/arrowRight.png')}
                       />
                     </View>
-                    <Text style={styles.textSale}>Dựa trên 27 đánh giá</Text>
+                    <Text style={styles.textSale}>Dựa trên {numberRating} đánh giá</Text>
                   </TouchableOpacity>
                 </View>
                 <View style={styles.viewOptionBig}>
                   <View style={styles.viewOption}>
                     <Text style={styles.textMota}>Chọn loại hoàng </Text>
-                    <Text style={styles.textDecription}>Màu</Text>
+                    <View style={styles.viewPhanloai}>
+                      <View>
+                        {
+                          loaiHang.map((item, index) => (
+                            <TouchableOpacity style={styles.phanloai} key={index}>
+                              <Text style={styles.textSale}>{item}</Text>
+                            </TouchableOpacity>
+                          ))
+                        }
+                      </View>
+                      <View>
+                        {
+                          soLuong.map((item, index) => (
+                            <View key={index} style={styles.phanloai1}>
+                              <Text style={styles.textSale}>{item} sản phẩm có sẵn </Text>
+                            </View>
+                          ))
+                        }
+                      </View>
+                    </View>
                   </View>
                   <View style={styles.viewShop}>
                     <Image
                       style={styles.avatar}
-                      source={require('../../../../image/catAvatar.jpg')}
+                      source={{ uri: nhaCungcap["anhDaiDien"] }}
                     />
-                    <View>
-                      <Text style={styles.name}>Do Phu Vu</Text>
+                    <View style={styles.shopinfo}>
+                      <Text style={styles.name}>{nhaCungcap["tenNguoiDung"]}</Text>
                       <View style={styles.viewRow}>
                         <Image
                           style={styles.iconMap}
                           source={require('../../../../image/map.png')}
                         />
-                        <Text style={styles.textMap}>Đà Nẵng</Text>
+                        <Text style={styles.textMap}>{nhaCungcap["diaChi"]}</Text>
                       </View>
                     </View>
                     <TouchableOpacity style={styles.btnViewShop} onPress={() => this.props.navigation.navigate('Shop')}>
