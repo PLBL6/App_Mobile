@@ -1,13 +1,13 @@
 import { Text, TouchableOpacity, View, Image, ScrollView, ToastAndroid } from 'react-native'
 import React, { Component } from 'react'
 
-import styles from './Style'
-import Rating from '../Rating/Rating';
-import { getKichcovMausac_IDmathang, getRatingMathang_IDmathang, getAnhMathang_IDmathang, getMathang_IDmathang } from '../../../../api/mathangs.js'
-import { getSoluongDanhgia } from '../../../../api/danhgias';
-import { getNhacungcap_IDmathang, getRatingAVG_IDnhacungcap } from '../../../../api/nhacungcap';
+import styles from '../InfoProductShop/Style'
+import Rating from '../../../Rating/Rating';
+import { getKichcovMausac_IDmathang, getRatingMathang_IDmathang, getAnhMathang_IDmathang, getMathang_IDmathang } from '../../../../../../api/mathangs.js';
+import { getSoluongDanhgia } from '../../../../../../api/danhgias';
+import { getNhacungcap_IDmathang } from '../../../../../../api/nhacungcap';
 
-export default class InfoProduct extends Component {
+export default class InfoProductShop extends Component {
   constructor(props) {
     super(props);
 
@@ -18,7 +18,6 @@ export default class InfoProduct extends Component {
       ratingTBData: [],
       numberRating: [],
       nhaCungcap: [],
-      avgRatingNCC: [],
       active: 0,
       arrayholder: []
     };
@@ -47,7 +46,6 @@ export default class InfoProduct extends Component {
       this.setState({ numberRating: await getSoluongDanhgia(id) });
       this.setState({ chitietData: await getKichcovMausac_IDmathang(id) });
       this.setState({ nhaCungcap: await getNhacungcap_IDmathang(id) });
-      this.setState({ avgRatingNCC: await getRatingAVG_IDnhacungcap(id) });
     } catch (error) {
       console.log(error);
     } finally {
@@ -60,7 +58,7 @@ export default class InfoProduct extends Component {
   }
 
   render() {
-    const { data, imageData, chitietData, ratingTBData, numberRating, nhaCungcap, isLoading, avgRatingNCC } = this.state;
+    const { data, imageData, chitietData, ratingTBData, numberRating, nhaCungcap, isLoading } = this.state;
 
     var image = []
     imageData.map((item) => (
@@ -111,14 +109,14 @@ export default class InfoProduct extends Component {
 
                 <TouchableOpacity style={styles.btnBack} onPress={() => this.props.navigation.goBack()}>
                   <Image
-                    source={require('../../../../image/arrowLeftv2.png')}
+                    source={require('../../../../../../image/arrowLeftv2.png')}
                     style={styles.iconArrow}
                   />
                 </TouchableOpacity>
 
                 <TouchableOpacity style={styles.btnCart} onPress={() => this.props.navigation.navigate('Cart')}>
                   <Image
-                    source={require('../../../../image/cartv2.png')}
+                    source={require('../../../../../../image/cartv2.png')}
                     style={styles.iconArrow}
                   />
                 </TouchableOpacity>
@@ -146,7 +144,7 @@ export default class InfoProduct extends Component {
                       <Rating rating={ratingTB} />
                       <Image
                         style={styles.iconArrowRating}
-                        source={require('../../../../image/arrowRight.png')}
+                        source={require('../../../../../../image/arrowRight.png')}
                       />
                     </View>
                     <Text style={styles.textSale}>Dựa trên {numberRating} đánh giá</Text>
@@ -186,12 +184,12 @@ export default class InfoProduct extends Component {
                       <View style={styles.viewRow}>
                         <Image
                           style={styles.iconMap}
-                          source={require('../../../../image/map.png')}
+                          source={require('../../../../../../image/map.png')}
                         />
                         <Text style={styles.textMap}>{nhaCungcap["diaChi"]}</Text>
                       </View>
                     </View>
-                    <TouchableOpacity style={styles.btnViewShop} onPress={() => this.props.navigation.navigate('Shop',{shop: nhaCungcap, avg: avgRatingNCC})}>
+                    <TouchableOpacity style={styles.btnViewShop} onPress={() => this.props.navigation.navigate('Shop',{shop: nhaCungcap})}>
                       <Text style={styles.textBtnViewShop}>Xem Shop</Text>
                     </TouchableOpacity>
                   </View>

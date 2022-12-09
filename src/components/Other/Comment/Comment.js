@@ -4,6 +4,7 @@ import React, { Component } from 'react'
 import styles from '../Comment/Style'
 import Rating from '../Rating/Rating';
 import { getDanhgia } from '../../../../api/danhgias';
+import { getKhachhang_IDkhachhang } from '../../../../api/khachhang';
 
 export default class Comment extends Component {
   constructor(props) {

@@ -1,1 +1,1 @@
-export const https = 'https://backend-api-server-endcode.herokuapp.com/api/'
+export const https = 'https://api-shop-dut.herokuapp.com/api/'

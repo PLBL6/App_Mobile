@@ -96,7 +96,7 @@ export default class Home extends Component {
               renderItem={({ item }) => (
                 <TouchableOpacity
                   style={styles.item}
-                  onPress={() => navigation.navigate('InfoProduct', { id: item.id, isBackProduct: false })}
+                  onPress={() => navigation.navigate('InfoProduct', { id: item.id})}
                 >
                   <Image source={{ uri: item.hinhAnh }} style={styles.Image} />
                   <View style={styles.discout}>

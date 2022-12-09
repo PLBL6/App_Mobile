@@ -12,11 +12,20 @@ const Tab = createMaterialTopTabNavigator();
 
 export default class Shop extends Component {
   render() {
+    const nhaCungcap = this.props.route.params.shop
+    const avg = this.props.route.params.avg
+
+    var ratingTB
+    if (avg == null)
+      ratingTB = 0
+    else
+      ratingTB = Math.round(avg * 10) / 10
+
     return (
       <View style={styles.container}>
         <ImageBackground source={{ uri: 'https://genk.mediacdn.vn/k:thumb_w/640/2016/21-20160516-img-6625-1463647934941-1463981877095/bo-anh-nha-sach-tuyet-dep-cho-ban-nam-dai-doc-truyen-tranh-thoai-mai-tai-viet-nam.jpg' }} style={styles.header}>
           <View style={styles.view1}>
-            <TouchableOpacity onPress={() => this.props.navigation.navigate('Home')}>
+            <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
               <Image
                 style={styles.iconArrow}
                 source={require('../../../../image/arrowLeftWhite.png')}
@@ -34,20 +43,20 @@ export default class Shop extends Component {
           <View style={styles.viewShop}>
             <Image
               style={styles.avatar}
-              source={require('../../../../image/catAvatar.jpg')}
+              source={{ uri: nhaCungcap["anhDaiDien"] }}
             />
             <View style={styles.Info}>
-              <Text style={styles.name}>Do Phu Vu</Text>
+              <Text style={styles.name}>{nhaCungcap["tenNguoiDung"]}</Text>
               <View style={styles.viewRow}>
                 <Image
                   style={styles.iconMap}
                   source={require('../../../../image/mapWhite.png')}
                 />
-                <Text style={styles.textMap}>Đà Nẵng</Text>
+                <Text style={styles.textMap}>{nhaCungcap["diaChi"]}</Text>
               </View>
               <View style={styles.viewRow}>
                 <Image source={require('../../../../image/ic_star_fill.png')} style={styles.iconStar}/>
-                <Text style={styles.textMap}>5.0/5.0 </Text>
+                <Text style={styles.textMap}>{ratingTB}    </Text>
                 <Text numberOfLines={1} style={styles.textAll}>17,9k Người theo dõi </Text>
               </View>
             </View>
@@ -73,11 +82,13 @@ export default class Shop extends Component {
             <Tab.Screen
               name="Product"
               component={Product}
+              initialParams={{ idNhacungcap: nhaCungcap["id"] }}
               options={{ tabBarLabel: 'Sản phẩm' }}
             />
             <Tab.Screen
               name="Category"
               component={Category}
+              initialParams={{ idNhacungcap: nhaCungcap["id"] }}
               options={{ tabBarLabel: 'Danh mục hàng' }}
             />
           </Tab.Navigator>

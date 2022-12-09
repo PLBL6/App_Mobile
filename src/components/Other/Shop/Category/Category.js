@@ -2,8 +2,32 @@ import { Text, View, Image, TouchableOpacity, ScrollView } from 'react-native'
 import React, { Component } from 'react'
 
 import styles from './Style'
+import { getDanhmuc_IDnhacungcap } from '../../../../../api/nhacungcap';
 
 export default class Category extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      data: [],
+      isLoading: true
+    };
+  }
+
+  async getProducts() {
+    try {
+      this.setState({ data: await getDanhmuc_IDnhacungcap(this.props.route.params.idNhacungcap) });
+    } catch (error) {
+      console.log(error);
+    } finally {
+      this.setState({ isLoading: false });
+    }
+  }
+
+  componentDidMount() {
+    this.getProducts();
+  }
+
   category = [
     { image: 'https://www.bachcoffee.com/Resources/BachCoffee/Files/San-pham/Ca%20Phe%20Hat%20Moc%201.jpg', title: 'Cà Phê Phin Giấy', number: 6 },
     { image: 'http://sieuthitratuiloc.com/wp-content/uploads/2019/12/tra-sen-tui-loc-hop-thiec-1.jpg', title: 'Trà Túi Thiết', number: 10 },

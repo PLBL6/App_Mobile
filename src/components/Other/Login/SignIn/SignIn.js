@@ -4,6 +4,51 @@ import React, { Component } from 'react'
 import styles from './Style'
 
 export default class SignIn extends Component {
+    constructor(props) {
+        super(props); 
+    
+        this.state = {
+          username: '',
+          password: ''
+        };
+      }
+
+      setUsername(text) {
+        this.setState({username: text})
+      }
+
+      setPassword(text) {
+        this.setState({password: text})
+      }
+    
+      async checkLoginKhachHang() {
+        try {
+            await fetch ("https://backend-api-server-endcode.herokuapp.com/api/check-login-khachhang?matKhau&tenNguoiDung", 
+            {
+                method: "POST",
+                body: JSON.stringify({
+                    tenNguoiDung: this.state.username,
+                    matKhau: this.state.password
+               }), 
+           })
+             .then((response) => response.json())
+             .then((result) => {
+            //    if(result.message === "Missing inputs parameter!"){
+            //      alert("Thiếu tham số đầu vào !!!!");
+            //     } 
+            //     else if(result.message === "Ten nguoi dung isnt exist in your system"){
+            //         alert("Tên người dùng không tồn tại !!!!");
+            //        } 
+            //     else {
+            //         alert("Đăng nhập thành công ròi !!!");
+            //     }
+            alert(result.message);
+             });
+          } catch (error) {
+            console.log(error);
+          } 
+      }
+
     render() {
         const navigation = this.props.navigation
 
@@ -35,7 +80,7 @@ export default class SignIn extends Component {
                     <View style={styles.Item2}>
                         <Text style={styles.textAll}>User Name*</Text>
                         <View style={styles.infoLogin}>
-                            <TextInput style={styles.textInput} />
+                            <TextInput style={styles.textInput} onChangeText={text => this.setUsername(text)}/>
                             <Image
                                 source={require('../../../../../image/mail.png')}
                             />
@@ -44,7 +89,7 @@ export default class SignIn extends Component {
                     <View style={styles.Item3}>
                         <Text style={styles.textAll}>Password*</Text>
                         <View style={styles.infoLogin}>
-                            <TextInput secureTextEntry={true} style={styles.textInput} />
+                            <TextInput secureTextEntry={true} style={styles.textInput} onChangeText={text => this.setPassword(text)}/>
                             <Image
                                 source={require('../../../../../image/hide.png')}
                             />
@@ -55,7 +100,7 @@ export default class SignIn extends Component {
                             <Text style={styles.textAll}>Forgot your Password?</Text>
                         </TouchableOpacity>
                     </View>
-                    <TouchableOpacity style={styles.Item5}>
+                    <TouchableOpacity style={styles.Item5} onPress={() => this.checkLoginKhachHang()}>
                         <View style={styles.brLogin}>
                             <Text style={styles.login}>Login</Text>
                         </View>

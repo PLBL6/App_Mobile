@@ -2,6 +2,7 @@ import { ActivityIndicator, FlatList, Text, View, Image, TouchableOpacity } from
 import React, { Component } from 'react'
 
 import styles from './Style'
+import { getMathang_IDnhacungcap } from '../../../../../api/nhacungcap';
 
 export default class Product extends Component {
     constructor(props) {
@@ -9,18 +10,13 @@ export default class Product extends Component {
 
         this.state = {
             data: [],
-            dataTemp: [],
-            isLoading: true,
-            text: '',
-            arrayholder: []
+            isLoading: true
         };
     }
 
     async getProducts() {
         try {
-            const response = await fetch('https://dummyjson.com/products');
-            const json = await response.json();
-            this.setState({ data: json.products });
+            this.setState({ data: await getMathang_IDnhacungcap(this.props.route.params.idNhacungcap) });
         } catch (error) {
             console.log(error);
         } finally {
@@ -30,10 +26,10 @@ export default class Product extends Component {
 
     componentDidMount() {
         this.getProducts();
-      }
+    }
 
     render() {
-        const { data, isLoading} = this.state;
+        const { data, isLoading } = this.state;
         const navigation = this.props.navigation
 
         return (
@@ -47,18 +43,18 @@ export default class Product extends Component {
                             renderItem={({ item }) => (
                                 <TouchableOpacity
                                     style={styles.item}
-                                    onPress={() => navigation.navigate('InfoProduct', { data: data, id: item.id, isBackProduct: true })}
+                                    onPress={() => navigation.navigate('InfoProductShop', { id: item.id})}
                                 >
-                                    <Image source={{ uri: item.thumbnail }} style={styles.Image} />
+                                    <Image source={{ uri: item.hinhAnh }} style={styles.Image} />
                                     <View style={styles.discout}>
-                                        <Text style={styles.textDiscount}>41%</Text>
+                                        <Text style={styles.textDiscount}>{item.khuyenMai}%</Text>
                                         <Text style={styles.textGIAM}>GIẢM</Text>
                                     </View>
                                     <View style={styles.info}>
-                                        <Text numberOfLines={1} style={styles.textName}>{item.title}</Text>
+                                        <Text numberOfLines={1} style={styles.textName}>{item.tenMatHang}</Text>
                                         <View style={styles.info1}>
-                                            <Text style={styles.textPrice}>${item.price}</Text>
-                                            <Text style={styles.textAvailable}>Đã bán {item.stock}</Text>
+                                            <Text style={styles.textPrice}>{item.gia}đ</Text>
+                                            <Text style={styles.textAvailable}>Đã bán {item.id}</Text>
                                         </View>
                                     </View>
                                 </TouchableOpacity>
