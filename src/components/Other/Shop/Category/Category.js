@@ -1,8 +1,9 @@
-import { Text, View, Image, TouchableOpacity, ScrollView } from 'react-native'
+import { Text, View, Image, TouchableOpacity, FlatList, ActivityIndicator } from 'react-native'
 import React, { Component } from 'react'
 
 import styles from './Style'
 import { getDanhmuc_IDnhacungcap } from '../../../../../api/nhacungcap';
+import ImageCategory from '../../../ListImage/ImageCategory';
 
 export default class Category extends Component {
   constructor(props) {
@@ -10,13 +11,15 @@ export default class Category extends Component {
 
     this.state = {
       data: [],
-      isLoading: true
+      isLoading: true,
+      imageCategory: []
     };
   }
 
-  async getProducts() {
+  async getCategory() {
     try {
       this.setState({ data: await getDanhmuc_IDnhacungcap(this.props.route.params.idNhacungcap) });
+      this.setState({ imageCategory: ImageCategory() })
     } catch (error) {
       console.log(error);
     } finally {
@@ -25,41 +28,41 @@ export default class Category extends Component {
   }
 
   componentDidMount() {
-    this.getProducts();
+    this.getCategory();
   }
 
-  category = [
-    { image: 'https://www.bachcoffee.com/Resources/BachCoffee/Files/San-pham/Ca%20Phe%20Hat%20Moc%201.jpg', title: 'Cà Phê Phin Giấy', number: 6 },
-    { image: 'http://sieuthitratuiloc.com/wp-content/uploads/2019/12/tra-sen-tui-loc-hop-thiec-1.jpg', title: 'Trà Túi Thiết', number: 10 },
-    { image: 'https://salt.tikicdn.com/ts/tmp/53/cc/05/7fc7748f149ea79e22b25412f81fa7ca.png', title: 'Bột Matcha Trà xanh', number: 30 }
-  ]
-
   render() {
+    const { data, isLoading, imageCategory } = this.state;
+    console.log(data)
+
     return (
       <View style={styles.container}>
-        <ScrollView>
-          {
-            this.category.map((item, index) => (
-              <TouchableOpacity key={index} style={styles.item}>
+        {isLoading ? <ActivityIndicator /> : (
+          <FlatList
+            data={data}
+            keyExtractor={({ id }, index) => id}
+            renderItem={({ item }) => (
+              <TouchableOpacity style={styles.item}>
                 <View style={styles.item1}>
-                  <Image source={{ uri: item.image }} style={styles.image} />
+                  <Image source={imageCategory[item.id - 1]} style={styles.image} />
                   <View style={styles.info}>
-                    <Text style={styles.textName}>{item.title}</Text>
-                    <Text style={styles.textNumber}>{item.number} sản phẩm</Text>
+                    <Text style={styles.textName}>{item.tenDanhMuc}</Text>
+                    <Text style={styles.textNumber}>10 sản phẩm</Text>
                   </View>
                 </View>
                 <Image source={require('../../../../../image/arrowRightBlack.png')} style={styles.iconArrow} />
               </TouchableOpacity>
-            ))
-          }
-          <TouchableOpacity style={styles.item}>
-            <View style={styles.infoTotal}>
-              <Text style={styles.textName}>Sản phẩm</Text>
-              <Text style={styles.textNumber}>1103 sản phẩm</Text>
-            </View>
-            <Image source={require('../../../../../image/arrowRightBlack.png')} style={styles.iconArrow} />
-          </TouchableOpacity>
-        </ScrollView>
+            )}
+          />
+        )}
+
+        <TouchableOpacity style={styles.item}>
+          <View style={styles.infoTotal}>
+            <Text style={styles.textName}>Sản phẩm</Text>
+            <Text style={styles.textNumber}>1103 sản phẩm</Text>
+          </View>
+          <Image source={require('../../../../../image/arrowRightBlack.png')} style={styles.iconArrow} />
+        </TouchableOpacity>
       </View>
     )
   }

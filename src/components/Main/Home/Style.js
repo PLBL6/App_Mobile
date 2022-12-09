@@ -52,14 +52,19 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: 'center'
     },
-    ImageCategory: {
-        height: 60,
-        width: 60,
+    viewImageCategory: {
+        backgroundColor: colors.white,
         marginBottom: 5,
+        padding: 5,
         borderRadius: 10
+    },
+    ImageCategory: {
+        height: 50,
+        width: 50
     },
     textCategory: {
         fontSize: 15,
+        fontWeight: "500",
         color: colors.white
     },
     containerv2: {

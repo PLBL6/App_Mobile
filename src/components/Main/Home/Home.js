@@ -5,6 +5,7 @@ import CardAndChat from "../CartAndChat/CartAndChat.js"
 import styles from './Style.js'
 import { getMathang, getMathang_Danhmuc, getMathang_Tenmathang } from '../../../../api/mathangs.js'
 import { getDanhmuc } from '../../../../api/danhmucs.js'
+import ImageCategory from '../../ListImage/ImageCategory.js'
 
 export default class Home extends Component {
   constructor(props) {
@@ -15,15 +16,17 @@ export default class Home extends Component {
       dataTemp: [],
       isLoading: true,
       text: '',
-      arrayholder: []
+      arrayholder: [],
+      imageCategory: [],
     };
   }
 
   async getProducts() {
     try {
-      this.setState({ data: await getMathang() });
+      this.setState({ imageCategory: ImageCategory() })
+      this.setState({ data: await getMathang() })
       this.arrayholder = await getMathang()
-      this.setState({ dataTemp: await getDanhmuc()});
+      this.setState({ dataTemp: await getDanhmuc() })
     } catch (error) {
       console.log(error);
     } finally {
@@ -53,7 +56,7 @@ export default class Home extends Component {
   }
 
   render() {
-    const { data, isLoading, dataTemp } = this.state;
+    const { data, isLoading, dataTemp, imageCategory } = this.state;
     const navigation = this.props.navigation
 
     return (
@@ -80,7 +83,9 @@ export default class Home extends Component {
               horizontal={true}
               renderItem={({ item }) => (
                 <TouchableOpacity style={styles.categori} onPress={() => this.filterCategory(item.id)}>
-                  <Image source={require('../../../../image/search.png')} style={styles.ImageCategory}/>
+                  <View style={styles.viewImageCategory}>
+                    <Image source={imageCategory[item.id - 1]} style={styles.ImageCategory} />
+                  </View>
                   <Text style={styles.textCategory}>{item.tenDanhMuc}</Text>
                 </TouchableOpacity>
               )}
@@ -96,7 +101,7 @@ export default class Home extends Component {
               renderItem={({ item }) => (
                 <TouchableOpacity
                   style={styles.item}
-                  onPress={() => navigation.navigate('InfoProduct', { id: item.id})}
+                  onPress={() => navigation.navigate('InfoProduct', { id: item.id })}
                 >
                   <Image source={{ uri: item.hinhAnh }} style={styles.Image} />
                   <View style={styles.discout}>
