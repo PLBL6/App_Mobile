@@ -9,7 +9,8 @@ const styles = StyleSheet.create({
     header: {
         flex: 1,
         backgroundColor: colors.white,
-        flexDirection: 'row'
+        flexDirection: 'row',
+        marginBottom: 5
     },
     iconArrow: {
         height: 20,
@@ -29,7 +30,6 @@ const styles = StyleSheet.create({
     view2: {
         backgroundColor: colors.white,
         flexDirection: 'row',
-        marginVertical: 4,
         paddingTop: 15,
         paddingBottom: 10,
         height: 190
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
         marginRight: 20
     },
     textName: {
-        fontSize: 17,
+        fontSize: 20,
         marginBottom: 5
     },
     textPrice: {
@@ -52,6 +52,11 @@ const styles = StyleSheet.create({
         marginBottom: 15,
         color: colors.dark,
         marginLeft: 5
+    },
+    textName2: {
+        fontSize: 20,
+        marginRight: '9%',
+        fontWeight: "500"
     },
     viewCategory: {
         backgroundColor: colors.whiteDarkLight,
@@ -66,8 +71,8 @@ const styles = StyleSheet.create({
         marginLeft: 5
     },
     viewNumber: {
-        height: '47%',
-        width: '15%',
+        height: '50%',
+        width: '17%',
         justifyContent: 'center',
         alignItems: 'center',
         borderTopWidth: 1,
@@ -75,12 +80,22 @@ const styles = StyleSheet.create({
         borderColor: colors.whiteDark
     },
     viewMath: {
-        height: '47%',
-        width: '15%',
+        height: '50%',
+        width: '17%',
         justifyContent: 'center',
         alignItems: 'center',
         borderWidth: 1,
         borderColor: colors.whiteDark
+    },
+    viewTotalOne: {
+        flexDirection: 'row',
+        paddingLeft: '4%',
+        paddingVertical: 10,
+        backgroundColor: colors.white,
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
+        marginBottom: 10,
+        borderTopWidth: 0.5
     },
     viewBuy: {
         flex: 1,

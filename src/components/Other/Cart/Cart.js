@@ -1,10 +1,65 @@
-import { Text, View, TouchableOpacity, Image, ScrollView } from 'react-native'
+import { Text, View, TouchableOpacity, Image, FlatList } from 'react-native'
 import React, { Component } from 'react'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import styles from './Style.js'
 
 export default class Cart extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      dataCart: []
+    };
+  }
+
+  setSoLuong(i, action) {
+    const dataTemp = this.state.dataCart
+    let number = dataTemp[i].number;
+    let totalPrice = dataTemp[i].totalPrice
+    let price = dataTemp[i].product["gia"]
+
+    if (action) {
+      number = number + 1
+      dataTemp[i].number = number
+      dataTemp[i].totalPrice = totalPrice + price
+      this.setState({ dataCart: dataTemp })
+    }
+    else if (action == false && number >= 2) {
+      number = number - 1
+      dataTemp[i].number = number
+      dataTemp[i].totalPrice = totalPrice - price
+      this.setState({ dataCart: dataTemp })
+    }
+    else if (action == false && number == 1) {
+      dataTemp.splice(i, 1)
+      this.setState({ dataCart: dataTemp })
+    }
+
+    AsyncStorage.removeItem('cart');
+    AsyncStorage.setItem('cart', JSON.stringify(dataTemp));
+  }
+
+  componentDidMount() {
+    AsyncStorage.getItem('cart').then((cart) => {
+      if (cart !== null) {
+        const cartData = JSON.parse(cart)
+        this.setState({ dataCart: cartData })
+      }
+    })
+      .catch((err) => {
+        alert(err)
+      })
+  }
+
   render() {
+    const { dataCart } = this.state;
+
+    var TotalPriceAll = 0
+    for (var i = 0; i < dataCart.length; i++) {
+      TotalPriceAll = TotalPriceAll + dataCart[i].totalPrice
+    }
+
     return (
       <View style={styles.container}>
         <TouchableOpacity onPress={() => this.props.navigation.goBack()} style={styles.header}>
@@ -15,32 +70,41 @@ export default class Cart extends Component {
           <Text style={styles.textTitle}>Giỏ Hàng</Text>
         </TouchableOpacity>
         <View style={styles.info}>
-          <ScrollView>
-            <View style={styles.view2}>
-              <Image
-                style={styles.avatar}
-                source={{ uri: 'https://product.hstatic.net/200000343865/product/18_37_a48342740086452297644c49f6aa3bb6.jpg' }}
-              />
-              <View style={styles.viewInfo}>
-                <Text numberOfLines={1} style={styles.textName}>Truyện tranh shin cậu bé bút chì - đặt biệt - Lẻ -8-12 _NXB Kim Đồng</Text>
-                <View style={styles.viewCategory}>
-                  <Text>Phân loại: Tập 8 </Text>
-                </View>
-                <Text style={styles.textPrice}>đ19.000</Text>
-                <View style={styles.viewOption}>
-                  <TouchableOpacity style={styles.viewMath}>
-                    <Text style={styles.textName}>-</Text>
-                  </TouchableOpacity>
-                  <View style={styles.viewNumber}>
-                    <Text style={styles.textName}>0</Text>
+          <FlatList
+            data={dataCart}
+            renderItem={({ item, index }) => (
+              <View key={item.id}>
+                <View style={styles.view2}>
+                  <Image
+                    style={styles.avatar}
+                    source={{ uri: item.product["hinhAnh"] }}
+                  />
+                  <View style={styles.viewInfo}>
+                    <Text numberOfLines={1} style={styles.textName}>{item.product["tenMatHang"]}</Text>
+                    <View style={styles.viewCategory}>
+                      <Text>{item.detail} </Text>
+                    </View>
+                    <Text style={styles.textPrice}>đ{item.product["gia"]}</Text>
+                    <View style={styles.viewOption}>
+                      <TouchableOpacity style={styles.viewMath} onPress={() => this.setSoLuong(index, false)}>
+                        <Text style={styles.textName}>-</Text>
+                      </TouchableOpacity>
+                      <View style={styles.viewNumber}>
+                        <Text style={styles.textName}>{item.number}</Text>
+                      </View>
+                      <TouchableOpacity style={styles.viewMath} onPress={() => this.setSoLuong(index, true)}>
+                        <Text style={styles.textName}>+</Text>
+                      </TouchableOpacity>
+                    </View>
                   </View>
-                  <TouchableOpacity style={styles.viewMath}>
-                    <Text style={styles.textName}>+</Text>
-                  </TouchableOpacity>
+                </View>
+                <View style={styles.viewTotalOne}>
+                  <Text style={styles.textName2}>Tổng tiền:</Text>
+                  <Text style={styles.textPrice2}>đ{item.totalPrice}</Text>
                 </View>
               </View>
-            </View>
-          </ScrollView>
+            )}
+          />
         </View>
         <View style={styles.viewBuy}>
           <TouchableOpacity style={styles.viewBuyInfo}>
@@ -49,7 +113,7 @@ export default class Cart extends Component {
               <Text style={styles.textName}>Tiết kiệm:</Text>
             </View>
             <View>
-              <Text style={styles.textPrice2}>đ50.000</Text>
+              <Text style={styles.textPrice2}>đ{TotalPriceAll}</Text>
               <Text style={styles.textPrice2}>đ5.000</Text>
             </View>
           </TouchableOpacity>

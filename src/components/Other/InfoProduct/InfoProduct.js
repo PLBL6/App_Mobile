@@ -1,11 +1,14 @@
 import { Text, TouchableOpacity, View, Image, ScrollView, ToastAndroid } from 'react-native'
 import React, { Component } from 'react'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import styles from './Style'
 import Rating from '../Rating/Rating';
-import { getKichcovMausac_IDmathang, getRatingMathang_IDmathang, getAnhMathang_IDmathang, getMathang_IDmathang } from '../../../../api/mathangs.js'
+import { getChitiet_IDmathang, getRatingMathang_IDmathang, getAnhMathang_IDmathang, getMathang_IDmathang } from '../../../../api/mathangs.js'
 import { getSoluongDanhgia } from '../../../../api/danhgias';
 import { getNhacungcap_IDmathang, getRatingAVG_IDnhacungcap } from '../../../../api/nhacungcap';
+import ArrayMausac from '../../ListImage/ArrayMausac'
+import ArrayKichco from '../../ListImage/ArrayKichco';
 
 export default class InfoProduct extends Component {
   constructor(props) {
@@ -20,7 +23,11 @@ export default class InfoProduct extends Component {
       nhaCungcap: [],
       avgRatingNCC: [],
       active: 0,
-      arrayholder: []
+      arrayholder: [],
+      mausac: [],
+      kichco: [],
+      valueSelect: 0,
+      detail: ''
     };
   }
 
@@ -31,21 +38,50 @@ export default class InfoProduct extends Component {
     }
   }
 
-  Messge() {
-    ToastAndroid.show(
-      'Đã thêm vào giỏ',
-      ToastAndroid.SHORT
-    )
+  onClickAddCart(data, id, detail) {
+    const itemcart = {
+      product: data,
+      number: 1,
+      totalPrice: data["gia"],
+      idDetail: id,
+      detail: detail
+    }
+
+    AsyncStorage.getItem('cart').then((datacart) => {
+      if (datacart !== null) {
+        const cart = JSON.parse(datacart)
+        cart.push(itemcart)
+        AsyncStorage.setItem('cart', JSON.stringify(cart));
+      }
+      else {
+        const cart = []
+        cart.push(itemcart)
+        AsyncStorage.setItem('cart', JSON.stringify(cart));
+      }
+      alert("Đã thêm vào giỏ hàng !")
+    })
+      .catch((err) => {
+        alert(err)
+      })
   }
+
+  selectHandler(value) {
+    this.setState({ valueSelect: value.id });
+    const detail = ArrayMausac()[value.maMS - 1] + ' - Size:' + ArrayKichco()[value.maKC - 1];
+    this.setState({ detail: detail });
+  };
 
   async getProducts() {
     try {
+      this.setState({ mausac: ArrayMausac() });
+      this.setState({ kichco: ArrayKichco() });
+
       const id = this.props.route.params.id
       this.setState({ data: await getMathang_IDmathang(id) });
       this.setState({ imageData: await getAnhMathang_IDmathang(id) });
       this.setState({ ratingTBData: await getRatingMathang_IDmathang(id) });
       this.setState({ numberRating: await getSoluongDanhgia(id) });
-      this.setState({ chitietData: await getKichcovMausac_IDmathang(id) });
+      this.setState({ chitietData: await getChitiet_IDmathang(id) });
       this.setState({ nhaCungcap: await getNhacungcap_IDmathang(id) });
       this.setState({ avgRatingNCC: await getRatingAVG_IDnhacungcap(id) });
     } catch (error) {
@@ -60,7 +96,7 @@ export default class InfoProduct extends Component {
   }
 
   render() {
-    const { data, imageData, chitietData, ratingTBData, numberRating, nhaCungcap, isLoading, avgRatingNCC } = this.state;
+    const { data, imageData, chitietData, ratingTBData, numberRating, nhaCungcap, isLoading, avgRatingNCC, mausac, kichco, valueSelect, detail } = this.state;
 
     var image = []
     imageData.map((item) => (
@@ -77,13 +113,6 @@ export default class InfoProduct extends Component {
       ratingTB = 0
     else
       ratingTB = Math.round(ratingTBData * 10) / 10
-
-    var loaiHang = []
-    var soLuong = []
-    for (var i = 0; i < chitietData.length; i = i + 3) {
-      loaiHang.push("Màu: " + chitietData[i] + " - Size: " + chitietData[i + 1])
-      soLuong.push(chitietData[i + 2])
-    }
 
     return (
       <View style={styles.container}>
@@ -158,18 +187,23 @@ export default class InfoProduct extends Component {
                     <View style={styles.viewPhanloai}>
                       <View>
                         {
-                          loaiHang.map((item, index) => (
-                            <TouchableOpacity style={styles.phanloai} key={index}>
-                              <Text style={styles.textSale}>{item}</Text>
+                          chitietData.map((item, index) => (
+                            <TouchableOpacity
+                              style={
+                                item.id === valueSelect ? styles.selected : styles.unselected
+                              }
+                              key={index}
+                              onPress={() => this.selectHandler(item)}>
+                              <Text style={item.id === valueSelect ? styles.textSaleSelected : styles.textSale}>{mausac[item.maMS - 1]} - Size: {kichco[item.maKC - 1]}</Text>
                             </TouchableOpacity>
                           ))
                         }
                       </View>
                       <View>
                         {
-                          soLuong.map((item, index) => (
+                          chitietData.map((item, index) => (
                             <View key={index} style={styles.phanloai1}>
-                              <Text style={styles.textSale}>{item} sản phẩm có sẵn </Text>
+                              <Text style={styles.textSale}>{item.soLuong} sản phẩm có sẵn </Text>
                             </View>
                           ))
                         }
@@ -191,7 +225,7 @@ export default class InfoProduct extends Component {
                         <Text style={styles.textMap}>{nhaCungcap["diaChi"]}</Text>
                       </View>
                     </View>
-                    <TouchableOpacity style={styles.btnViewShop} onPress={() => this.props.navigation.navigate('Shop',{shop: nhaCungcap, avg: avgRatingNCC})}>
+                    <TouchableOpacity style={styles.btnViewShop} onPress={() => this.props.navigation.navigate('Shop', { shop: nhaCungcap, avg: avgRatingNCC })}>
                       <Text style={styles.textBtnViewShop}>Xem Shop</Text>
                     </TouchableOpacity>
                   </View>
@@ -209,7 +243,7 @@ export default class InfoProduct extends Component {
           )}
         </View>
         <View style={styles.container2}>
-          <TouchableOpacity style={styles.btnSubmit} onPress={this.Messge}>
+          <TouchableOpacity style={styles.btnSubmit} onPress={() => this.onClickAddCart(data, valueSelect, detail)}>
             <Text style={styles.textBtn}>ADD TO BAG</Text>
           </TouchableOpacity>
         </View>

@@ -67,6 +67,10 @@ const styles = StyleSheet.create({
         fontSize: 15,
         color: colors.whiteDarkv2
     },
+    textSaleSelected: {
+        fontSize: 15,
+        color: colors.dark
+    },
     textRating: {
         fontSize: 20,
         fontWeight: 'bold',
@@ -207,9 +211,17 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         marginTop: 10
     },
-    phanloai: {
+    selected: {
         padding: 5,
         margin: 5,
+        borderWidth: 1,
+        borderRadius: 5,
+        borderColor: colors.dark
+    },
+    unselected: {
+        padding: 5,
+        margin: 5,
+        borderRadius: 5,
         borderWidth: 1
     },
     phanloai1: {
