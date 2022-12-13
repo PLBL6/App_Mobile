@@ -38,31 +38,53 @@ export default class InfoProduct extends Component {
     }
   }
 
-  onClickAddCart(data, id, detail) {
-    const itemcart = {
-      product: data,
-      number: 1,
-      totalPrice: data["gia"],
-      idDetail: id,
-      detail: detail
+  onClickAddCart(data, id, detail, cost) {
+    if (detail !== '') {
+      const itemcart = {
+        product: data,
+        number: 1,
+        totalPrice: data["gia"],
+        idDetail: id,
+        detail: detail,
+        cost: cost
+      }
+
+      AsyncStorage.getItem('cart').then((datacart) => {
+        if (datacart !== null) {
+          const cart = JSON.parse(datacart)
+          var foundIndex = cart.findIndex(function (item) {
+            return item.idDetail == id;
+          });
+
+          if (foundIndex !== -1) {
+            let number = cart[foundIndex].number
+            let totalPrice = cart[foundIndex].totalPrice
+            let price = cart[foundIndex].product["gia"]
+
+            cart[foundIndex].number = number + 1
+            cart[foundIndex].totalPrice = totalPrice + price
+            AsyncStorage.setItem('cart', JSON.stringify(cart))
+          }
+          else {
+            cart.push(itemcart)
+            AsyncStorage.setItem('cart', JSON.stringify(cart))
+          }
+        }
+        else {
+          const cart = []
+          cart.push(itemcart)
+          AsyncStorage.setItem('cart', JSON.stringify(cart))
+        }
+        alert("Đã thêm vào giỏ hàng !")
+      })
+        .catch((err) => {
+          alert(err)
+        })
+    }
+    else {
+      alert("Vui lòng chọn loại hàng !")
     }
 
-    AsyncStorage.getItem('cart').then((datacart) => {
-      if (datacart !== null) {
-        const cart = JSON.parse(datacart)
-        cart.push(itemcart)
-        AsyncStorage.setItem('cart', JSON.stringify(cart));
-      }
-      else {
-        const cart = []
-        cart.push(itemcart)
-        AsyncStorage.setItem('cart', JSON.stringify(cart));
-      }
-      alert("Đã thêm vào giỏ hàng !")
-    })
-      .catch((err) => {
-        alert(err)
-      })
   }
 
   selectHandler(value) {
@@ -97,6 +119,8 @@ export default class InfoProduct extends Component {
 
   render() {
     const { data, imageData, chitietData, ratingTBData, numberRating, nhaCungcap, isLoading, avgRatingNCC, mausac, kichco, valueSelect, detail } = this.state;
+
+    var priceNotDiscount = data["gia"] + data["gia"] * (data["khuyenMai"] / 100)
 
     var image = []
     imageData.map((item) => (
@@ -243,7 +267,7 @@ export default class InfoProduct extends Component {
           )}
         </View>
         <View style={styles.container2}>
-          <TouchableOpacity style={styles.btnSubmit} onPress={() => this.onClickAddCart(data, valueSelect, detail)}>
+          <TouchableOpacity style={styles.btnSubmit} onPress={() => this.onClickAddCart(data, valueSelect, detail, priceNotDiscount)}>
             <Text style={styles.textBtn}>ADD TO BAG</Text>
           </TouchableOpacity>
         </View>

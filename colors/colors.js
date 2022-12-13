@@ -1,7 +1,9 @@
 export default {
     main: '#282A36',
     orangeLigth: '#FD6132',
+    mainHome: '#EB3251',
     dark: '#FF0000',
+    darkPrice: '#929292',
     orange: '#F6422D',
     white: '#FFF',
     yellowLight: '#FFD839',

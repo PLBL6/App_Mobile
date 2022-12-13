@@ -33,7 +33,6 @@ export default class Category extends Component {
 
   render() {
     const { data, isLoading, imageCategory } = this.state;
-    console.log(data)
 
     return (
       <View style={styles.container}>

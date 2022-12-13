@@ -25,14 +25,15 @@ const styles = StyleSheet.create({
     },
     info: {
         flex: 6,
-        backgroundColor: colors.whiteDarkLight
+        height: '100%',
+        width: '100%'
     },
     view2: {
         backgroundColor: colors.white,
         flexDirection: 'row',
         paddingTop: 15,
         paddingBottom: 10,
-        height: 190
+        height: 200
     },
     viewInfo: {
         width: '65%'
@@ -41,17 +42,26 @@ const styles = StyleSheet.create({
         height: 120,
         width: 100,
         marginLeft: 10,
-        marginRight: 20
+        marginRight: 15
     },
     textName: {
         fontSize: 20,
         marginBottom: 5
     },
+    viewPrice: {
+        flexDirection: 'row',
+        paddingBottom: 20
+    },
     textPrice: {
         fontSize: 20,
-        marginBottom: 15,
         color: colors.dark,
-        marginLeft: 5
+        marginLeft: 10,
+        fontWeight: "500"
+    },
+    textPriceDiscount: {
+        fontSize: 20,
+        color: colors.darkPrice,
+        textDecorationLine: 'line-through',
     },
     textName2: {
         fontSize: 20,
@@ -98,11 +108,11 @@ const styles = StyleSheet.create({
         borderTopWidth: 0.5
     },
     viewBuy: {
-        flex: 1,
+        flex: 0.7,
         flexDirection: 'row',
         backgroundColor: colors.whiteDarkv3,
-        borderTopWidth: 3,
-        borderColor: colors.whiteDark
+        borderTopWidth: 1,
+        borderColor: colors.mainHome
     },
     viewBuyInfo: {
         flex: 2,
@@ -113,13 +123,14 @@ const styles = StyleSheet.create({
     },
     btnBuy: {
         flex: 1,
-        backgroundColor:colors.orangeLigth,
+        backgroundColor: colors.mainHome,
         justifyContent: 'center',
         alignItems: 'center',
     },
     textPrice2: {
-        fontSize: 19,
+        fontSize: 22,
         color: colors.dark,
+        fontWeight: "bold"
     },
     textBtnBuy: {
         fontSize: 18,
@@ -132,7 +143,22 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: 100,
         height: 80,
-      },
+    },
+    textTotalLast: {
+        fontSize: 16,
+        color: colors.whiteDark,
+        marginBottom: 3
+    },
+    textsavePrice: {
+        fontSize: 17,
+        color: colors.dark,
+        fontWeight: "400"
+    },
+    viewTitle: {
+        alignItems: 'flex-end',
+        justifyContent: 'center',
+        paddingTop: 8
+    }
 })
 
 export default styles

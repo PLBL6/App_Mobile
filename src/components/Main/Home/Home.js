@@ -110,6 +110,7 @@ export default class Home extends Component {
                   </View>
                   <View style={styles.info}>
                     <Text numberOfLines={1} style={styles.textName}>{item.tenMatHang}</Text>
+                    <Text style={styles.textPriceDiscount}>đ{item.gia + item.gia * (item.khuyenMai / 100)}</Text>
                     <View style={styles.info1}>
                       <Text style={styles.textPrice}>đ{item.gia}</Text>
                       <Text style={styles.textAvailable}>Đã bán 0</Text>

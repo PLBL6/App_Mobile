@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
         paddingTop: '3%',
         flexDirection: 'row',
         flex: 0.7,
-        backgroundColor: colors.orangeLigth,
+        backgroundColor: colors.mainHome,
         paddingBottom: 10
     },
     SectionStyle: {
@@ -43,10 +43,10 @@ const styles = StyleSheet.create({
     },
     containerv1: {
         flex: 1.15,
-        backgroundColor: colors.productBackgrond
+        backgroundColor: colors.mainHome
     },
     categori: {
-        backgroundColor: colors.orangeLigth,
+        backgroundColor: colors.mainHome,
         width: 100,
         height: 100,
         justifyContent: "center",
@@ -75,7 +75,8 @@ const styles = StyleSheet.create({
     item: {
         borderRadius: 5,
         width: '50%',
-        height: 280,
+        height: 330,
+        paddingBottom: 10,
         margin: 2,
         backgroundColor: colors.white
     },
@@ -101,7 +102,6 @@ const styles = StyleSheet.create({
     },
     info1: {
         flexDirection: 'row',
-        marginTop: 5,
         justifyContent: 'space-between',
         alignItems: 'center'
     },
@@ -114,6 +114,12 @@ const styles = StyleSheet.create({
     textPrice: {
         fontSize: 20,
         color: colors.orange
+    },
+    textPriceDiscount: {
+        fontSize: 15,
+        color: colors.darkPrice,
+        textDecorationLine: 'line-through',
+        marginTop: 3
     },
     textDiscount: {
         fontSize: 15,

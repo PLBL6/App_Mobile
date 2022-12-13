@@ -1,4 +1,4 @@
-import { Text, View, TouchableOpacity, Image, FlatList } from 'react-native'
+import { Text, View, TouchableOpacity, Image, FlatList, ImageBackground } from 'react-native'
 import React, { Component } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -60,6 +60,11 @@ export default class Cart extends Component {
       TotalPriceAll = TotalPriceAll + dataCart[i].totalPrice
     }
 
+    var savePrice = 0
+    for (var i = 0; i < dataCart.length; i++) {
+      savePrice = savePrice + dataCart[i].number * (dataCart[i].cost - dataCart[i].product["gia"]) 
+    }
+
     return (
       <View style={styles.container}>
         <TouchableOpacity onPress={() => this.props.navigation.goBack()} style={styles.header}>
@@ -69,7 +74,9 @@ export default class Cart extends Component {
           />
           <Text style={styles.textTitle}>Giỏ Hàng</Text>
         </TouchableOpacity>
-        <View style={styles.info}>
+        <ImageBackground
+          source={ dataCart.length === 0 ? require('../../../../image/Cart/cartEmty.png') : require('../../../../image/Cart/cart.png')}
+          style={styles.info}>
           <FlatList
             data={dataCart}
             renderItem={({ item, index }) => (
@@ -84,7 +91,10 @@ export default class Cart extends Component {
                     <View style={styles.viewCategory}>
                       <Text>{item.detail} </Text>
                     </View>
-                    <Text style={styles.textPrice}>đ{item.product["gia"]}</Text>
+                    <View style={styles.viewPrice}>
+                      <Text style={styles.textPriceDiscount}>đ{item.cost}</Text>
+                      <Text style={styles.textPrice}>đ{item.product["gia"]}</Text>
+                    </View>
                     <View style={styles.viewOption}>
                       <TouchableOpacity style={styles.viewMath} onPress={() => this.setSoLuong(index, false)}>
                         <Text style={styles.textName}>-</Text>
@@ -100,25 +110,25 @@ export default class Cart extends Component {
                 </View>
                 <View style={styles.viewTotalOne}>
                   <Text style={styles.textName2}>Tổng tiền:</Text>
-                  <Text style={styles.textPrice2}>đ{item.totalPrice}</Text>
+                  <Text style={styles.textPrice}>đ{item.totalPrice}</Text>
                 </View>
               </View>
             )}
           />
-        </View>
+        </ImageBackground>
         <View style={styles.viewBuy}>
-          <TouchableOpacity style={styles.viewBuyInfo}>
-            <View>
-              <Text style={styles.textName}>Tổng thanh toán:</Text>
-              <Text style={styles.textName}>Tiết kiệm:</Text>
+          <View style={styles.viewBuyInfo}>
+            <View style={styles.viewTitle}>
+              <Text style={styles.textTotalLast}>Tổng thanh toán:</Text>
+              <Text style={styles.textTotalLast}>Tiết kiệm:</Text>
             </View>
             <View>
               <Text style={styles.textPrice2}>đ{TotalPriceAll}</Text>
-              <Text style={styles.textPrice2}>đ5.000</Text>
+              <Text style={styles.textsavePrice}>đ{savePrice}</Text>
             </View>
-          </TouchableOpacity>
+          </View>
           <TouchableOpacity style={styles.btnBuy}>
-            <Text style={styles.textBtnBuy}>Mua hàng (4)</Text>
+            <Text style={styles.textBtnBuy}>Mua hàng ({dataCart.length})</Text>
           </TouchableOpacity>
         </View>
       </View>
