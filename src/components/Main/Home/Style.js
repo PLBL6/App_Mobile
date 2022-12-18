@@ -70,7 +70,8 @@ const styles = StyleSheet.create({
     containerv2: {
         flex: 7, 
         paddingRight: 2,
-        backgroundColor: colors.productBackgrond
+        height: '90%',
+        width: '100%'
     },
     item: {
         borderRadius: 5,
@@ -128,6 +129,10 @@ const styles = StyleSheet.create({
     textGIAM: {
         fontSize: 15,
         color: colors.white
+    },
+    ViewLoading: {
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 })
 

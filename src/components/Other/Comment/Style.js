@@ -27,10 +27,10 @@ const styles = StyleSheet.create({
         marginLeft: 20
     },
     Image: {
-        height: 60,
-        width: 60,
+        height: 50,
+        width: 50,
         marginTop: 40,
-        marginLeft: '51%'
+        marginLeft: '46%'
     },
     view1: {
         backgroundColor: colors.white,

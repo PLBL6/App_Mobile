@@ -1,11 +1,11 @@
-import { Text, TouchableOpacity, View, Image, ScrollView, ToastAndroid } from 'react-native'
+import { Text, TouchableOpacity, View, Image, ScrollView } from 'react-native'
 import React, { Component } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import styles from './Style'
 import Rating from '../Rating/Rating';
 import { getChitiet_IDmathang, getRatingMathang_IDmathang, getAnhMathang_IDmathang, getMathang_IDmathang } from '../../../../api/mathangs.js'
-import { getSoluongDanhgia } from '../../../../api/danhgias';
+import { getTotalDanhGia_byID } from '../../../../api/danhgias';
 import { getNhacungcap_IDmathang, getRatingAVG_IDnhacungcap } from '../../../../api/nhacungcap';
 import ArrayMausac from '../../ListImage/ArrayMausac'
 import ArrayKichco from '../../ListImage/ArrayKichco';
@@ -27,8 +27,21 @@ export default class InfoProduct extends Component {
       mausac: [],
       kichco: [],
       valueSelect: 0,
-      detail: ''
+      detail: '',
+      isLoggedIn: false
     };
+  }
+
+  checkLogin() {
+    AsyncStorage.getItem('userDetail').then((userData) => {
+      if (userData !== null)
+        this.setState({ isLoggedIn: true })
+      else
+        this.setState({ isLoggedIn: false })
+    })
+      .catch((err) => {
+        alert(err)
+      })
   }
 
   change = ({ nativeEvent }) => {
@@ -38,7 +51,7 @@ export default class InfoProduct extends Component {
     }
   }
 
-  onClickAddCart(data, id, detail, cost) {
+  onClickAddCart(data, id, detail, cost, nhacc) {
     if (detail !== '') {
       const itemcart = {
         product: data,
@@ -46,7 +59,8 @@ export default class InfoProduct extends Component {
         totalPrice: data["gia"],
         idDetail: id,
         detail: detail,
-        cost: cost
+        cost: cost,
+        nhacc: nhacc
       }
 
       AsyncStorage.getItem('cart').then((datacart) => {
@@ -102,7 +116,7 @@ export default class InfoProduct extends Component {
       this.setState({ data: await getMathang_IDmathang(id) });
       this.setState({ imageData: await getAnhMathang_IDmathang(id) });
       this.setState({ ratingTBData: await getRatingMathang_IDmathang(id) });
-      this.setState({ numberRating: await getSoluongDanhgia(id) });
+      this.setState({ numberRating: await getTotalDanhGia_byID(id) });
       this.setState({ chitietData: await getChitiet_IDmathang(id) });
       this.setState({ nhaCungcap: await getNhacungcap_IDmathang(id) });
       this.setState({ avgRatingNCC: await getRatingAVG_IDnhacungcap(id) });
@@ -114,11 +128,14 @@ export default class InfoProduct extends Component {
   }
 
   componentDidMount() {
+    this.props.navigation.addListener('focus', () => {
+      this.checkLogin()
+    });
     this.getProducts();
   }
 
   render() {
-    const { data, imageData, chitietData, ratingTBData, numberRating, nhaCungcap, isLoading, avgRatingNCC, mausac, kichco, valueSelect, detail } = this.state;
+    const { data, imageData, chitietData, ratingTBData, numberRating, nhaCungcap, isLoading, avgRatingNCC, mausac, kichco, valueSelect, detail, isLoggedIn } = this.state;
 
     var priceNotDiscount = data["gia"] + data["gia"] * (data["khuyenMai"] / 100)
 
@@ -169,7 +186,7 @@ export default class InfoProduct extends Component {
                   />
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.btnCart} onPress={() => this.props.navigation.navigate('Cart')}>
+                <TouchableOpacity style={styles.btnCart} onPress={() => isLoggedIn ? this.props.navigation.navigate('Cart') : this.props.navigation.navigate('SignIn')}>
                   <Image
                     source={require('../../../../image/cartv2.png')}
                     style={styles.iconArrow}
@@ -267,7 +284,7 @@ export default class InfoProduct extends Component {
           )}
         </View>
         <View style={styles.container2}>
-          <TouchableOpacity style={styles.btnSubmit} onPress={() => this.onClickAddCart(data, valueSelect, detail, priceNotDiscount)}>
+          <TouchableOpacity style={styles.btnSubmit} onPress={() => this.onClickAddCart(data, valueSelect, detail, priceNotDiscount, nhaCungcap["tenNguoiDung"])}>
             <Text style={styles.textBtn}>ADD TO BAG</Text>
           </TouchableOpacity>
         </View>

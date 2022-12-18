@@ -62,7 +62,7 @@ export default class Cart extends Component {
 
     var savePrice = 0
     for (var i = 0; i < dataCart.length; i++) {
-      savePrice = savePrice + dataCart[i].number * (dataCart[i].cost - dataCart[i].product["gia"]) 
+      savePrice = savePrice + dataCart[i].number * (dataCart[i].cost - dataCart[i].product["gia"])
     }
 
     return (
@@ -75,12 +75,16 @@ export default class Cart extends Component {
           <Text style={styles.textTitle}>Giỏ Hàng</Text>
         </TouchableOpacity>
         <ImageBackground
-          source={ dataCart.length === 0 ? require('../../../../image/Cart/cartEmty.png') : require('../../../../image/Cart/cart.png')}
+          source={dataCart.length === 0 ? require('../../../../image/Cart/cartEmty.png') : require('../../../../image/Cart/cart.png')}
           style={styles.info}>
           <FlatList
             data={dataCart}
             renderItem={({ item, index }) => (
               <View key={item.id}>
+                <View style={styles.viewTitle1}>
+                  <Image style={styles.imageIcon} source={require('../../../../image/IconFrofile/shopIcon.png')} />
+                  <Text style={styles.textName2}>{item.nhacc}</Text>
+                </View>
                 <View style={styles.view2}>
                   <Image
                     style={styles.avatar}

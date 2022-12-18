@@ -18,7 +18,8 @@ const styles = StyleSheet.create({
     },
     view2: {
         flex: 2,
-        alignItems: 'center'
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     view3: {
         marginBottom: 50,
@@ -33,7 +34,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     Item1: {
-        flex: 2,
+        flex: 0.5,
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -62,8 +63,9 @@ const styles = StyleSheet.create({
         width: 20
     },
     iconShop: {
-        height: 120,
-        width: 150
+        height: 250,
+        width: 250,
+        borderRadius: 100
     },
     textBack: {
         fontSize: 20,

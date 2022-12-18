@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     },
     info: {
         flex: 7,
-        backgroundColor: colors.whiteDarkLight,
+        backgroundColor: colors.whiteDarkv3,
         marginVertical: 10
     },
     viewBill: {

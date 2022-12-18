@@ -14,7 +14,10 @@ const styles = StyleSheet.create({
     },
     contain1: {
         flex: 1.5,
-        flexDirection: 'row'
+        flexDirection: 'row',
+        justifyContent: "space-between",
+        alignItems: 'center', 
+        paddingHorizontal: 15
     },
     contain2: {
         flex: 5
@@ -25,35 +28,20 @@ const styles = StyleSheet.create({
         marginTop: 30,
         marginRight: 10
     },
-    tag: {
-        backgroundColor: colors.white,
-        flexDirection: 'row',
-        width: 120,
-        marginVertical: 25,
-        marginRight: 160,
-        borderTopRightRadius: 50,
-        borderBottomRightRadius: 50
-    },
     text: {
         color: colors.dark,
         marginVertical: 6,
         marginLeft: 8,
         marginRight: 7
     },
-    arrow: {
-        marginVertical: 6,
-        height: 20,
-        width: 20
-    },
     avatar: {
         height: 100,
         width: 100,
-        marginLeft: 20,
         borderRadius: 100
     },
     name: {
         marginLeft: 20,
-        fontSize: 20,
+        fontSize: 25,
         fontWeight: "bold",
         color: colors.white
     },
@@ -62,14 +50,16 @@ const styles = StyleSheet.create({
         width: '100%'
     },
     notLogin: {
+        height: '100%',
         flexDirection: 'row',
-        marginTop: 60
+        alignItems: 'center',
+        paddingHorizontal: 15
     },
     btn: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        marginLeft: 37
+        paddingHorizontal: 15
     },
     btnSignIn: {
         backgroundColor: colors.white,
@@ -98,59 +88,7 @@ const styles = StyleSheet.create({
         fontSize: 15,
         color: colors.white
     },
-    imageIcon: {
-        height: 40,
-        width: 40,
-        marginRight: 10
-    },
-    viewOption: {
-        backgroundColor: colors.whiteDarkLight,
-        marginTop: 10
-    },
-    viewChoose: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: 'center',
-        padding: 10,
-        marginVertical: 4,
-        backgroundColor: colors.white
-    },
-    viewTitle: {
-        flexDirection: "row",
-        alignItems: 'center'
-    },
-    textTitle: {
-        fontSize: 17,
-        fontWeight: "500"
-    },
-    textClick: {
-        color: colors.whiteDark
-    },
-    ImageProduct: {
-        height: 170,
-        width: 150,
-        borderTopLeftRadius: 5,
-        borderTopRightRadius: 5
-    },
-    viewProduct: {
-        padding: 10,
-        backgroundColor: colors.white,
-        borderWidth: 0.5,
-        marginTop: 4
-    },
-    textBuyBack: {
-        color: colors.whiteDark,
-        marginVertical: 2
-    },
-    imageCart: {
-        height: 18,
-        width: 18
-    },
-    viewPrice: {
-        flexDirection: 'row',
-        justifyContent: "space-between",
-        alignItems: 'center'
-    }
+    
 })
 
 export default styles

@@ -158,7 +158,22 @@ const styles = StyleSheet.create({
         alignItems: 'flex-end',
         justifyContent: 'center',
         paddingTop: 8
-    }
+    },
+    viewTitle1: {
+        flexDirection: "row",
+        padding: 7,
+        backgroundColor: colors.white,
+        alignItems: 'center',
+        borderBottomWidth: 1,
+        borderBottomColor: colors.darkPrice,
+        marginVertical: 1
+    },
+    imageIcon: {
+        height: 35,
+        width: 35,
+        marginRight: 10
+    },
+    
 })
 
 export default styles

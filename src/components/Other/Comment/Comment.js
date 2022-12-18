@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 
 import styles from '../Comment/Style'
 import Rating from '../Rating/Rating';
-import { getDanhgia } from '../../../../api/danhgias';
+import { getDanhgia_byID } from '../../../../api/danhgias';
 import { getKhachhang_IDkhachhang } from '../../../../api/khachhang';
 
 export default class Comment extends Component {
@@ -19,7 +19,7 @@ export default class Comment extends Component {
   async getComment() {
     try {
       const id = this.props.route.params.idMathang
-      this.setState({ danhgia: await getDanhgia(id) });
+      this.setState({ danhgia: await getDanhgia_byID(id) });
     } catch (error) {
       console.log(error);
     } finally {
@@ -38,7 +38,7 @@ export default class Comment extends Component {
     const { danhgia, isLoading } = this.state;
 
     const Images = [
-      "https://www.chupsanpham.net/wp-content/uploads/2017/07/bat-mi-cach-chup-anh-quan-ao-thoi-trang-dep-khi-ban-hang-online-02.jpg",
+      "https://danviet.mediacdn.vn/upload/1-2016/images/2016-03-10/1457584417-1.jpg",
       "https://artia.vn/wp-content/uploads/2020/12/Baby-Solid-Knitted-Style-Long-sleeve-Romper-800x800.jpg"
     ]
 

@@ -2,7 +2,6 @@ import { Text, View, Image, TouchableOpacity, TextInput, ImageBackground} from '
 import React, { Component} from 'react'
 
 import styles from './Style'
-import SetAvatar from './SetAvatar/SetAvatar'
 
 export default class SignUp extends Component {
     render() {
@@ -23,7 +22,10 @@ export default class SignUp extends Component {
                     </TouchableOpacity>
                 </View>
                 <View style={styles.view2}>
-                   <SetAvatar />
+                    <Image
+                        source={require('../../../../../image/shopIcon.png')}
+                        style={styles.iconShop}
+                    />
                 </View>
                 <View style={styles.view3}>
                     <View style={styles.Item1}>

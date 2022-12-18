@@ -24,7 +24,6 @@ export const getRatingMathang_IDmathang = async (id) => {
     return await getByValue('get-avg-rating-by-id-mathang?idMatHang=', id, 'avgrating')
 }
 
-//chua fix
 export const getChitiet_IDmathang = async (id) => {
     return await getByValue('get-all-chi-tiet-mathangs-by-id-mathang?matHangID=', id, 'chitietmathangs')
 } 

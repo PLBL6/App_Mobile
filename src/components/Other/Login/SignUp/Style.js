@@ -105,7 +105,12 @@ const styles = StyleSheet.create({
         fontSize: 17,
         fontWeight: 'bold',
         color: colors.white
-    }
+    },
+    iconShop: {
+        height: 250,
+        width: 250,
+        borderRadius: 100
+    },
 })
 
 export default styles
