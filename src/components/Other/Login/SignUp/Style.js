@@ -17,9 +17,8 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start'
     },
     view2: {
-        flex: 2,
-        alignItems: 'center',
-        paddingTop: 0
+        flex: 1,
+        alignItems: 'center'
     },
     view3: {
         marginBottom: 50,
@@ -34,9 +33,10 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     Item1: {
-        flex: 2,
+        flex: 0.5,
         justifyContent: 'center',
         alignItems: 'center',
+        paddingBottom: 20
     },
     Item2: {
         flex: 1,

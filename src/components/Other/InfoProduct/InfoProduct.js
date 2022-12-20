@@ -284,7 +284,7 @@ export default class InfoProduct extends Component {
           )}
         </View>
         <View style={styles.container2}>
-          <TouchableOpacity style={styles.btnSubmit} onPress={() => this.onClickAddCart(data, valueSelect, detail, priceNotDiscount, nhaCungcap["tenNguoiDung"])}>
+          <TouchableOpacity style={styles.btnSubmit} onPress={() => isLoggedIn ? this.onClickAddCart(data, valueSelect, detail, priceNotDiscount, nhaCungcap["tenNguoiDung"]) : this.props.navigation.navigate('SignIn')}>
             <Text style={styles.textBtn}>ADD TO BAG</Text>
           </TouchableOpacity>
         </View>

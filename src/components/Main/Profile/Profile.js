@@ -1,20 +1,31 @@
-import { Text, View, Image, TouchableOpacity, ImageBackground, FlatList } from 'react-native'
+import { Text, View, Image, TouchableOpacity, ImageBackground } from 'react-native'
 import React, { Component } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import styles from './Style'
 import ListOption from './ListOption/ListOption';
+import { getKhachhang_byID } from '../../../../api/khachhang'; 
 
 export default class Profile extends Component {
   constructor(props) {
     super(props);
-    this.state = { isLoggedIn: false };
+    this.state = {
+      isLoggedIn: false,
+      userDetail: []
+    };
+  }
+
+  async getDataUser(cartData) {
+    this.setState({ userDetail: await getKhachhang_byID(cartData[0].user['id'], cartData[0].token) })
   }
 
   checkLogin() {
     AsyncStorage.getItem('userDetail').then((userData) => {
-      if (userData !== null)
+      if (userData !== null) {
         this.setState({ isLoggedIn: true })
+        const cartData = JSON.parse(userData)
+        this.getDataUser(cartData)
+      }
       else
         this.setState({ isLoggedIn: false })
     })
@@ -37,6 +48,7 @@ export default class Profile extends Component {
 
   render() {
     const navigation = this.props.navigation
+    const {userDetail} = this.state
 
     const notLogged = (
       <View style={styles.container}>
@@ -64,7 +76,7 @@ export default class Profile extends Component {
             </View>
           </View>
         </ImageBackground>
-        <ListOption navigation={navigation} route={false}/>
+        <ListOption navigation={navigation} route={false} data={''}/>
       </View>
     );
 
@@ -77,9 +89,9 @@ export default class Profile extends Component {
           <View style={styles.contain1}>
             <Image
               style={styles.avatar}
-              source={require('../../../../image/catAvatar.jpg')}
+              source={{ uri: userDetail.anhDaiDien }}
             />
-            <Text style={styles.name}>Do Phu Vu</Text>
+            <Text style={styles.name}>{userDetail.ten + ' ' + userDetail.ho}</Text>
             <TouchableOpacity
               style={styles.btnSignUn}
               onPress={() => this.logOut()}
@@ -88,7 +100,7 @@ export default class Profile extends Component {
             </TouchableOpacity>
           </View>
         </ImageBackground>
-        <ListOption navigation={navigation} route={true}/>
+        <ListOption navigation={navigation} route={true} data={userDetail}/>
       </View>
     );
 

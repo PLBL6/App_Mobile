@@ -37,13 +37,15 @@ const styles = StyleSheet.create({
     avatar: {
         height: 100,
         width: 100,
-        borderRadius: 100
+        borderRadius: 100,
+        borderWidth: 1,
+        borderColor: colors.mainHome
     },
     name: {
         marginLeft: 20,
         fontSize: 25,
         fontWeight: "bold",
-        color: colors.white
+        color: colors.mainHome
     },
     cover: {
         height: 200,

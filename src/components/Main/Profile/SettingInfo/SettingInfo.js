@@ -5,6 +5,8 @@ import styles from './Style'
 
 export default class SettingInfo extends Component {
   render() {
+    const data = this.props.route.params.data
+
     return (
       <View style={styles.container}>
         <TouchableOpacity onPress={() => this.props.navigation.goBack()} style={styles.header}>
@@ -16,35 +18,38 @@ export default class SettingInfo extends Component {
         </TouchableOpacity>
         <View style={styles.info}>
           <ImageBackground style={styles.imageCover} source={require('../../../../../image/coverImage.jpg')}>
-            <Image style={styles.imageAvatar} source={require('../../../../../image/catAvatar.jpg')} />
+            <Image style={styles.imageAvatar} source={{uri: data.anhDaiDien}} />
           </ImageBackground>
           <TouchableOpacity style={styles.viewChoose}>
             <Text style={styles.textTitleInfo}>Họ</Text>
-            <Text style={styles.textClick}>Đỗ  ➤</Text>
+            <Text style={styles.textClick}>{data.ho}  ➤</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.viewChoose}>
             <Text style={styles.textTitleInfo}>Tên</Text>
-            <Text style={styles.textClick}>Vũ  ➤</Text>
+            <Text style={styles.textClick}>{data.ten}  ➤</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.viewChoose1}>
             <Text style={styles.textTitleInfo}>Giới tính</Text>
-            <Text style={styles.textClick}>Nam  ➤</Text>
+            {
+              data.gioiTinh ? <Text style={styles.textClick}>Nam  ➤</Text> : <Text style={styles.textClick}>Nữ  ➤</Text>
+            }
+            
           </TouchableOpacity>
           <TouchableOpacity style={styles.viewChoose}>
             <Text style={styles.textTitleInfo}>Ngày sinh</Text>
-            <Text style={styles.textClick}>02-01-2001  ➤</Text>
+            <Text style={styles.textClick}>{data.ngaySinh.split('T')[0]}  ➤</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.viewChoose}>
             <Text style={styles.textTitleInfo}>Địa chỉ</Text>
-            <Text style={styles.textClick}>Đà Nẵng  ➤</Text>
+            <Text style={styles.textClick}>{data.diaChi}  ➤</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.viewChoose1}>
             <Text style={styles.textTitleInfo}>Số điện thoại</Text>
-            <Text style={styles.textClick}>0931986875  ➤</Text>
+            <Text style={styles.textClick}>{data.sdt}  ➤</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.viewChoose}>
             <Text style={styles.textTitleInfo}>Email</Text>
-            <Text style={styles.textClick}>dophuvu016@gmail..  ➤</Text>
+            <Text style={styles.textClick}>{data.email}  ➤</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.viewChoose1}>
             <Text style={styles.textTitleInfo}>Đổi mật khẩu</Text>

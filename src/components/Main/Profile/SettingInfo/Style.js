@@ -37,7 +37,9 @@ const styles = StyleSheet.create({
         height: 130,
         width: 130,
         borderRadius: 100,
-        alignSelf: 'center'
+        alignSelf: 'center',
+        borderWidth: 1,
+        borderColor: colors.mainHome
     },
     viewChoose: {
         flexDirection: "row",

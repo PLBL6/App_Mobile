@@ -7,6 +7,7 @@ export default class ListOption extends Component {
   render() {
     const navigation = this.props.navigation
     const route = this.props.route
+    const dataUser = this.props.data
 
     const Product = [
       {
@@ -48,7 +49,7 @@ export default class ListOption extends Component {
             </View>
             <Text style={styles.textClick}>➤</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.viewChoose} onPress={() => route ? navigation.navigate('SettingInfo') : navigation.navigate('SignIn')}>
+          <TouchableOpacity style={styles.viewChoose} onPress={() => route ? navigation.navigate('SettingInfo', {data: dataUser}) : navigation.navigate('SignIn')}>
             <View style={styles.viewTitle}>
               <Image style={styles.imageIcon} source={require('../../../../../image/IconFrofile/profile.png')} />
               <Text style={styles.textTitle}>Thiết lập thông tin</Text>
