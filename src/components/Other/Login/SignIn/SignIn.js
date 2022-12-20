@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import styles from './Style'
-import { checkLogin_KH } from '../../../../../api/Method/post';
+import { handle_SignIn_SignUp_KH } from '../../../../../api/Method/post';
 
 export default class SignIn extends Component {
     constructor(props) {
@@ -25,7 +25,7 @@ export default class SignIn extends Component {
 
     async checkLoginKhachHang(navigation) {
         try {
-            const itemUser = await checkLogin_KH(this.state.username, this.state.password)
+            const itemUser = await handle_SignIn_SignUp_KH(this.state.username, this.state.password, 1)
             if (itemUser.length !== 0) {
                 const user = {
                     user: itemUser[0],
@@ -41,8 +41,17 @@ export default class SignIn extends Component {
         }
     }
 
+    componentDidMount() {
+        const newUser = this.props.route.params.newUser
+        if (newUser !== null){
+            this.setState({ username: newUser.username })
+            this.setState({ password: newUser.password })
+        }
+    }
+
     render() {
         const navigation = this.props.navigation
+        const {username, password} = this.state
 
         return (
             <ImageBackground
@@ -72,16 +81,16 @@ export default class SignIn extends Component {
                         <View style={styles.Item2}>
                             <Text style={styles.textAll}>User Name*</Text>
                             <View style={styles.infoLogin}>
-                                <TextInput style={styles.textInput} onChangeText={text => this.setUsername(text)} />
+                                <TextInput style={styles.textInput} onChangeText={text => this.setUsername(text)}>{username}</TextInput>
                                 <Image
-                                    source={require('../../../../../image/mail.png')}
+                                    source={require('../../../../../image/username.png')}
                                 />
                             </View>
                         </View>
                         <View style={styles.Item3}>
                             <Text style={styles.textAll}>Password*</Text>
                             <View style={styles.infoLogin}>
-                                <TextInput secureTextEntry={true} style={styles.textInput} onChangeText={text => this.setPassword(text)} />
+                                <TextInput secureTextEntry={true} style={styles.textInput} onChangeText={text => this.setPassword(text)}>{password}</TextInput>
                                 <Image
                                     source={require('../../../../../image/hide.png')}
                                 />

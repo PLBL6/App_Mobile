@@ -63,7 +63,7 @@ export default class Profile extends Component {
             <View style={styles.btn}>
               <TouchableOpacity
                 style={styles.btnSignIn}
-                onPress={() => navigation.navigate('SignIn')}
+                onPress={() => navigation.navigate('SignIn', {newUser: null})}
               >
                 <Text style={styles.textBtn1}>Đăng nhập</Text>
               </TouchableOpacity>

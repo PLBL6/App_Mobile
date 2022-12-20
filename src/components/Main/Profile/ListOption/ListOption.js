@@ -35,28 +35,28 @@ export default class ListOption extends Component {
     return (
       <View>
         <View style={styles.viewOption}>
-          <TouchableOpacity style={styles.viewChoose} onPress={() => route ? navigation.navigate('Purchase') : navigation.navigate('SignIn')}>
+          <TouchableOpacity style={styles.viewChoose} onPress={() => route ? navigation.navigate('Purchase') : navigation.navigate('SignIn', {newUser: null})}>
             <View style={styles.viewTitle}>
               <Image style={styles.imageIcon} source={require('../../../../../image/IconFrofile/purchase.png')} />
               <Text style={styles.textTitle}>Đơn Mua</Text>
             </View>
             <Text style={styles.textClick}>Xem lịch sử mua hàng  ➤</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.viewChoose} onPress={() => route ? navigation.navigate('MyComment') : navigation.navigate('SignIn')}>
+          <TouchableOpacity style={styles.viewChoose} onPress={() => route ? navigation.navigate('MyComment') : navigation.navigate('SignIn', {newUser: null})}>
             <View style={styles.viewTitle}>
               <Image style={styles.imageIcon} source={require('../../../../../image/IconFrofile/evaluate.png')} />
               <Text style={styles.textTitle}>Đánh giá của tôi</Text>
             </View>
             <Text style={styles.textClick}>➤</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.viewChoose} onPress={() => route ? navigation.navigate('SettingInfo', {data: dataUser}) : navigation.navigate('SignIn')}>
+          <TouchableOpacity style={styles.viewChoose} onPress={() => route ? navigation.navigate('SettingInfo', {data: dataUser}) : navigation.navigate('SignIn', {newUser: null})}>
             <View style={styles.viewTitle}>
               <Image style={styles.imageIcon} source={require('../../../../../image/IconFrofile/profile.png')} />
               <Text style={styles.textTitle}>Thiết lập thông tin</Text>
             </View>
             <Text style={styles.textClick}> ➤</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.viewChoose} onPress={() => route ? navigation.navigate('Repurchase') : navigation.navigate('SignIn')}>
+          <TouchableOpacity style={styles.viewChoose} onPress={() => route ? navigation.navigate('Repurchase') : navigation.navigate('SignIn', {newUser: null})}>
             <View style={styles.viewTitle}>
               <Image style={styles.imageIcon} source={require('../../../../../image/IconFrofile/bagShopping.png')} />
               <Text style={styles.textTitle}>Mua lại</Text>

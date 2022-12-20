@@ -43,7 +43,7 @@ export default class CartAndChat extends Component {
 
         return (
             <View style={styles.container}>
-                <TouchableOpacity onPress={() => isLoggedIn ? navigation.navigate('Cart') : navigation.navigate('SignIn')}>
+                <TouchableOpacity onPress={() => isLoggedIn ? navigation.navigate('Cart') : navigation.navigate('SignIn', {newUser: null})}>
                     <Image
                         style={styles.icon}
                         source={require('../../../../image/cart.png')}

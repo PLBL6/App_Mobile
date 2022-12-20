@@ -37,7 +37,7 @@ export default class SettingInfo extends Component {
           </TouchableOpacity>
           <TouchableOpacity style={styles.viewChoose}>
             <Text style={styles.textTitleInfo}>Ngày sinh</Text>
-            <Text style={styles.textClick}>{data.ngaySinh.split('T')[0]}  ➤</Text>
+            {/* <Text style={styles.textClick}>{data.ngaySinh.split('T')[0]}  ➤</Text> */}
           </TouchableOpacity>
           <TouchableOpacity style={styles.viewChoose}>
             <Text style={styles.textTitleInfo}>Địa chỉ</Text>

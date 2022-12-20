@@ -186,7 +186,7 @@ export default class InfoProduct extends Component {
                   />
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.btnCart} onPress={() => isLoggedIn ? this.props.navigation.navigate('Cart') : this.props.navigation.navigate('SignIn')}>
+                <TouchableOpacity style={styles.btnCart} onPress={() => isLoggedIn ? this.props.navigation.navigate('Cart') : this.props.navigation.navigate('SignIn', {newUser: null})}>
                   <Image
                     source={require('../../../../image/cartv2.png')}
                     style={styles.iconArrow}
@@ -284,7 +284,7 @@ export default class InfoProduct extends Component {
           )}
         </View>
         <View style={styles.container2}>
-          <TouchableOpacity style={styles.btnSubmit} onPress={() => isLoggedIn ? this.onClickAddCart(data, valueSelect, detail, priceNotDiscount, nhaCungcap["tenNguoiDung"]) : this.props.navigation.navigate('SignIn')}>
+          <TouchableOpacity style={styles.btnSubmit} onPress={() => isLoggedIn ? this.onClickAddCart(data, valueSelect, detail, priceNotDiscount, nhaCungcap["tenNguoiDung"]) : this.props.navigation.navigate('SignIn', {newUser: null})}>
             <Text style={styles.textBtn}>ADD TO BAG</Text>
           </TouchableOpacity>
         </View>
