@@ -42,16 +42,18 @@ export default class SignIn extends Component {
     }
 
     componentDidMount() {
-        const newUser = this.props.route.params.newUser
-        if (newUser !== null){
-            this.setState({ username: newUser.username })
-            this.setState({ password: newUser.password })
-        }
+        this.props.navigation.addListener('focus', () => {
+            const newUser = this.props.route.params.newUser
+            if (newUser !== null) {
+                this.setState({ username: newUser.username })
+                this.setState({ password: newUser.password })
+            }
+        });
     }
 
     render() {
         const navigation = this.props.navigation
-        const {username, password} = this.state
+        const { username, password } = this.state
 
         return (
             <ImageBackground

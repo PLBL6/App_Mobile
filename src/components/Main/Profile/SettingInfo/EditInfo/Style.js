@@ -1,13 +1,10 @@
 import { StyleSheet } from "react-native"
 
-import colors from "../../../../../colors/colors"
+import colors from "../../../../../../colors/colors"
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1
-    },
     header: {
-        flex: 1,
+        height: '13%',
         backgroundColor: colors.white,
         flexDirection: 'row'
     },
@@ -33,7 +30,6 @@ const styles = StyleSheet.create({
         marginLeft: 20
     },
     info: {
-        flex: 7,
         backgroundColor: colors.whiteDarkLight,
         marginVertical: 10
     },
@@ -68,34 +64,41 @@ const styles = StyleSheet.create({
         marginBottom: 3,
         backgroundColor: colors.white
     },
+    datePickerStyle: {
+        width: 200,
+        marginTop: 20,
+    },
     viewTitle: {
         flexDirection: "row",
         alignItems: 'center'
     },
     textTitleInfo: {
+        flex: 1,
         fontSize: 20,
         fontWeight: "400"
     },
     textClick: {
+        flex: 1,
         fontSize: 20,
         color: colors.whiteDark
     },
-    viewChangePass: {
-        flexDirection: "row",
-        justifyContent: "space-between",
+    container2: {
+        height: 80,
+        paddingHorizontal: 50,
+        paddingVertical: 5
+    },
+    btnSubmit: {
+        backgroundColor: colors.pink,
+        borderRadius: 7,
+        height: 40,
         alignItems: 'center',
-        padding: 10,
-        marginTop: 18,
-        marginBottom: 3,
-        backgroundColor: colors.white,
-        borderWidth: 1,
-        borderColor: colors.mainHome
+        justifyContent: 'center'
     },
-    textChangePass: {
+    textBtn: {
+        color: colors.white,
         fontSize: 20,
-        fontWeight: 'bold',
-        color: colors.mainHome
-    },
+        fontWeight: 'bold'
+    }
 })
 
 export default styles

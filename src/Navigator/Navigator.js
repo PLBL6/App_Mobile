@@ -16,6 +16,7 @@ import SettingInfo from '../components/Main/Profile/SettingInfo/SettingInfo';
 import Repurchase from '../components/Main/Profile/Repurchase/Repurchase';
 import Purchase from '../components/Main/Profile/Purchase/Purchase';
 import MyComment from '../components/Main/Profile/MyComment/MyComment';
+import EditInfo from '../components/Main/Profile/SettingInfo/EditInfo/EditInfo'
 
 const stack = createNativeStackNavigator();
 
@@ -37,6 +38,7 @@ export default function Navigator() {
           <stack.Screen name='Repurchase' component={Repurchase}/>
           <stack.Screen name='Purchase' component={Purchase}/>
           <stack.Screen name='MyComment' component={MyComment}/>
+          <stack.Screen name='EditInfo' component={EditInfo}/>
         </stack.Navigator>
       </NavigationContainer>
     )

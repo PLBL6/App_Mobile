@@ -11,12 +11,14 @@ export default class Profile extends Component {
     super(props);
     this.state = {
       isLoggedIn: false,
-      userDetail: []
+      userDetail: [],
+      token: ''
     };
   }
 
   async getDataUser(cartData) {
     this.setState({ userDetail: await getKhachhang_byID(cartData[0].user['id'], cartData[0].token) })
+    this.setState({ token: cartData[0].token })
   }
 
   checkLogin() {
@@ -48,7 +50,7 @@ export default class Profile extends Component {
 
   render() {
     const navigation = this.props.navigation
-    const {userDetail} = this.state
+    const {userDetail, token} = this.state
 
     const notLogged = (
       <View style={styles.container}>
@@ -100,7 +102,7 @@ export default class Profile extends Component {
             </TouchableOpacity>
           </View>
         </ImageBackground>
-        <ListOption navigation={navigation} route={true} data={userDetail}/>
+        <ListOption navigation={navigation} route={true} data={userDetail} token={token}/>
       </View>
     );
 

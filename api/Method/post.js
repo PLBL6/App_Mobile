@@ -1,5 +1,4 @@
 import { https, https_2 } from "../Http/http";
-import { useState } from 'react';
 
 export const handle_SignIn_SignUp_KH = async (username, password, option) => {
     const itemUser = []
@@ -9,17 +8,17 @@ export const handle_SignIn_SignUp_KH = async (username, password, option) => {
     option == 1 ? url.push('check-login-khachhang?matKhau&tenNguoiDung') : url.push('create-khachhang')
 
     const response = await fetch(https_2 + url[0],
-    {
-        method: "POST",
-        headers: { 'Content-Type': 'application/json; charset=utf-8' },
-        body: JSON.stringify({
-            tenNguoiDung: username,
-            matKhau: password
-        }),
-    })
+        {
+            method: "POST",
+            headers: { 'Content-Type': 'application/json; charset=utf-8' },
+            body: JSON.stringify({
+                tenNguoiDung: username,
+                matKhau: password
+            }),
+        })
     const resJson = await response.json();
 
-    if(option == 1) {
+    if (option == 1) {
         if (resJson.message === "Missing inputs parameter!") {
             alert("Vui lòng nhập đủ tt !!!!");
         }
@@ -45,6 +44,35 @@ export const handle_SignIn_SignUp_KH = async (username, password, option) => {
             alert("Tạo tài khoản thất bại !!!!");
         }
     }
-    
+
     return itemUser
+}
+
+export const create_Donhang = async (khachhang, tongtien, token) => {
+    const response = await fetch(https_2 + 'create-new-don-hang',
+        {
+            method: "POST",
+            headers: { 'Content-Type': 'application/json; charset=utf-8', 'Authorization': token },
+            body: JSON.stringify({
+                khachHang: khachhang,
+                tongTien: tongtien
+            }),
+        })
+    const resJson = await response.json();
+    return resJson.errMessage['id']
+}
+
+export const create_ChitietDonhang = async (maCTMH, maDH, soLuong, tongTien, token) => {
+    const response = await fetch(https_2 + 'create-new-chi-tiet-don-hang',
+        {
+            method: "POST",
+            headers: { 'Content-Type': 'application/json; charset=utf-8', 'Authorization': token },
+            body: JSON.stringify({
+                maCTMH: maCTMH,
+                maDH: maDH,
+                soLuong: soLuong,
+                tongTien: tongTien
+            }),
+        })
+    const resJson = await response.json();
 }

@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import styles from './Style.js'
+import { create_Donhang, create_ChitietDonhang } from '../../../../api/Method/post.js';
 
 export default class Cart extends Component {
   constructor(props) {
@@ -40,7 +41,7 @@ export default class Cart extends Component {
     AsyncStorage.setItem('cart', JSON.stringify(dataTemp));
   }
 
-  componentDidMount() {
+  getDataCart() {
     AsyncStorage.getItem('cart').then((cart) => {
       if (cart !== null) {
         const cartData = JSON.parse(cart)
@@ -50,6 +51,41 @@ export default class Cart extends Component {
       .catch((err) => {
         alert(err)
       })
+  }
+
+  componentDidMount() {
+    this.props.navigation.addListener('focus', () => {
+      this.getDataCart()
+    });
+  }
+
+  async createPurchaseDetail(maCTMH, maDH, soLuong, tongTien, token) {
+    await create_ChitietDonhang(maCTMH, maDH, soLuong, tongTien, token)
+  }
+
+  async createPurchase(id, TotalPrice, token) {
+    const dataTemp = this.state.dataCart
+
+    if (dataTemp !== null) {
+      const idDH = await create_Donhang(id, TotalPrice, token)
+      dataTemp.map((item) => {
+        this.createPurchaseDetail(item.idDetail, idDH, item.number, item.number * item.product['gia'], token)
+      });
+      alert('Thanh toán thành công !!!')
+      AsyncStorage.removeItem('cart');
+    }
+    else
+      alert('Giỏ hàng đang trống. Không thể thanh toán !!!')
+  }
+
+  payment(TotalPrice) {
+    AsyncStorage.getItem('userDetail').then((userData) => {
+      if (userData !== null) {
+        this.setState({ isLoggedIn: true })
+        const userDT = JSON.parse(userData)
+        this.createPurchase(userDT[0].user['id'], TotalPrice, userDT[0].token)
+      }
+    })
   }
 
   render() {
@@ -131,7 +167,7 @@ export default class Cart extends Component {
               <Text style={styles.textsavePrice}>đ{savePrice}</Text>
             </View>
           </View>
-          <TouchableOpacity style={styles.btnBuy}>
+          <TouchableOpacity style={styles.btnBuy} onPress={() => this.payment(TotalPriceAll)}>
             <Text style={styles.textBtnBuy}>Mua hàng ({dataCart.length})</Text>
           </TouchableOpacity>
         </View>
