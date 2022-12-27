@@ -65,7 +65,7 @@ export default class SignUp extends Component {
                     <View style={styles.view2}>
                         <Image
                             source={require('../../../../../image/shopIcon.png')}
-                            style={styles.iconShop}
+                            style={styles.iconShop1}
                         />
                     </View>
                     <View style={styles.view3}>

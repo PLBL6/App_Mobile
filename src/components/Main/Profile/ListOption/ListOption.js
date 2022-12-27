@@ -44,7 +44,7 @@ export default class ListOption extends Component {
             </View>
             <Text style={styles.textClick}>Xem lịch sử mua hàng  ➤</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.viewChoose} onPress={() => route ? navigation.navigate('MyComment') : navigation.navigate('SignIn', {newUser: null})}>
+          <TouchableOpacity style={styles.viewChoose} onPress={() => route ? navigation.navigate('MyComment', {idKH: dataUser.id}) : navigation.navigate('SignIn', {newUser: null})}>
             <View style={styles.viewTitle}>
               <Image style={styles.imageIcon} source={require('../../../../../image/IconFrofile/evaluate.png')} />
               <Text style={styles.textTitle}>Đánh giá của tôi</Text>

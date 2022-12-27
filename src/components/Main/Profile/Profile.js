@@ -91,7 +91,7 @@ export default class Profile extends Component {
           <View style={styles.contain1}>
             <Image
               style={styles.avatar}
-              source={{ uri: userDetail.anhDaiDien }}
+              source={ userDetail.anhDaiDien === null ? (userDetail.gioiTinh ? require('../../../../image/IconFrofile/mall.png') : require('../../../../image/IconFrofile/femall.png') ) : { uri: userDetail.anhDaiDien }}
             />
             <Text style={styles.name}>{userDetail.ten + ' ' + userDetail.ho}</Text>
             <TouchableOpacity

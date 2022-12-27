@@ -63,9 +63,10 @@ const styles = StyleSheet.create({
         width: 20
     },
     iconShop: {
-        height: 250,
-        width: 250,
-        borderRadius: 100
+        height: 200,
+        width: 200,
+        borderRadius: 100,
+        marginBottom: 50
     },
     textBack: {
         fontSize: 20,

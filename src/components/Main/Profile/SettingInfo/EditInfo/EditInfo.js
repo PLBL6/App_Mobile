@@ -58,7 +58,7 @@ export default class EditInfo extends Component {
     if (this.state.anhDaiDien !== '')
       data.anhDaiDien = this.state.anhDaiDien
 
-    data.gioiTinh = this.state.gender
+    data.gioiTinh = this.state.gender ? "1" : "0"
     data.ngaySinh = this.state.date.toString()
 
     update_Khachhang(data, idKH, token)
@@ -108,7 +108,10 @@ export default class EditInfo extends Component {
         </TouchableOpacity>
         <View style={styles.info}>
           <ImageBackground style={styles.imageCover} source={require('../../../../../../image/coverImage.jpg')}>
-            <Image style={styles.imageAvatar} source={{ uri: data.anhDaiDien }} />
+            <Image 
+            style={styles.imageAvatar} 
+            source={data.anhDaiDien === null ? (data.gioiTinh ? require('../../../../../../image/IconFrofile/mall.png') : require('../../../../../../image/IconFrofile/femall.png')) : { uri: data.anhDaiDien }}
+            />
           </ImageBackground>
           <View style={styles.viewChoose}>
             <Text style={styles.textTitleInfo}>Họ</Text>
@@ -149,7 +152,7 @@ export default class EditInfo extends Component {
           </View>
           <View style={styles.viewChoose1}>
             <Text style={styles.textTitleInfo}>Số điện thoại</Text>
-            <TextInput style={styles.textClick} placeholder={data.sdt.toString()} onChangeText={text => this.setValue(text, 6)} />
+            <TextInput style={styles.textClick} placeholder={data.sdt === null ? '' : data.sdt.toString()} onChangeText={text => this.setValue(text, 6)} />
           </View>
           <View style={styles.viewChoose}>
             <Text style={styles.textTitleInfo}>Email</Text>

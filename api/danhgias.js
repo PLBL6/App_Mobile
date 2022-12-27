@@ -11,3 +11,7 @@ export const getAnhDanhgia_byIDDanhgia = async (id) => {
 export const getTotalDanhGia_byID = async (id) => {
     return await getByValue_2('get-all-danhgias-by-id-mathang?matHangId=', id, 'total')
 }
+
+export const getDanhgia_byIDKH = async (id) => {
+    return await getByValue_2('get-all-danhgias-by-id-khachhang?khachHangId=', id, 'danhgias')
+}

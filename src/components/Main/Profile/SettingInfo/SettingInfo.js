@@ -23,7 +23,7 @@ export default class SettingInfo extends Component {
 
   render() {
     const token = this.props.route.params.token
-    const {data} = this.state
+    const { data } = this.state
 
     const formatDate = (date) => {
       return `${date.getDate()}/${date.getMonth() +
@@ -40,7 +40,7 @@ export default class SettingInfo extends Component {
             />
             <Text style={styles.textTitle}>Hồ sơ của tôi</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.btnEdit} onPress={() => this.props.navigation.navigate('EditInfo', {data: data, token: token})}>
+          <TouchableOpacity style={styles.btnEdit} onPress={() => this.props.navigation.navigate('EditInfo', { data: data, token: token })}>
             <Image
               style={styles.iconEdit}
               source={require('../../../../../image/IconFrofile/editProfile.png')}
@@ -49,7 +49,10 @@ export default class SettingInfo extends Component {
         </View>
         <View style={styles.info}>
           <ImageBackground style={styles.imageCover} source={require('../../../../../image/coverImage.jpg')}>
-            <Image style={styles.imageAvatar} source={{ uri: data.anhDaiDien }} />
+            <Image
+              style={styles.imageAvatar}
+              source={data.anhDaiDien === null ? (data.gioiTinh ? require('../../../../../image/IconFrofile/mall.png') : require('../../../../../image/IconFrofile/femall.png')) : { uri: data.anhDaiDien }}
+            />
           </ImageBackground>
           <View style={styles.viewChoose}>
             <Text style={styles.textTitleInfo}>Họ</Text>
@@ -84,7 +87,7 @@ export default class SettingInfo extends Component {
             <Text style={styles.textTitleInfo}>Email</Text>
             <Text style={styles.textClick}>{data.email}  </Text>
           </View>
-          <TouchableOpacity style={styles.viewChangePass} onPress={() => this.props.navigation.navigate('ChangePass', {idKH: data.id, token: token})}>
+          <TouchableOpacity style={styles.viewChangePass} onPress={() => this.props.navigation.navigate('ChangePass', { idKH: data.id, token: token })}>
             <Text style={styles.textChangePass}>Đổi mật khẩu</Text>
             <Text style={styles.textChangePass}>➤</Text>
           </TouchableOpacity>
