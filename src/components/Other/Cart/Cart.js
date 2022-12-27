@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import styles from './Style.js'
-import { create_Donhang, create_ChitietDonhang } from '../../../../api/Method/post.js';
+import { getPayment_ByidKHvsTongTien } from '../../../../api/donhang.js';
 
 export default class Cart extends Component {
   constructor(props) {
@@ -17,14 +17,20 @@ export default class Cart extends Component {
   setSoLuong(i, action) {
     const dataTemp = this.state.dataCart
     let number = dataTemp[i].number;
+    let soLuong = dataTemp[i].soLuong;
     let totalPrice = dataTemp[i].totalPrice
     let price = dataTemp[i].product["gia"]
 
     if (action) {
-      number = number + 1
-      dataTemp[i].number = number
-      dataTemp[i].totalPrice = totalPrice + price
-      this.setState({ dataCart: dataTemp })
+      if (soLuong <= number) {
+        alert('Đã vượt quá số lượng có sẵn !!!')
+      }
+      else {
+        number = number + 1
+        dataTemp[i].number = number
+        dataTemp[i].totalPrice = totalPrice + price
+        this.setState({ dataCart: dataTemp })
+      }
     }
     else if (action == false && number >= 2) {
       number = number - 1
@@ -59,31 +65,34 @@ export default class Cart extends Component {
     });
   }
 
-  async createPurchaseDetail(maCTMH, maDH, soLuong, tongTien, token) {
-    await create_ChitietDonhang(maCTMH, maDH, soLuong, tongTien, token)
-  }
-
   async createPurchase(id, TotalPrice, token) {
     const dataTemp = this.state.dataCart
 
-    if (dataTemp !== null) {
-      const idDH = await create_Donhang(id, TotalPrice, token)
-      dataTemp.map((item) => {
-        this.createPurchaseDetail(item.idDetail, idDH, item.number, item.number * item.product['gia'], token)
-      });
-      alert('Thanh toán thành công !!!')
-      AsyncStorage.removeItem('cart');
+    if (dataTemp.length > 0) {
+      this.getPayment(id, TotalPrice, token, dataTemp)
     }
     else
       alert('Giỏ hàng đang trống. Không thể thanh toán !!!')
   }
 
+  async getPayment(idKH, TotalPrice, token, dataTemp) {
+    const request = await getPayment_ByidKHvsTongTien(idKH, TotalPrice, token)
+    let data = {
+      'idKH': idKH,
+      'TotalPrice': TotalPrice,
+      'token': token
+    }
+    this.props.navigation.navigate('Paypal', { url: request, data: data, dataTemp: dataTemp })
+  }
+
   payment(TotalPrice) {
     AsyncStorage.getItem('userDetail').then((userData) => {
       if (userData !== null) {
-        this.setState({ isLoggedIn: true })
         const userDT = JSON.parse(userData)
-        this.createPurchase(userDT[0].user['id'], TotalPrice, userDT[0].token)
+        const idKH = userDT[0].user['id']
+        const token = userDT[0].token
+
+        this.createPurchase(idKH, TotalPrice, token)
       }
     })
   }
@@ -95,11 +104,13 @@ export default class Cart extends Component {
     for (var i = 0; i < dataCart.length; i++) {
       TotalPriceAll = TotalPriceAll + dataCart[i].totalPrice
     }
+    TotalPriceAll = Math.round(TotalPriceAll * 10) / 10
 
     var savePrice = 0
     for (var i = 0; i < dataCart.length; i++) {
       savePrice = savePrice + dataCart[i].number * (dataCart[i].cost - dataCart[i].product["gia"])
     }
+    savePrice = Math.round(savePrice * 10) / 10
 
     return (
       <View style={styles.container}>
@@ -118,8 +129,8 @@ export default class Cart extends Component {
             renderItem={({ item, index }) => (
               <View key={item.id}>
                 <View style={styles.viewTitle1}>
-                  <Image style={styles.imageIcon} source={require('../../../../image/IconFrofile/shopIcon.png')} />
-                  <Text style={styles.textName2}>{item.nhacc}</Text>
+                  <Image style={styles.imageIcon} source={{ uri: item.nhaCungCap['anhDaiDien'] }} />
+                  <Text style={styles.textName2}>{item.nhaCungCap['tenNguoiDung']}</Text>
                 </View>
                 <View style={styles.view2}>
                   <Image
@@ -132,8 +143,8 @@ export default class Cart extends Component {
                       <Text>{item.detail} </Text>
                     </View>
                     <View style={styles.viewPrice}>
-                      <Text style={styles.textPriceDiscount}>đ{item.cost}</Text>
-                      <Text style={styles.textPrice}>đ{item.product["gia"]}</Text>
+                      <Text style={styles.textPriceDiscount}>${item.cost}</Text>
+                      <Text style={styles.textPrice}>${item.product["gia"]}</Text>
                     </View>
                     <View style={styles.viewOption}>
                       <TouchableOpacity style={styles.viewMath} onPress={() => this.setSoLuong(index, false)}>
@@ -150,7 +161,7 @@ export default class Cart extends Component {
                 </View>
                 <View style={styles.viewTotalOne}>
                   <Text style={styles.textName2}>Tổng tiền:</Text>
-                  <Text style={styles.textPrice}>đ{item.totalPrice}</Text>
+                  <Text style={styles.textPrice}>${item.totalPrice}</Text>
                 </View>
               </View>
             )}
@@ -163,8 +174,8 @@ export default class Cart extends Component {
               <Text style={styles.textTotalLast}>Tiết kiệm:</Text>
             </View>
             <View>
-              <Text style={styles.textPrice2}>đ{TotalPriceAll}</Text>
-              <Text style={styles.textsavePrice}>đ{savePrice}</Text>
+              <Text style={styles.textPrice2}>${TotalPriceAll}</Text>
+              <Text style={styles.textsavePrice}>${savePrice}</Text>
             </View>
           </View>
           <TouchableOpacity style={styles.btnBuy} onPress={() => this.payment(TotalPriceAll)}>

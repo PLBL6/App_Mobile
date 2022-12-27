@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     },
     viewNumber: {
         height: '50%',
-        width: '17%',
+        width: '25%',
         justifyContent: 'center',
         alignItems: 'center',
         borderTopWidth: 1,
@@ -164,14 +164,16 @@ const styles = StyleSheet.create({
         padding: 7,
         backgroundColor: colors.white,
         alignItems: 'center',
-        borderBottomWidth: 1,
-        borderBottomColor: colors.darkPrice,
-        marginVertical: 1
+        borderWidth: 1,
+        borderColor: colors.mainHome,
+        marginVertical: 1,
+        flex: 1
     },
     imageIcon: {
-        height: 35,
-        width: 35,
-        marginRight: 10
+        height: 40,
+        width: 40,
+        marginHorizontal: 10,
+         borderRadius: 50
     },
     
 })

@@ -54,7 +54,6 @@ export default class Product extends Component {
                                         <Text numberOfLines={1} style={styles.textName}>{item.tenMatHang}</Text>
                                         <View style={styles.info1}>
                                             <Text style={styles.textPrice}>{item.gia}đ</Text>
-                                            <Text style={styles.textAvailable}>Đã bán {item.id}</Text>
                                         </View>
                                     </View>
                                 </TouchableOpacity>

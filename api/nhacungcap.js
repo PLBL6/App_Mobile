@@ -15,6 +15,12 @@ export const getDanhmuc_IDnhacungcap = async (idNhacungcap) => {
     return danhmucs
 }
 
+export const getSanpham_IDDanhmucvsNhacungcap = async (idNhacungcap, idDanhmuc) => {
+    const url2Param = idNhacungcap + '&danhMucId=' + idDanhmuc
+    const sanphams = await getByValue('get-all-mathangs-by-id-nhacungcap-and-id-danhmuc?nhaCungCapId=', url2Param, 'mathangs')
+    return sanphams
+}
+
 export const getRatingAVG_IDnhacungcap = async (idNhacungcap) => {
     const array = await getByValue('get-avg-rating-nhacungcap?nhaCungCapId=', idNhacungcap, 'avgNCC')
     return array

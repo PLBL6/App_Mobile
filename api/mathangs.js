@@ -1,4 +1,4 @@
-import { getAll, getByValue } from "./Method/methods";
+import { getAll, getByValue, getByValue_NotData } from "./Method/methods";
 
 export const getMathang = async () => {
     return await getAll('get-mathangs?idMatHang=ALL', 'mathangs')
@@ -26,4 +26,20 @@ export const getRatingMathang_IDmathang = async (id) => {
 
 export const getChitiet_IDmathang = async (id) => {
     return await getByValue('get-all-chi-tiet-mathangs-by-id-mathang?matHangID=', id, 'chitietmathangs')
+} 
+
+export const getChitiet_Idchitietmh = async (id) => {
+    return await getByValue_NotData('get-detail-chitietmathang?ctmhId=', id)
+} 
+
+export const getDaban_Idmathang = async (id) => {
+    return await getByValue('get-soluong-daban-by-id-mathang?matHangId=', id, 'soluong')
+} 
+
+export const getTop10Daban_Idmathang = async (id) => {
+    return await getByValue('get-top10-mathang-by_id_ncc?nhaCungCapId=', id, 'mathangs')
+} 
+
+export const getMathangDamua_IdKH = async (id) => {
+    return await getByValue('get-all-mathangs-by-id-khachhang?khachHangId=', id, 'mathangs')
 } 

@@ -1,8 +1,9 @@
-import { Text, View, TouchableOpacity, Image, ImageBackground, TextInput, ScrollView } from 'react-native'
+import { Text, View, TouchableOpacity, Image, ImageBackground, TextInput, ScrollView, Button, Platform } from 'react-native'
 import React, { Component } from 'react'
 
 import styles from './Style'
 import { update_Khachhang } from '../../../../../../api/Method/put';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 export default class EditInfo extends Component {
   constructor(props) {
@@ -13,11 +14,13 @@ export default class EditInfo extends Component {
       ho: '',
       ten: '',
       gioiTinh: '',
-      ngaySinh: '',
       diaChi: '',
       sdt: '',
       email: '',
-      anhDaiDien: ''
+      anhDaiDien: '',
+      date: new Date(this.props.route.params.data.ngaySinh),
+      gender: this.props.route.params.data.gioiTinh,
+      show: false
     };
   }
 
@@ -28,8 +31,8 @@ export default class EditInfo extends Component {
       this.setState({ ten: text })
     if (index === 3)
       this.setState({ gioiTinh: text })
-    if (index === 4)
-      this.setState({ ngaySinh: text })
+    // if (index === 4)
+    //   this.setState({ ngaySinh: text })
     if (index === 5)
       this.setState({ diaChi: text })
     if (index === 6)
@@ -46,10 +49,6 @@ export default class EditInfo extends Component {
       data.ho = this.state.ho
     if (this.state.ten !== '')
       data.ten = this.state.ten
-    if (this.state.gioiTinh !== '')
-      data.gioiTinh = this.state.gioiTinh
-    if (this.state.ngaySinh !== '')
-      data.ngaySinh = this.state.ngaySinh
     if (this.state.diaChi !== '')
       data.diaChi = this.state.diaChi
     if (this.state.sdt !== '')
@@ -59,13 +58,44 @@ export default class EditInfo extends Component {
     if (this.state.anhDaiDien !== '')
       data.anhDaiDien = this.state.anhDaiDien
 
+    data.gioiTinh = this.state.gender
+    data.ngaySinh = this.state.date.toString()
+
     update_Khachhang(data, idKH, token)
   }
 
+  setDate = (event, date) => {
+    date = date || this.state.date;
+
+    this.setState({
+      show: Platform.OS === 'ios' ? true : false,
+      date,
+    });
+  }
+
+  setGender(option) {
+    this.setState({ gender: option })
+  }
+
+  show = mode => {
+    this.setState({
+      show: true,
+      mode,
+    });
+  }
+
+  datepicker = () => {
+    this.show('date');
+  }
 
   render() {
     const data = this.props.route.params.data
     const token = this.props.route.params.token
+    const { show, date, mode, gender } = this.state
+
+    const formatDate = (date) => {
+      return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+    }
 
     return (
       <ScrollView>
@@ -90,13 +120,28 @@ export default class EditInfo extends Component {
           </View>
           <View style={styles.viewChoose1}>
             <Text style={styles.textTitleInfo}>Giới tính</Text>
-            {
-              data.gioiTinh ? <Text style={styles.textClick}>Nam  </Text> : <Text style={styles.textClick}>Nữ  </Text>
-            }
+            <View style={styles.viewGender}>
+              <TouchableOpacity style={gender ? styles.viewBtnGender : styles.viewBtnGenderNot} onPress={() => this.setGender(true)}>
+                <Text style={gender ? styles.textGender : styles.textGenderNot}>Nam</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={gender ? styles.viewBtnGenderNot : styles.viewBtnGender} onPress={() => this.setGender(false)}>
+                <Text style={gender ? styles.textGenderNot : styles.textGender}>Nữ</Text>
+              </TouchableOpacity>
+            </View>
           </View>
           <View style={styles.viewChoose}>
             <Text style={styles.textTitleInfo}>Ngày sinh</Text>
-            <Text style={styles.textClick}>{data.ngaySinh.split('T')[0]}  </Text>
+            <Text style={styles.textClickDate}>{formatDate(date)}</Text>
+            <Button onPress={this.datepicker} title="Show" />
+            {
+              show &&
+              <DateTimePicker value={date}
+                mode={mode}
+                is24Hour={true}
+                display="default"
+                onChange={this.setDate}
+              />
+            }
           </View>
           <View style={styles.viewChoose}>
             <Text style={styles.textTitleInfo}>Địa chỉ</Text>

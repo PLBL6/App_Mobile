@@ -58,6 +58,20 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
+    optionReview: {
+        marginHorizontal: 3,
+        backgroundColor: colors.mainHome,
+        width: '23.5%',
+        height: 50,
+        borderRadius: 5,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    textReview: {
+        fontSize: 17,
+        fontWeight: 'bold',
+        color: colors.white
+    },
     textNumber: {
         fontSize: 13,
         color: colors.whiteDark
@@ -70,8 +84,7 @@ const styles = StyleSheet.create({
     },
     textAll: {
         fontSize: 19,
-        color: colors.whiteDark,
-        marginBottom: 15
+        color: colors.whiteDark
     },
     textSaleChat: {
         fontSize: 17,
@@ -83,8 +96,7 @@ const styles = StyleSheet.create({
     // },
     textCommen: {
         fontSize: 20,
-        marginBottom: 5,
-        width: '80%'
+        marginBottom: 5
     },
     ImageComen: {
         height: 102,
@@ -99,6 +111,16 @@ const styles = StyleSheet.create({
     rating: {
         alignItems: "flex-start",
         marginVertical: 5
+    },
+    ViewLoading: {
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    textName: {
+        fontSize: 17
+    },
+    viewBig: {
+        justifyContent: 'space-between'
     }
 })
 

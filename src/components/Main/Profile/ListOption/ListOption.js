@@ -1,37 +1,38 @@
-import { Text, View, Image, TouchableOpacity, ImageBackground, FlatList } from 'react-native'
+import { Text, View, Image, TouchableOpacity, FlatList } from 'react-native'
 import React, { Component } from 'react'
 
 import styles from './Style'
+import { getMathangDamua_IdKH } from '../../../../../api/mathangs';
 
 export default class ListOption extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      dataDamua: []
+    };
+  }
+
+  async getProductsDamua() {
+    try {
+      const id = this.props.data.id
+      this.setState({ dataDamua: await getMathangDamua_IdKH(id) })
+    } catch (error) {
+      console.log(error);
+    } 
+  }
+
+  componentDidMount() {
+    this.getProductsDamua()
+  }
+
   render() {
     const navigation = this.props.navigation
     const route = this.props.route
     const dataUser = this.props.data
     const token = this.props.token
 
-    const Product = [
-      {
-        "image": "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
-        "price": 549
-      },
-      {
-        "image": "https://i.dummyjson.com/data/products/2/thumbnail.jpg",
-        "price": 899
-      },
-      {
-        "image": "https://i.dummyjson.com/data/products/3/thumbnail.jpg",
-        "price": 355
-      },
-      {
-        "image": "https://i.dummyjson.com/data/products/4/thumbnail.jpg",
-        "price": 268
-      },
-      {
-        "image": "https://i.dummyjson.com/data/products/5/thumbnail.jpg",
-        "price": 100
-      }
-    ]
+    const {dataDamua} = this.state
 
     return (
       <View>
@@ -57,7 +58,7 @@ export default class ListOption extends Component {
             </View>
             <Text style={styles.textClick}> ➤</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.viewChoose} onPress={() => route ? navigation.navigate('Repurchase') : navigation.navigate('SignIn', {newUser: null})}>
+          <TouchableOpacity style={styles.viewChoose} onPress={() => route ? navigation.navigate('Repurchase', {dataDamua: dataDamua}) : navigation.navigate('SignIn', {newUser: null})}>
             <View style={styles.viewTitle}>
               <Image style={styles.imageIcon} source={require('../../../../../image/IconFrofile/bagShopping.png')} />
               <Text style={styles.textTitle}>Mua lại</Text>
@@ -67,17 +68,17 @@ export default class ListOption extends Component {
           {
             route ? (
               <FlatList
-                data={Product}
+                data={dataDamua}
                 keyExtractor={(item, index) => {
                   return index.toString();
                 }}
                 horizontal={true}
                 renderItem={({ item, index }) => (
                   <TouchableOpacity key={index} style={styles.viewProduct}>
-                    <Image source={{ uri: item.image }} style={styles.ImageProduct} />
-                    <Text style={styles.textBuyBack}>Đã mua 1 lần</Text>
+                    <Image source={{ uri: item.hinhAnh }} style={styles.ImageProduct} />
+                    <Text numberOfLines={1} style={styles.textBtn1}>{item.tenMatHang}</Text>
                     <View style={styles.viewPrice}>
-                      <Text style={styles.textBtn1}>đ{item.price}</Text>
+                      <Text style={styles.textBtn2}>${item.gia}</Text>
                       <Image style={styles.imageCart} source={require('../../../../../image/IconFrofile/cart.png')} />
                     </View>
                   </TouchableOpacity>

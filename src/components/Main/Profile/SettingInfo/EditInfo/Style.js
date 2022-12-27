@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: 'center',
-        padding: 10,
+        paddingHorizontal: 10,
         marginVertical: 3,
         backgroundColor: colors.white
     },
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: 'center',
-        padding: 10,
+        paddingHorizontal: 10,
         marginTop: 18,
         marginBottom: 3,
         backgroundColor: colors.white
@@ -75,12 +75,24 @@ const styles = StyleSheet.create({
     textTitleInfo: {
         flex: 1,
         fontSize: 20,
-        fontWeight: "400"
+        fontWeight: "400",
+        marginVertical: 10
     },
     textClick: {
         flex: 1,
         fontSize: 20,
-        color: colors.whiteDark
+        color: colors.whiteDark,
+        backgroundColor: colors.whiteDarkLight,
+        height: '80%',
+        paddingHorizontal: 10
+    },
+    textClickDate: {
+        flex: 0.7,
+        fontSize: 20,
+        color: colors.whiteDark,
+        backgroundColor: colors.whiteDarkLight,
+        height: '80%',
+        paddingHorizontal: 10
     },
     container2: {
         height: 80,
@@ -98,6 +110,37 @@ const styles = StyleSheet.create({
         color: colors.white,
         fontSize: 20,
         fontWeight: 'bold'
+    },
+    viewGender: {
+        justifyContent: 'space-between',
+        flexDirection: 'row',
+        width: '53%'
+    },
+    viewBtnGender: {
+        backgroundColor: colors.whiteDarkLight,
+        borderWidth: 2,
+        borderColor: colors.mainHome,
+        paddingVertical: 3,
+        width: '40%',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    viewBtnGenderNot: {
+        backgroundColor: colors.whiteDarkLight,
+        borderWidth: 2,
+        borderColor: colors.whiteDarkLight,
+        paddingVertical: 3,
+        width: '40%',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    textGender: {
+        fontSize: 20,
+        color: colors.mainHome
+    },
+    textGenderNot: {
+        fontSize: 20,
+        color: colors.whiteDark
     }
 })
 

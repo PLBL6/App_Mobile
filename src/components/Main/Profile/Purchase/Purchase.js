@@ -1,10 +1,14 @@
-import { Text, View, TouchableOpacity, Image, FlatList, ActivityIndicator } from 'react-native'
+import { Text, View, Image, FlatList, ActivityIndicator, ImageBackground, TouchableOpacity } from 'react-native'
 import React, { Component } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import styles from './Style'
 import { getDonhang_ByIdKH, getChitietDonhang_ByIdDH } from '../../../../../api/donhang';
+import { getChitiet_Idchitietmh } from '../../../../../api/mathangs';
 import colors from '../../../../../colors/colors';
+import ArrayKichco from '../../../ListImage/ArrayKichco';
+import ArrayMausac from '../../../ListImage/ArrayMausac';
+import { getNhacungcap_IDmathang } from '../../../../../api/nhacungcap';
 
 export default class Purchase extends Component {
     constructor(props) {
@@ -14,13 +18,31 @@ export default class Purchase extends Component {
             donHang: [],
             ChitietDH: [],
             isLoading: true,
+            mausac: [],
+            kichco: [],
         };
     }
 
     async getChitietDonhang(idDH, total) {
         try {
             const donhang = this.state.ChitietDH
-            donhang.push(await getChitietDonhang_ByIdDH(idDH), total)
+            const detail = await getChitietDonhang_ByIdDH(idDH)
+            const mathang = []
+            await Promise.all(detail.map(async (item) => {
+                const mathangDetail = await getChitiet_Idchitietmh(item.maCTMH)
+                let dataMH = {
+                    "mathangV2": mathangDetail,
+                    "shop": await getNhacungcap_IDmathang(mathangDetail.mathang['id']),
+                    "detail": item
+                }
+                mathang.push(dataMH)
+            }))
+
+            let item = {
+                "mathang": mathang,
+                "total": total
+            }
+            donhang.push(item)
             this.setState({ ChitietDH: donhang })
         } catch (error) {
             console.log(error);
@@ -30,12 +52,11 @@ export default class Purchase extends Component {
     }
 
     async getDataDonhang(idKH) {
-        this.setState({ donHang: await getDonhang_ByIdKH(idKH) })
-        const donHang = this.state.donHang
+        const donHang = await getDonhang_ByIdKH(idKH)
+        this.setState({ donHang: donHang })
         donHang.map((item) => {
             this.getChitietDonhang(item.id, item.tongTien)
         });
-        this.getChitietDonhang(donHang.id)
     }
 
     getDonhang() {
@@ -49,56 +70,14 @@ export default class Purchase extends Component {
         }
     }
 
-
     componentDidMount() {
         this.getDonhang();
+        this.setState({ mausac: ArrayMausac() });
+        this.setState({ kichco: ArrayKichco() });
     }
 
     render() {
-        const Purchase = [
-            {
-                "Shop": "youxiu.vn",
-                "image": "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
-                "Name": "Kìm tập tay",
-                "Phanloai": "Đen",
-                "number": 2,
-                "price": 50,
-                "numberTotal": 4,
-                "priceTotal": 100
-            },
-            {
-                "Shop": "youxiu.vn",
-                "image": "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
-                "Name": "Kìm tập tay",
-                "Phanloai": "Đen",
-                "number": 2,
-                "price": 50,
-                "numberTotal": 4,
-                "priceTotal": 100
-            },
-            {
-                "Shop": "youxiu.vn",
-                "image": "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
-                "Name": "Kìm tập tay",
-                "Phanloai": "Đen",
-                "number": 2,
-                "price": 50,
-                "numberTotal": 4,
-                "priceTotal": 100
-            },
-            {
-                "Shop": "youxiu.vn",
-                "image": "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
-                "Name": "Kìm tập taydasdasddasdsdsdasdas",
-                "Phanloai": "Đen",
-                "number": 2,
-                "price": 50,
-                "numberTotal": 4,
-                "priceTotal": 100
-            },
-        ]
-
-        const { isLoading, ChitietDH } = this.state;
+        const { isLoading, ChitietDH, mausac, kichco } = this.state;
 
         return (
             <View style={styles.container}>
@@ -110,41 +89,58 @@ export default class Purchase extends Component {
                     <Text style={styles.textTitle}>Đơn mua</Text>
                 </TouchableOpacity>
                 <View style={styles.info}>
-                    {isLoading ?
-                        <View style={styles.ViewLoading}>
-                            <ActivityIndicator color={colors.white} size={25} />
-                            <Text style={styles.textName}>Đang tải dữ liệu</Text>
-                        </View> : (
-                            ChitietDH.map((item, index) => {
-                                <TouchableOpacity key={index} style={styles.viewBill}>
-                                    <View style={styles.viewChoose} onPress={() => navigation.navigate('Purchase')}>
-                                        <View style={styles.viewTitle}>
-                                            <Image style={styles.imageIcon} source={require('../../../../../image/IconFrofile/shopIcon.png')} />
-                                            <Text style={styles.textTitle1}>ok</Text>
+                    <ImageBackground
+                        source={ChitietDH.length === 0 ? require('../../../../../image/Cart/purchaseEmty.png') : require('../../../../../image/Cart/cart.png')}
+                        style={styles.info}>
+                        {isLoading ?
+                            <View style={styles.ViewLoading}>
+                                <ActivityIndicator color={colors.mainHome} size={25} />
+                                <Text style={styles.textName}>Đang tải dữ liệu</Text>
+                            </View> :
+                            <FlatList
+                                data={ChitietDH}
+                                renderItem={({ item, index }) => (
+                                    <View key={index} style={styles.viewBill}>
+                                        <View style={styles.viewChoose}>
+                                            <Text style={styles.textTitle1}>Đơn hàng</Text>
                                         </View>
-                                        <Text style={styles.textClick}>Hoàn thành</Text>
-                                    </View>
-                                    <View style={styles.viewProduct}>
-                                        <Image source={{ uri: "https://i.dummyjson.com/data/products/1/thumbnail.jpg" }} style={styles.ImageProduct} />
-                                        <View style={styles.viewInfo}>
-                                            <Text style={styles.textName} numberOfLines={1}>ok</Text>
-                                            <View style={styles.viewTitle1}>
-                                                <Text style={styles.textSize}>{item.maCTMH}</Text>
-                                                <Text style={styles.textName}>x{item.soLuong}</Text>
+                                        <FlatList
+                                            data={item.mathang}
+                                            renderItem={({ item, index }) => (
+                                                <View>
+                                                    <View style={styles.viewChoose}>
+                                                        <View style={styles.viewTitle}>
+                                                            <Image style={styles.imageIcon} source={{uri: item.shop['anhDaiDien']}} />
+                                                            <Text style={styles.textTitle1}>{item.shop['tenNguoiDung']}</Text>
+                                                        </View>
+                                                        <Text style={styles.textClick}>{item.detail['trangThai']}</Text>
+                                                    </View>
+                                                    <View style={styles.viewProduct}>
+                                                        <Image source={{ uri: item.mathangV2.mathang['hinhAnh'] }} style={styles.ImageProduct} />
+                                                        <View style={styles.viewInfo}>
+                                                            <Text style={styles.textName} numberOfLines={1}>{item.mathangV2.mathang['tenMatHang']}</Text>
+                                                            <View style={styles.viewTitle1}>
+                                                                <Text style={styles.textSize}>{mausac[item.mathangV2.ctmh['maMS'] - 1]} - Size: {kichco[item.mathangV2.ctmh['maKC'] - 1]}</Text>
+                                                                <Text style={styles.textName}>x{item.detail['soLuong']}</Text>
+                                                            </View>
+                                                            <Text style={styles.textClick}>{item.mathangV2.mathang['gia']} $</Text>
+                                                        </View>
+                                                    </View>
+                                                </View>
+                                            )}
+                                        />
+                                        <View style={styles.viewChoose}>
+                                            <Text style={styles.textSize}>{item.mathang.length} sản phẩm</Text>
+                                            <View style={styles.viewTitle}>
+                                                <Text style={styles.textName}>Thành tiền:</Text>
+                                                <Text style={styles.textClick}>{item.total} đ</Text>
                                             </View>
-                                            <Text style={styles.textClick}>{item.tongTien} đ</Text>
                                         </View>
                                     </View>
-                                    <View style={styles.viewChoose}>
-                                        <Text style={styles.textSize}>{item.length} sản phẩm</Text>
-                                        <View style={styles.viewTitle}>
-                                            <Text style={styles.textName}>Thành tiền:</Text>
-                                            <Text style={styles.textClick}>{item} đ</Text>
-                                        </View>
-                                    </View>
-                                </TouchableOpacity>
-                            })
-                        )}
+                                )}
+                            />
+                        }
+                    </ImageBackground>
                 </View>
             </View>
         )

@@ -25,6 +25,11 @@ export default class SettingInfo extends Component {
     const token = this.props.route.params.token
     const {data} = this.state
 
+    const formatDate = (date) => {
+      return `${date.getDate()}/${date.getMonth() +
+        1}/${date.getFullYear()}`;
+    };
+
     return (
       <View style={styles.container}>
         <View style={styles.header}>
@@ -64,7 +69,7 @@ export default class SettingInfo extends Component {
           <View style={styles.viewChoose}>
             <Text style={styles.textTitleInfo}>Ngày sinh</Text>
             {
-              data.ngaySinh !== null ? <Text style={styles.textClick}>{data.ngaySinh.split('T')[0]}  </Text> : <Text style={styles.textClick}> </Text>
+              data.ngaySinh !== null ? <Text style={styles.textClick}>{formatDate(new Date(data.ngaySinh))}  </Text> : <Text style={styles.textClick}> </Text>
             }
           </View>
           <View style={styles.viewChoose}>
@@ -79,7 +84,7 @@ export default class SettingInfo extends Component {
             <Text style={styles.textTitleInfo}>Email</Text>
             <Text style={styles.textClick}>{data.email}  </Text>
           </View>
-          <TouchableOpacity style={styles.viewChangePass}>
+          <TouchableOpacity style={styles.viewChangePass} onPress={() => this.props.navigation.navigate('ChangePass', {idKH: data.id, token: token})}>
             <Text style={styles.textChangePass}>Đổi mật khẩu</Text>
             <Text style={styles.textChangePass}>➤</Text>
           </TouchableOpacity>

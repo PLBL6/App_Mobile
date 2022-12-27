@@ -16,6 +16,16 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between'
     },
+    itemTotal: {
+        width: '100%',
+        height: 100,
+        backgroundColor: colors.white,
+        borderTopColor: colors.mainHome,
+        borderTopWidth: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between'
+    },
     item1: {
         height: 100,
         backgroundColor: colors.white,

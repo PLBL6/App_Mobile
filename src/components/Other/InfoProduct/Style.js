@@ -7,19 +7,19 @@ const height = 400;
 
 const styles = StyleSheet.create({
     container: {
-        width, 
+        width,
         height,
         flex: 1,
         backgroundColor: colors.white
     },
     btnBack: {
-        position: 'absolute', 
+        position: 'absolute',
         alignSelf: 'flex-start',
         marginTop: 40,
         marginLeft: 10
     },
     btnCart: {
-        position: 'absolute', 
+        position: 'absolute',
         alignSelf: 'flex-end',
         marginTop: 45,
         right: 10
@@ -29,28 +29,28 @@ const styles = StyleSheet.create({
         width: 40
     },
     image: {
-        width, 
-        height, 
+        width,
+        height,
         resizeMode: 'cover'
     },
     scrollView: {
-        width, 
+        width,
         height
     },
     dotView: {
-        flexDirection: 'row', 
-        position: 'absolute', 
-        bottom: 0, 
+        flexDirection: 'row',
+        position: 'absolute',
+        bottom: 0,
         alignSelf: 'center'
     },
     dotActive: {
-        fontSize: 15, 
-        color: colors.orangeLigth, 
+        fontSize: 15,
+        color: colors.orangeLigth,
         margin: 3
     },
     dotNotActive: {
-        fontSize: 15, 
-        color: colors.white, 
+        fontSize: 15,
+        color: colors.white,
         margin: 3
     },
     textName: {
@@ -161,7 +161,8 @@ const styles = StyleSheet.create({
     },
     textMota: {
         fontSize: 17,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        marginBottom: 10
     },
     avatar: {
         height: 80,
@@ -224,9 +225,38 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         borderWidth: 1
     },
+    hethang: {
+        padding: 5,
+        margin: 5,
+        borderRadius: 5,
+        borderWidth: 1,
+        backgroundColor: colors.whiteDarkLight
+    },
     phanloai1: {
         padding: 5,
         margin: 6
+    },
+    viewTop: {
+        padding: 5,
+        width: 150,
+        height: 200,
+        backgroundColor: colors.white,
+        borderWidth: 1,
+        marginTop: 4
+    },
+    hinhAnhTop: {
+        height: '70%',
+        width: '100%',
+        borderTopLeftRadius: 5,
+        borderTopRightRadius: 5
+    },
+    viewTopInfo: {
+        paddingHorizontal: 5,
+        paddingVertical: 10
+    },
+    viewToprow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between'
     }
 })
 

@@ -127,16 +127,22 @@ export default class Home extends Component {
                     onPress={() => navigation.navigate('InfoProduct', { id: item.id })}
                   >
                     <Image source={{ uri: item.hinhAnh }} style={styles.Image} />
-                    <View style={styles.discout}>
-                      <Text style={styles.textDiscount}>{item.khuyenMai}%</Text>
-                      <Text style={styles.textGIAM}>GIẢM</Text>
-                    </View>
+                    {
+                      item.khuyenMai > 0 ?
+                        <View style={styles.discout}>
+                          <Text style={styles.textDiscount}>{item.khuyenMai}%</Text>
+                          <Text style={styles.textGIAM}>GIẢM</Text>
+                        </View> :
+                        null
+                    }
                     <View style={styles.info}>
                       <Text numberOfLines={1} style={styles.textName}>{item.tenMatHang}</Text>
-                      <Text style={styles.textPriceDiscount}>đ{item.gia + item.gia * (item.khuyenMai / 100)}</Text>
+                      {
+                        item.khuyenMai > 0 ?
+                          <Text style={styles.textPriceDiscount}>${item.gia + item.gia * (item.khuyenMai / 100)}</Text> : null
+                      }
                       <View style={styles.info1}>
-                        <Text style={styles.textPrice}>đ{item.gia}</Text>
-                        <Text style={styles.textAvailable}>Đã bán 0</Text>
+                        <Text style={styles.textPrice}>${item.gia}</Text>
                       </View>
                     </View>
                   </TouchableOpacity>

@@ -7,13 +7,27 @@ import styles from './Style'
 import colors from '../../../../colors/colors';
 import Category from './Category/Category';
 import Product from './Product/Product';
+import { getRatingAVG_IDnhacungcap } from '../../../../api/nhacungcap';
 
 const Tab = createMaterialTopTabNavigator();
 
 export default class Shop extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      avg: 0,
+      nhaCungcap: this.props.route.params.shop
+    };
+  }
+
+  async componentDidMount() {
+    const idNhacc = this.state.nhaCungcap["id"]
+    this.setState({ avg: await getRatingAVG_IDnhacungcap(idNhacc) });
+  }
+
   render() {
-    const nhaCungcap = this.props.route.params.shop
-    const avg = this.props.route.params.avg
+    const {nhaCungcap, avg} = this.state
 
     var ratingTB
     if (avg == null)
@@ -56,14 +70,10 @@ export default class Shop extends Component {
               </View>
               <View style={styles.viewRow}>
                 <Image source={require('../../../../image/ic_star_fill.png')} style={styles.iconStar}/>
-                <Text style={styles.textMap}>{ratingTB}    </Text>
-                <Text numberOfLines={1} style={styles.textAll}>17,9k Người theo dõi </Text>
+                <Text style={styles.textMap}>{ratingTB}</Text>
               </View>
             </View>
             <View style={styles.view2}>
-              <TouchableOpacity style={styles.btnFollowShop}>
-                <Text style={styles.textBtnFollowShop}>+ Theo dõi</Text>
-              </TouchableOpacity>
             </View>
           </View>
         </ImageBackground>

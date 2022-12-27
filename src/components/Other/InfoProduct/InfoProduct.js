@@ -1,12 +1,12 @@
-import { Text, TouchableOpacity, View, Image, ScrollView } from 'react-native'
+import { Text, TouchableOpacity, View, Image, ScrollView, FlatList } from 'react-native'
 import React, { Component } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import styles from './Style'
 import Rating from '../Rating/Rating';
-import { getChitiet_IDmathang, getRatingMathang_IDmathang, getAnhMathang_IDmathang, getMathang_IDmathang } from '../../../../api/mathangs.js'
+import { getTop10Daban_Idmathang, getChitiet_IDmathang, getRatingMathang_IDmathang, getAnhMathang_IDmathang, getMathang_IDmathang, getDaban_Idmathang } from '../../../../api/mathangs.js'
 import { getTotalDanhGia_byID } from '../../../../api/danhgias';
-import { getNhacungcap_IDmathang, getRatingAVG_IDnhacungcap } from '../../../../api/nhacungcap';
+import { getNhacungcap_IDmathang } from '../../../../api/nhacungcap';
 import ArrayMausac from '../../ListImage/ArrayMausac'
 import ArrayKichco from '../../ListImage/ArrayKichco';
 
@@ -21,21 +21,26 @@ export default class InfoProduct extends Component {
       ratingTBData: [],
       numberRating: [],
       nhaCungcap: [],
-      avgRatingNCC: [],
       active: 0,
       arrayholder: [],
       mausac: [],
       kichco: [],
       valueSelect: 0,
       detail: '',
-      isLoggedIn: false
+      isLoggedIn: false,
+      token: '',
+      idKH: 0,
+      dataTop: [],
+      soLuong: 0
     };
   }
 
   checkLogin() {
     AsyncStorage.getItem('userDetail').then((userData) => {
-      if (userData !== null)
-        this.setState({ isLoggedIn: true })
+      if (userData !== null) {
+        const cartData = JSON.parse(userData)
+        this.setState({ isLoggedIn: true, token: cartData[0].token, idKH: cartData[0].user['id'] })
+      }
       else
         this.setState({ isLoggedIn: false })
     })
@@ -51,7 +56,7 @@ export default class InfoProduct extends Component {
     }
   }
 
-  onClickAddCart(data, id, detail, cost, nhacc) {
+  onClickAddCart(data, id, detail, cost, nhacc, soLuong) {
     if (detail !== '') {
       const itemcart = {
         product: data,
@@ -60,7 +65,9 @@ export default class InfoProduct extends Component {
         idDetail: id,
         detail: detail,
         cost: cost,
-        nhacc: nhacc
+        nhaCungCap: nhacc,
+        daBan: 0,
+        soLuong: soLuong
       }
 
       AsyncStorage.getItem('cart').then((datacart) => {
@@ -74,22 +81,30 @@ export default class InfoProduct extends Component {
             let number = cart[foundIndex].number
             let totalPrice = cart[foundIndex].totalPrice
             let price = cart[foundIndex].product["gia"]
+            let soLuong = this.state.soLuong
 
-            cart[foundIndex].number = number + 1
-            cart[foundIndex].totalPrice = totalPrice + price
-            AsyncStorage.setItem('cart', JSON.stringify(cart))
+            if (soLuong <= number) {
+              alert('Đã vượt quá số lượng có sẵn !!!')
+            }
+            else {
+              cart[foundIndex].number = number + 1
+              cart[foundIndex].totalPrice = totalPrice + price
+              AsyncStorage.setItem('cart', JSON.stringify(cart))
+              alert("Đã thêm vào giỏ hàng !")
+            }
           }
           else {
             cart.push(itemcart)
             AsyncStorage.setItem('cart', JSON.stringify(cart))
+            alert("Đã thêm vào giỏ hàng !")
           }
         }
         else {
           const cart = []
           cart.push(itemcart)
           AsyncStorage.setItem('cart', JSON.stringify(cart))
+          alert("Đã thêm vào giỏ hàng !")
         }
-        alert("Đã thêm vào giỏ hàng !")
       })
         .catch((err) => {
           alert(err)
@@ -102,7 +117,7 @@ export default class InfoProduct extends Component {
   }
 
   selectHandler(value) {
-    this.setState({ valueSelect: value.id });
+    this.setState({ valueSelect: value.id, soLuong: value.soLuong });
     const detail = ArrayMausac()[value.maMS - 1] + ' - Size:' + ArrayKichco()[value.maKC - 1];
     this.setState({ detail: detail });
   };
@@ -113,13 +128,16 @@ export default class InfoProduct extends Component {
       this.setState({ kichco: ArrayKichco() });
 
       const id = this.props.route.params.id
-      this.setState({ data: await getMathang_IDmathang(id) });
+      const data = await getMathang_IDmathang(id)
+      this.setState({ data: data });
       this.setState({ imageData: await getAnhMathang_IDmathang(id) });
       this.setState({ ratingTBData: await getRatingMathang_IDmathang(id) });
       this.setState({ numberRating: await getTotalDanhGia_byID(id) });
       this.setState({ chitietData: await getChitiet_IDmathang(id) });
       this.setState({ nhaCungcap: await getNhacungcap_IDmathang(id) });
-      this.setState({ avgRatingNCC: await getRatingAVG_IDnhacungcap(id) });
+      this.setState({ daBan: await getDaban_Idmathang(id) });
+      const idShop = data['nhaCungCap']
+      this.setState({ dataTop: await getTop10Daban_Idmathang(idShop) });
     } catch (error) {
       console.log(error);
     } finally {
@@ -130,12 +148,12 @@ export default class InfoProduct extends Component {
   componentDidMount() {
     this.props.navigation.addListener('focus', () => {
       this.checkLogin()
+      this.getProducts();
     });
-    this.getProducts();
   }
 
   render() {
-    const { data, imageData, chitietData, ratingTBData, numberRating, nhaCungcap, isLoading, avgRatingNCC, mausac, kichco, valueSelect, detail, isLoggedIn } = this.state;
+    const { data, soLuong, imageData, chitietData, ratingTBData, numberRating, nhaCungcap, isLoading, mausac, kichco, valueSelect, detail, isLoggedIn, token, idKH, daBan, dataTop } = this.state;
 
     var priceNotDiscount = data["gia"] + data["gia"] * (data["khuyenMai"] / 100)
 
@@ -186,7 +204,7 @@ export default class InfoProduct extends Component {
                   />
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.btnCart} onPress={() => isLoggedIn ? this.props.navigation.navigate('Cart') : this.props.navigation.navigate('SignIn', {newUser: null})}>
+                <TouchableOpacity style={styles.btnCart} onPress={() => isLoggedIn ? this.props.navigation.navigate('Cart') : this.props.navigation.navigate('SignIn', { newUser: null })}>
                   <Image
                     source={require('../../../../image/cartv2.png')}
                     style={styles.iconArrow}
@@ -207,10 +225,10 @@ export default class InfoProduct extends Component {
                 </View>
                 <View style={styles.info1}>
                   <View style={styles.viewInfo1}>
-                    <Text style={styles.textPrice}>{data["gia"]} vnđ</Text>
-                    <Text style={styles.textSale}>Đã bán: 0 | {data["khuyenMai"]}% GIẢM</Text>
+                    <Text style={styles.textPrice}>{data["gia"]} $</Text>
+                    <Text style={styles.textSale}>Đã bán: {daBan} | {data["khuyenMai"]}% GIẢM</Text>
                   </View>
-                  <TouchableOpacity onPress={() => this.props.navigation.navigate('Comment', { thumbnail: data["hinhAnh"], idMathang: data["id"] })} style={styles.viewInfo2}>
+                  <TouchableOpacity onPress={() => this.props.navigation.navigate('Comment', { thumbnail: data["hinhAnh"], idMathang: data["id"], token: token, idKH: idKH })} style={styles.viewInfo2}>
                     <View style={styles.info3}>
                       <Text style={styles.textRating}>{ratingTB}</Text>
                       <Rating rating={ratingTB} />
@@ -229,14 +247,21 @@ export default class InfoProduct extends Component {
                       <View>
                         {
                           chitietData.map((item, index) => (
-                            <TouchableOpacity
-                              style={
-                                item.id === valueSelect ? styles.selected : styles.unselected
-                              }
-                              key={index}
-                              onPress={() => this.selectHandler(item)}>
-                              <Text style={item.id === valueSelect ? styles.textSaleSelected : styles.textSale}>{mausac[item.maMS - 1]} - Size: {kichco[item.maKC - 1]}</Text>
-                            </TouchableOpacity>
+                            item.soLuong === 0 ?
+                              <View
+                                style={styles.hethang}
+                                key={index}>
+                                <Text style={styles.textSale}>{mausac[item.maMS - 1]} - Size: {kichco[item.maKC - 1]}</Text>
+                              </View>
+                              :
+                              <TouchableOpacity
+                                style={
+                                  item.id === valueSelect ? styles.selected : styles.unselected
+                                }
+                                key={index}
+                                onPress={() => this.selectHandler(item)}>
+                                <Text style={item.id === valueSelect ? styles.textSaleSelected : styles.textSale}>{mausac[item.maMS - 1]} - Size: {kichco[item.maKC - 1]}</Text>
+                              </TouchableOpacity>
                           ))
                         }
                       </View>
@@ -244,7 +269,10 @@ export default class InfoProduct extends Component {
                         {
                           chitietData.map((item, index) => (
                             <View key={index} style={styles.phanloai1}>
-                              <Text style={styles.textSale}>{item.soLuong} sản phẩm có sẵn </Text>
+                              {
+                                item.soLuong === 0 ? <Text style={styles.textSale}>Đã hết hàng </Text>
+                                  : <Text style={styles.textSale}>{item.soLuong} sản phẩm có sẵn </Text>
+                              }
                             </View>
                           ))
                         }
@@ -266,13 +294,32 @@ export default class InfoProduct extends Component {
                         <Text style={styles.textMap}>{nhaCungcap["diaChi"]}</Text>
                       </View>
                     </View>
-                    <TouchableOpacity style={styles.btnViewShop} onPress={() => this.props.navigation.navigate('Shop', { shop: nhaCungcap, avg: avgRatingNCC })}>
+                    <TouchableOpacity style={styles.btnViewShop} onPress={() => this.props.navigation.navigate('Shop', { shop: nhaCungcap })}>
                       <Text style={styles.textBtnViewShop}>Xem Shop</Text>
                     </TouchableOpacity>
                   </View>
                   <View style={styles.viewOption}>
                     <Text style={styles.textMota}>Top sản phẩm bán chạy</Text>
-                    <Text style={styles.textDecription}> Sản Phẩm 1</Text>
+                    {
+                      dataTop === null ? <Text>Hiện chưa có sản phẩm nào được mua !!</Text> :
+                        <FlatList
+                          data={dataTop}
+                          initialNumToRender={10}
+                          horizontal={true}
+                          renderItem={({ item }) => (
+                            <View style={styles.viewTop}>
+                              <Image source={{ uri: item.hinhAnh }} style={styles.hinhAnhTop} />
+                              <View style={styles.viewTopInfo}>
+                                <Text style={styles.textMota} numberOfLines={1}>{item.tenMatHang}</Text>
+                                <View style={styles.viewToprow}>
+                                  <Text>${item.gia}</Text>
+                                  <Text>Đã bán: {item.daban}</Text>
+                                </View>
+                              </View>
+                            </View>
+                          )}
+                        />
+                    }
                   </View>
                   <View style={styles.viewOption}>
                     <Text style={styles.textMota}>Chi tiết sản phẩm</Text>
@@ -284,7 +331,7 @@ export default class InfoProduct extends Component {
           )}
         </View>
         <View style={styles.container2}>
-          <TouchableOpacity style={styles.btnSubmit} onPress={() => isLoggedIn ? this.onClickAddCart(data, valueSelect, detail, priceNotDiscount, nhaCungcap["tenNguoiDung"]) : this.props.navigation.navigate('SignIn', {newUser: null})}>
+          <TouchableOpacity style={styles.btnSubmit} onPress={() => isLoggedIn ? this.onClickAddCart(data, valueSelect, detail, priceNotDiscount, nhaCungcap, soLuong) : this.props.navigation.navigate('SignIn', { newUser: null })}>
             <Text style={styles.textBtn}>THÊM VÀO GIỎ</Text>
           </TouchableOpacity>
         </View>

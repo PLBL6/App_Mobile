@@ -44,7 +44,8 @@ const styles = StyleSheet.create({
     imageIcon: {
         height: 35,
         width: 35,
-        marginRight: 10
+        marginRight: 10,
+        borderRadius: 50
     },
     textClick: {
         color: colors.orangeLigth,
@@ -85,6 +86,10 @@ const styles = StyleSheet.create({
     textSize: {
         fontSize: 17,
         color: colors.whiteDark
+    },
+    ViewLoading: {
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 })
 

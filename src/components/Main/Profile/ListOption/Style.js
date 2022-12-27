@@ -38,10 +38,13 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 5
     },
     viewProduct: {
-        padding: 10,
+        padding: 5,
         backgroundColor: colors.white,
-        borderWidth: 0.5,
-        marginTop: 4
+        borderWidth: 1,
+        marginTop: 4,
+        width: 170,
+        justifyContent: 'center',
+        borderColor: colors.whiteDark
     },
     textBuyBack: {
         color: colors.whiteDark,
@@ -53,8 +56,14 @@ const styles = StyleSheet.create({
     },
     viewPrice: {
         flexDirection: 'row',
-        justifyContent: "space-between",
-        alignItems: 'center'
+        justifyContent: "space-between"
+    },
+    textBtn1: {
+        fontSize: 20
+    },
+    textBtn2: {
+        fontSize: 17,
+        color: colors.dark
     }
 })
 

@@ -62,7 +62,7 @@ export const create_Donhang = async (khachhang, tongtien, token) => {
     return resJson.errMessage['id']
 }
 
-export const create_ChitietDonhang = async (maCTMH, maDH, soLuong, tongTien, token) => {
+export const create_ChitietDonhang = async (maCTMH, maDH, soLuong, tongTien, token, TT) => {
     const response = await fetch(https_2 + 'create-new-chi-tiet-don-hang',
         {
             method: "POST",
@@ -71,7 +71,23 @@ export const create_ChitietDonhang = async (maCTMH, maDH, soLuong, tongTien, tok
                 maCTMH: maCTMH,
                 maDH: maDH,
                 soLuong: soLuong,
-                tongTien: tongTien
+                tongTien: tongTien,
+                trangThai: TT
+            }),
+        })
+    const resJson = await response.json();
+}
+
+export const create_DanhGia = async (body, token) => {
+    const response = await fetch(https_2 + 'create-danh-gia-by-id-mat-hang-khach-hang',
+        {
+            method: "POST",
+            headers: { 'Content-Type': 'application/json; charset=utf-8', 'Authorization': token },
+            body: JSON.stringify({
+                noiDung: body.noiDung,
+                xepHang: body.xepHang,
+                matHang: body.matHang,
+                khachHang: body.khachHang
             }),
         })
     const resJson = await response.json();

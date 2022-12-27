@@ -16,7 +16,11 @@ import SettingInfo from '../components/Main/Profile/SettingInfo/SettingInfo';
 import Repurchase from '../components/Main/Profile/Repurchase/Repurchase';
 import Purchase from '../components/Main/Profile/Purchase/Purchase';
 import MyComment from '../components/Main/Profile/MyComment/MyComment';
-import EditInfo from '../components/Main/Profile/SettingInfo/EditInfo/EditInfo'
+import EditInfo from '../components/Main/Profile/SettingInfo/EditInfo/EditInfo';
+import ChangePass from '../components/Main/Profile/SettingInfo/ChangePass/ChangePass';
+import Paypal from '../components/Other/Cart/Paypal/Paypal';
+import ProductCategory from '../components/Other/Shop/Category/ProductCategory/ProductCategory';
+import CreateNew from '../components/Other/Comment/CreateNew/CreateNew';
 
 const stack = createNativeStackNavigator();
 
@@ -39,6 +43,10 @@ export default function Navigator() {
           <stack.Screen name='Purchase' component={Purchase}/>
           <stack.Screen name='MyComment' component={MyComment}/>
           <stack.Screen name='EditInfo' component={EditInfo}/>
+          <stack.Screen name='ChangePass' component={ChangePass}/>
+          <stack.Screen name='Paypal' component={Paypal}/>
+          <stack.Screen name='ProductCategory' component={ProductCategory}/>
+          <stack.Screen name='CreateNew' component={CreateNew}/>
         </stack.Navigator>
       </NavigationContainer>
     )

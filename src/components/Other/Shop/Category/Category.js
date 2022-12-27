@@ -2,6 +2,7 @@ import { Text, View, Image, TouchableOpacity, FlatList, ActivityIndicator } from
 import React, { Component } from 'react'
 
 import styles from './Style'
+import { getSanpham_IDDanhmucvsNhacungcap } from '../../../../../api/nhacungcap';
 import { getDanhmuc_IDnhacungcap } from '../../../../../api/nhacungcap';
 import ImageCategory from '../../../ListImage/ImageCategory';
 
@@ -12,13 +13,29 @@ export default class Category extends Component {
     this.state = {
       data: [],
       isLoading: true,
-      imageCategory: []
+      imageCategory: [],
+      total: []
     };
   }
 
   async getCategory() {
     try {
-      this.setState({ data: await getDanhmuc_IDnhacungcap(this.props.route.params.idNhacungcap) });
+      const dataPush = this.state.data
+      const idNhacungcap = this.props.route.params.idNhacungcap
+      const data = await getDanhmuc_IDnhacungcap(idNhacungcap)
+      const tongSoluong = []
+      await Promise.all(data.map(async (item) => {
+        const sanpham = await getSanpham_IDDanhmucvsNhacungcap(idNhacungcap, item.id)
+        let dataCategory = {
+          "id": item.id,
+          "ten": item.tenDanhMuc,
+          "soluong": sanpham.length
+        }
+        dataPush.push(dataCategory)
+        tongSoluong.push(sanpham.length)
+      }))
+      this.setState({ total: tongSoluong });
+      this.setState({ data: dataPush });
       this.setState({ imageCategory: ImageCategory() })
     } catch (error) {
       console.log(error);
@@ -32,7 +49,9 @@ export default class Category extends Component {
   }
 
   render() {
-    const { data, isLoading, imageCategory } = this.state;
+    const { data, isLoading, imageCategory, total } = this.state;
+    const idNhacungcap = this.props.route.params.idNhacungcap
+    const soLuong = total.reduce(function (a, b) { return a + b; }, 0)
 
     return (
       <View style={styles.container}>
@@ -41,12 +60,12 @@ export default class Category extends Component {
             data={data}
             keyExtractor={({ id }, index) => id}
             renderItem={({ item }) => (
-              <TouchableOpacity style={styles.item}>
+              <TouchableOpacity style={styles.item} onPress={() => this.props.navigation.navigate('ProductCategory', {idNhacungcap: idNhacungcap, iddanhmuc: item.id, tendanhmuc: item.ten})}>
                 <View style={styles.item1}>
                   <Image source={imageCategory[item.id - 1]} style={styles.image} />
                   <View style={styles.info}>
-                    <Text style={styles.textName}>{item.tenDanhMuc}</Text>
-                    <Text style={styles.textNumber}>10 sản phẩm</Text>
+                    <Text style={styles.textName}>{item.ten}</Text>
+                    <Text style={styles.textNumber}>{item.soluong} sản phẩm</Text>
                   </View>
                 </View>
                 <Image source={require('../../../../../image/arrowRightBlack.png')} style={styles.iconArrow} />
@@ -55,13 +74,12 @@ export default class Category extends Component {
           />
         )}
 
-        <TouchableOpacity style={styles.item}>
+        <View style={styles.itemTotal}>
           <View style={styles.infoTotal}>
             <Text style={styles.textName}>Sản phẩm</Text>
-            <Text style={styles.textNumber}>1103 sản phẩm</Text>
+            <Text style={styles.textNumber}>{soLuong} sản phẩm</Text>
           </View>
-          <Image source={require('../../../../../image/arrowRightBlack.png')} style={styles.iconArrow} />
-        </TouchableOpacity>
+        </View>
       </View>
     )
   }

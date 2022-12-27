@@ -95,18 +95,6 @@ const styles = StyleSheet.create({
     width: 15,
     marginRight: 7
   },
-  btnFollowShop: {
-    height: '35%',
-    width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderWidth: 2,
-    borderColor: colors.white
-  },
-  textBtnFollowShop: {
-    fontSize: 15,
-    color: colors.white
-  },
   Info: {
     flex: 2.5
   },

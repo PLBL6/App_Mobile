@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "PBL6_SalesApp",
+    "name": "Sales App",
     "slug": "PBL6_SalesApp",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -24,10 +24,16 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.vuvuive87.PBL6_SalesApp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "f4d79669-f17d-430b-8a8e-f57ab2071db9"
+      }
     }
   }
 }
